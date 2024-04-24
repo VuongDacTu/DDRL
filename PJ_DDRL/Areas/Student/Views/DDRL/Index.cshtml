@@ -1,0 +1,39 @@
+﻿@model IEnumerable<PJ_DDRL.Models.DDRLModels.Question>;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+    // var AnsId = Model as List<Question>
+}
+
+<h1>Index</h1>
+
+<h4>SelfAnswer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @foreach(var item in Model){       
+                <h4>@item.ContentQuestion</h4>
+                    foreach(var i in item.Answers){
+                        if(i.QuestionId == item.Id){
+                        <div class="form-group">
+                            <label for="AnswerId">@i.ContentAnswer</label>
+                            @if(item.TypeQuestionId == 1){
+                                <input type="radio" id="AnswerId" value="@i.Id" name="AnswerIds[@(item.Id)]" />
+                            }
+                            else{
+                                <input id="AnswerId" type="checkbox" value="@i.Id" name="AnswerIds[@(item.Id)]" />
+                                }
+                            </div>
+                        }
+                    }
+                }
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
