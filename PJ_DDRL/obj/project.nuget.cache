@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5YM1asaU89i9In4WbhCVBVLqeYynK3SZRS7Pe3y/T1APl3JCX6yOLOFVlK3LnxThfEzyXjAaQ3lTK6d0UR1v5A==",
+  "dgSpecHash": "+eurJpgiaX7/8pA2xnOF2JkJVphjhtm+djMWcBg+QzRhg9b58enqaTR0PCv41f9WrcnyWeXeL94csNuZlHgKpA==",
   "success": true,
-  "projectFilePath": "E:\\New folder\\PJ_DDRL\\PJ_DDRL.csproj",
+  "projectFilePath": "E:\\DDRL\\PJ_DDRL\\PJ_DDRL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

@@ -22,28 +22,25 @@ namespace PJ_DDRL.Areas.Student.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(IFormCollection form)
+        public async Task<IActionResult> Index(Dictionary<int, int> AnswerIds)
         {
             if (ModelState.IsValid)
             {
 
-                var answerIds = form["AnswerIds"].ToArray();
+                //var answerIds = form["AnswerIds"].ToArray();
                 var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
-
-                foreach (var answerId in answerIds)
+                // Tạo danh sách SelfAnswer từ AnswerId và StudentId
+                foreach (var item in AnswerIds)
                 {
-                    // Tạo một đối tượng SelfAnswer mới
                     var selfAnswer = new SelfAnswer
-                        {
-                            StudentId = student.UserName,
-                            AnswerId = int.Parse(answerId),
-                        };
-
-                        _context.SelfAnswers.Add(selfAnswer);
+                    {
+                        StudentId = student.UserName,
+                        AnswerId = item.Value,
+                    };
+                    _context.SelfAnswers.Add(selfAnswer);
                 }
 
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Index");
+                _context.SaveChanges();
             }
             return RedirectToAction("Index");
 

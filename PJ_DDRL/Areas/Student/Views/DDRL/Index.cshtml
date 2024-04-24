@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
-    // var AnsId = Model as List<Question>
+
 }
 
 <h1>Index</h1>
@@ -19,14 +19,18 @@
                     foreach(var i in item.Answers){
                         if(i.QuestionId == item.Id){
                         <div class="form-group">
-                            <label for="AnswerId">@i.ContentAnswer</label>
-                            @if(item.TypeQuestionId == 1){
-                                <input type="radio" id="AnswerId" value="@i.Id" name="AnswerIds[@(item.Id)]" />
-                            }
-                            else{
-                                <input id="AnswerId" type="checkbox" value="@i.Id" name="AnswerIds[@(item.Id)]" />
+                            <label for="AnswerId[@i.Id]">
+                                @i.ContentAnswer
+                            
+                                @if(item.TypeQuestionId == 1){
+                                    <input type="radio" id="AnswerId[@i.Id]" value="@i.Id" name="AnswerIds[@item.Id]" />
                                 }
-                            </div>
+                                else{
+                                    <input id="AnswerId[@i.Id]" type="checkbox" value="@i.Id" name="AnswerIds[@item.Id]" />
+                                    }
+                            </label>
+                        </div>
+                            
                         }
                     }
                 }

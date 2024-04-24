@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\New folder\\PJ_DDRL\\PJ_DDRL.csproj": {}
+    "E:\\DDRL\\PJ_DDRL\\PJ_DDRL.csproj": {}
   },
   "projects": {
-    "E:\\New folder\\PJ_DDRL\\PJ_DDRL.csproj": {
+    "E:\\DDRL\\PJ_DDRL\\PJ_DDRL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\New folder\\PJ_DDRL\\PJ_DDRL.csproj",
+        "projectUniqueName": "E:\\DDRL\\PJ_DDRL\\PJ_DDRL.csproj",
         "projectName": "PJ_DDRL",
-        "projectPath": "E:\\New folder\\PJ_DDRL\\PJ_DDRL.csproj",
+        "projectPath": "E:\\DDRL\\PJ_DDRL\\PJ_DDRL.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "E:\\New folder\\PJ_DDRL\\obj\\",
+        "outputPath": "E:\\DDRL\\PJ_DDRL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
