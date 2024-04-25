@@ -58,8 +58,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTGVjdHVyZXJcVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/DDRL/PJ_DDRL/Areas/Student/Views/DDRL/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3R1ZGVudFxWaWV3c1xERFJMXEluZGV4LmNzaHRtbA==
+[E:/DDRL/PJ_DDRL/Areas/Student/Views/DGRL/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3R1ZGVudFxWaWV3c1xER1JMXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/DDRL/PJ_DDRL/Areas/Student/Views/Login/Index.cshtml]

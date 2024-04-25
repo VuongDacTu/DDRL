@@ -8,21 +8,29 @@ using PJ_DDRL.Models.DDRLModels;
 
 namespace PJ_DDRL.Areas.Student.Controllers
 {
-    public class DDRLController : BaseController
+    public class DGRLController : BaseController
     {
         private readonly DdrlContext _context;
-        public DDRLController(DdrlContext context)
+        public DGRLController(DdrlContext context)
         {
             _context = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int semesterId)
         {
-            var question = await _context.Questions.Include(u => u.Answers).ToListAsync(); 
+            if (semesterId == null)
+            {
+                return NotFound();
+            }
+            var question = await _context.Questions.Where(x => x.SemesterId == semesterId).Include(u => u.Answers).ToListAsync();
+            if (question == null)
+            {
+                return NotFound();
+            }
             return View(question);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(Dictionary<int, int> AnswerIds)
+        public async Task<IActionResult> Index(Dictionary<int, int> AnswerIds, Dictionary<int, int> AnswerId)
         {
             if (ModelState.IsValid)
             {
@@ -39,7 +47,15 @@ namespace PJ_DDRL.Areas.Student.Controllers
                     };
                     _context.SelfAnswers.Add(selfAnswer);
                 }
-
+                foreach (var item in AnswerId)
+                {
+                    var selfAnswer = new SelfAnswer
+                    {
+                        StudentId = student.UserName,
+                        AnswerId = item.Value,
+                    };
+                    _context.SelfAnswers.Add(selfAnswer);
+                }
                 _context.SaveChanges();
             }
             return RedirectToAction("Index");

@@ -1,8 +1,8 @@
 {
   "Files": [
     {
-      "Id": "E:\\DDRL\\PJ_DDRL\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\PJ_DDRL.bundle.scp.css",
-      "PackagePath": "staticwebassets\\PJ_DDRL.bundle.scp.css"
+      "Id": "E:\\DDRL\\PJ_DDRL\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\PJ_DGRL.bundle.scp.css",
+      "PackagePath": "staticwebassets\\PJ_DGRL.bundle.scp.css"
     },
     {
       "Id": "E:\\DDRL\\PJ_DDRL\\wwwroot\\css\\site.css",
@@ -245,20 +245,20 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.PJ_DDRL.Microsoft.AspNetCore.StaticWebAssets.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.PJ_DGRL.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
     {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.PJ_DDRL.props",
-      "PackagePath": "build\\PJ_DDRL.props"
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.PJ_DGRL.props",
+      "PackagePath": "build\\PJ_DGRL.props"
     },
     {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.PJ_DDRL.props",
-      "PackagePath": "buildMultiTargeting\\PJ_DDRL.props"
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.PJ_DGRL.props",
+      "PackagePath": "buildMultiTargeting\\PJ_DGRL.props"
     },
     {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.PJ_DDRL.props",
-      "PackagePath": "buildTransitive\\PJ_DDRL.props"
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.PJ_DGRL.props",
+      "PackagePath": "buildTransitive\\PJ_DGRL.props"
     }
   ],
   "ElementsToRemove": []

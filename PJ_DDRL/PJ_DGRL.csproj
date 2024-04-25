@@ -34,7 +34,7 @@
     <Folder Include="Areas\Lecturer\Models\" />
     <Folder Include="Areas\Lecturer\Views\" />
     <Folder Include="Areas\Student\Data\" />
-    <Folder Include="Models\DDRLModels\" />
+    <Folder Include="Models\DGRLModels\" />
   </ItemGroup>
 
 </Project>

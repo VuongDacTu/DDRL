@@ -8613,9 +8613,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\DDRL\\PJ_DDRL\\PJ_DDRL.csproj",
-      "projectName": "PJ_DDRL",
-      "projectPath": "E:\\DDRL\\PJ_DDRL\\PJ_DDRL.csproj",
+      "projectUniqueName": "E:\\DDRL\\PJ_DDRL\\PJ_DGRL.csproj",
+      "projectName": "PJ_DGRL",
+      "projectPath": "E:\\DDRL\\PJ_DDRL\\PJ_DGRL.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
       "outputPath": "E:\\DDRL\\PJ_DDRL\\obj\\",
       "projectStyle": "PackageReference",
