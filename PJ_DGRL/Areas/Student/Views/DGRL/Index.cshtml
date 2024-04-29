@@ -1,0 +1,61 @@
+﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+    String action = "Create";
+    if (@ViewBag.Iactive == 1)
+    {
+        action = "Update";
+    }
+    
+}
+
+<h4>Vui lòng trả lời đúng và đầy đủ các câu hỏi!!</h4>
+<hr />
+<div class="row">
+    <div class="">
+        <form asp-action="@action">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="semesterId" value="@ViewBag.semesterId" />
+            @foreach(var questionGroup in Model)
+            {
+                <h4>@questionGroup.Name</h4>
+                foreach(var question in questionGroup.QuestionLists.Where(u => u.Status == 1)){
+                    <h6>@question.ContentQuestion</h6>
+                    foreach (var answer in question.AnswerLists)
+                    {
+                        if(answer.Status == 1)
+                        {
+                            bool check;
+                            if (answer.Checked == 1)
+                            {
+                                check = true;
+                            }
+                            else
+                            {
+                                check = false;
+                            }
+                            if (question.TypeQuestionId == 1)
+                            {
+                                <input class="form-check-input" type="radio" id="AnswerId[@answer.Id]" checked="@check" value="@answer.Id" name="AnswerIds[@question.Id]">
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" value="@answer.Id" checked="@check" name="AnswerId[@answer.Id]" id="AnswerId[@answer.Id]">
+                            }
+                            <label class="form-check-label" for="AnswerId[@answer.Id]">@answer.ContentAnswer (@answer.AnswerScore điểm)</label>
+                            <br />
+                        }
+                    }
+                }
+            }
+            <div class="form-group">
+                <input type="submit" value="@action" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+

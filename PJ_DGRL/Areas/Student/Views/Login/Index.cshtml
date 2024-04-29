@@ -1,0 +1,47 @@
+﻿@model PJ_DGRL.Models.DGRLModels.AccountStudent;
+@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Đăng nhập sinh viên";
+    Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+}
+
+
+<!-- Style -->
+<link href="~/Student/login/css/style.css" rel="stylesheet" />
+<!-- Fonts -->
+<link href="//fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+<!-- //Fonts -->
+
+<div class="w3layoutscontaineragileits">
+	<h2>Sinh viên đăng nhập tại đây</h2>
+	@{
+		var ss = HttpContextAccessor.HttpContext.Session.GetString("StudentLogin");
+		if (ss != null)
+		{
+			<div>
+				<h2 class="text-center my-2 py-2">Welcome to, @ViewBag.Student.UserName</h2>
+			</div>
+		}
+		else
+		{
+			<form asp-action="Index" method="post">
+				<input type="text" asp-for="UserName" placeholder="Mã sinh viên" required="">
+				<input type="password" asp-for="Password" placeholder="Mật khẩu" required="">
+				<ul class="agileinfotickwthree">
+					<li>
+						<input type="checkbox" id="brand1" value="">
+						<label for="brand1"><span></span>Remember me</label>
+						<a href="#">Forgot password?</a>
+					</li>
+				</ul>
+				<div class="aitssendbuttonw3ls">
+					<input type="submit" value="LOGIN">
+				</div>
+			</form>
+		}
+	}
+</div>
+
+

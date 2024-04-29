@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\PJ_DDRL.props" />
-</Project>

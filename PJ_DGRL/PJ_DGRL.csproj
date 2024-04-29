@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Student\Data\" />
+    <Folder Include="wwwroot\Student\Login\" />
+    <Folder Include="Areas\Student\Models\" />
+    <Folder Include="Models\DGRLModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Student\Login\css\style.css" />
+    <None Include="wwwroot\Student\Login\images\e-mail.png" />
+    <None Include="wwwroot\Student\Login\images\password.png" />
+    <None Include="wwwroot\Student\Login\images\tick.png" />
+    <None Include="wwwroot\Student\Login\images\user.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="9.1.2" />
+  </ItemGroup>
+
+</Project>
