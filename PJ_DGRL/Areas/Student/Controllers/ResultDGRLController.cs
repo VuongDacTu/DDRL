@@ -17,7 +17,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
         {
             var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
             var SelfAnwser = _context.SelfAnswers.ToList();
-            var GroupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ToList();
+            var GroupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.SelfAnswers).ToList();
             ViewBag.SumSelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == student.UserName && u.SemesterId == semesterId).FirstOrDefault().SelfPoint;
             return View(GroupQuestion);
         }

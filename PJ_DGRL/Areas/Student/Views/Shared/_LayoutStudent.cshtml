@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using PJ_DGRL.Models.DGRLModels;
+@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var ss = HttpContextAccessor.HttpContext.Session.GetString("LTLogin");
+    var ss1 = HttpContextAccessor.HttpContext.Session.GetString("StudentLogin");
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,7 +20,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Đại học Nguyễn Trãi</a>
+                <a class="navbar-brand" asp-area="Student" asp-controller="Home" asp-action="Index">Đại học Nguyễn Trãi</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,8 +28,25 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Student" asp-controller="Semester" asp-action="Index">Kì đánh giá rèn luyện</a>
+                            <a class="nav-link text-dark" asp-area="Student" asp-controller="DGRL" asp-action="Index">Tự đánh giá rèn luyện</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Student" asp-controller="Semester" asp-action="History">Lịch sử đánh giá</a>
+                        </li>
+                        @if(ss != null){
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Student" asp-controller="Student" asp-action="Index">Đánh giá cho lớp</a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (ss1 != null)
+                        {
+                            var st = Newtonsoft.Json.JsonConvert.DeserializeObject<AccountStudent>(ss1);
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Student" asp-controller="Login" asp-action="Logout">Đăng xuất(@st.StudentId)</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

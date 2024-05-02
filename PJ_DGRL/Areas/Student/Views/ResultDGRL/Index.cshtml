@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
+
 @{
     ViewData["Title"] = "kết quả đánh giá";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
@@ -16,11 +17,11 @@
                     <h6>@question.ContentQuestion</h6>
                     foreach (var answer in question.AnswerLists)
                     {
-     
-                        if (answer.Checked == 1)
-                        {
-                        <p class="form-check-label" for="AnswerId[@answer.Id]">@answer.ContentAnswer (@answer.AnswerScore điểm)</p>
-                        <br />
+                        foreach (var selfAnswer in answer.SelfAnswers){
+
+                        <p class="form-check-label">@selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
+                                <br />
+            
                         }
                     }
                 }

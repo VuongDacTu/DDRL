@@ -11,8 +11,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
         {
             _ddrlContext = ddrlContext;
         }
-
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> History()
         {
             var semesters = await _ddrlContext.Semesters.ToListAsync();
             return View(semesters);

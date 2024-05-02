@@ -1,0 +1,21 @@
+﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.Student>
+@{
+    ViewData["Title"] = "LT_Student";
+    Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+}
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <h5>Chọn sinh viên đánh giá</h5>
+            <ul class="navbar-nav flex-grow-1">
+                @foreach (var item in Model)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="Student" asp-controller="LT_DGRL" asp-action="Index" asp-route-studentId="@item.Id"> @item.FullName (@item.Id)</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+

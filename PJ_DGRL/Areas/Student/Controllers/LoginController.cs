@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using PJ_DGRL.Models.DGRLModels;
@@ -30,17 +31,20 @@ namespace PJ_DGRL.Areas.Student.Controllers
             {
                 return View(model); // trả về trạng thái lỗi
             }
-            //xử lý logic phần đăng nhập tại đây
-
+            //đăng nhập cho sinh viên
             //var pass = GetSHA26Hash(model.Password);
             var dataLogin = _context.AccountStudents.Where(x => x.UserName.Equals(model.UserName)).FirstOrDefault(x => x.Password.Equals(model.Password));
-
+           
             if (dataLogin != null)
             {
                 // Lưu lại session khi đăng nhập thành công
                 HttpContext.Session.SetString("StudentLogin", dataLogin.ToJson());
-
-                return RedirectToAction("Index", "Semester");
+                var LTLogin = _context.Students.Where(x => x.Id.Equals(dataLogin.StudentId)).FirstOrDefault(x => x.PositionId.Equals("LT"));
+                if (LTLogin != null)
+                {
+					HttpContext.Session.SetString("LTLogin", dataLogin.UserName);
+				}
+				return RedirectToAction("Index", "Home");
             }
             TempData["errorLogin"] = "Mã sinh viên hoặc mật khẩu không đúng";
             return View(model);
@@ -48,8 +52,9 @@ namespace PJ_DGRL.Areas.Student.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("StudentLogin");
-            // huỷ session với key đã lưu trước đó
-            return RedirectToAction("Index");
+			HttpContext.Session.Remove("LTLogin");
+			// huỷ session với key đã lưu trước đó
+			return RedirectToAction("Index");
         }
         //static string GetSHA26Hash(string input)
         //{

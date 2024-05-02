@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<PJ_DGRL.Models.DGRLModels.Semester>
+@{
+    ViewData["Title"] = "Lớp trưởng đánh giá";
+    Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+}
+
+<h1>Kì đánh giá rèn luyện:</h1>
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <h5>Đánh giá rèn luyện</h5>
+            <ul class="navbar-nav flex-grow-1">
+                @foreach (var item in Model)
+                {
+                    if (item.IsActive == 2)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Student" asp-controller="DGRL" asp-action="Index" asp-route-studentId="@item.Id">Đánh giá năm @item.SchoolYear (Kỳ @item.Name)</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

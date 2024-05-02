@@ -2,60 +2,65 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
-    String action = "Create";
-    if (@ViewBag.Iactive == 1)
-    {
-        action = "Update";
-    }
-    
 }
 
+@if (ViewBag.semesterId == 1){
 <h4>Vui lòng trả lời đúng và đầy đủ các câu hỏi!!</h4>
 <hr />
 <div class="row">
     <div class="">
-        <form asp-action="@action">
+            <form asp-action="Submit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="semesterId" value="@ViewBag.semesterId" />
             @foreach(var questionGroup in Model)
             {
                 <h4>@questionGroup.Name</h4>
-                foreach(var question in questionGroup.QuestionLists.Where(u => u.Status == 1)){
-                    <h6>@question.ContentQuestion</h6>
-                    foreach (var answer in question.AnswerLists)
+                foreach(var question in questionGroup.QuestionLists){
+                    
+                    var questionList = question.QuestionHisories.Where(x => x.SemesterId == ViewBag.semesterId).FirstOrDefault();
+                    if (questionList != null)
                     {
-                        if(answer.Status == 1)
+                        <h6>@question.ContentQuestion</h6>
+                        foreach (var answer in question.AnswerLists)
                         {
-                            bool check;
-                            if (answer.Checked == 1)
+                            if (answer.Status == 1)
                             {
-                                check = true;
+                                bool check;
+                                if (answer.Checked == 1)
+                                {
+                                    check = true;
+                                }
+                                else
+                                {
+                                    check = false;
+                                }
+                                if (question.TypeQuestionId == 1)
+                                {
+                                    <input class="form-check-input" type="radio" id="AnswerId[@answer.Id]" checked="@check" value="@answer.Id" name="AnswerIds[@question.Id]">
+                                }
+                                else
+                                {
+                                    <input class="form-check-input" type="checkbox" value="@answer.Id" checked="@check" name="AnswerId[@answer.Id]" id="AnswerId[@answer.Id]">
+                                }
+                                <label class="form-check-label" for="AnswerId[@answer.Id]">@answer.ContentAnswer (@answer.AnswerScore điểm)</label>
+                                <br />
                             }
-                            else
-                            {
-                                check = false;
-                            }
-                            if (question.TypeQuestionId == 1)
-                            {
-                                <input class="form-check-input" type="radio" id="AnswerId[@answer.Id]" checked="@check" value="@answer.Id" name="AnswerIds[@question.Id]">
-                            }
-                            else
-                            {
-                                <input class="form-check-input" type="checkbox" value="@answer.Id" checked="@check" name="AnswerId[@answer.Id]" id="AnswerId[@answer.Id]">
-                            }
-                            <label class="form-check-label" for="AnswerId[@answer.Id]">@answer.ContentAnswer (@answer.AnswerScore điểm)</label>
-                            <br />
                         }
                     }
                 }
             }
             <div class="form-group">
-                <input type="submit" value="@action" class="btn btn-primary" />
-            </div>
+                <input type="submit" value="Gửi đánh giá" class="btn btn-primary" />
+                </div>
+
         </form>
     </div>
 </div>
-
-
+}else
+{
+    <div class="alert alert-danger">
+    <h2>Bạn không thể sửa đánh giá của mình vì phiên tự đánh giá đã kết thúc! </h2>
+    </div>
+}
 
 
