@@ -16,7 +16,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
         {
             var student = HttpContext.Session.GetString("LTLogin");
             var LTLogin = _context.Students.FirstOrDefault(x => x.Id == student);
-            var students = _context.Students.Where(u => u.ClassId == LTLogin.ClassId).ToList();
+            var students = _context.Students.Where(u => u.ClassId == LTLogin.ClassId && u.IsActive == 1).ToList();
             return View(students);
         }
     }

@@ -27,7 +27,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
 
             // set lại checked cho Answer
             var Answers = _context.AnswerLists.ToList();
-            int semesterId = _context.Semesters.FirstOrDefault(x => x.IsActive == 1).Id;
+            int semesterId = _context.Semesters.FirstOrDefault(x => x.IsActive == 1)?.Id ?? 0;
             var SelfAnswers = _context.SelfAnswers.Where(u => u.StudentId == student.UserName && u.SemesterId == semesterId).ToList();
             foreach (var item in Answers)
             {
@@ -126,14 +126,15 @@ namespace PJ_DGRL.Areas.Student.Controllers
                 {
                     StudentId = student.UserName,
                     SemesterId = semesterId,
-                    SelfPoint = sum
+                    SelfPoint = sum,
+                    UpdateDate = DateTime.Now,
                 };
                 _context.SumaryOfPoints.Add(sumaryOfPoints);
                 _context.AccountStudents.FirstOrDefault(x => x.StudentId == student.UserName).IsActive = 1;
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index1));
             }
-            return RedirectToAction(nameof(Index1));
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -44,7 +44,7 @@
                         {
                             var st = Newtonsoft.Json.JsonConvert.DeserializeObject<AccountStudent>(ss1);
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Student" asp-controller="Login" asp-action="Logout">Đăng xuất(@st.StudentId)</a>
+                                <a class="nav-link text-dark" asp-area="Student" asp-controller="Login" asp-action="Logout">Đăng xuất(@st.UserName)</a>
                             </li>
                         }
                     </ul>

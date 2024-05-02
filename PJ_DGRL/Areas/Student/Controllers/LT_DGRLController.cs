@@ -19,7 +19,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
             var GroupQuestions = _context.GroupQuestions.Include(u => u.QuestionLists).ThenInclude(u => u.QuestionHisories).Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ToList();
             // lấy ra sinh viên đang đăng nhập lưu trong session
             var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
-			int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.IsActive == 1)?.Id ?? 0;
+			int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.IsActive == 2)?.Id ?? 0;
 
 
 
@@ -46,7 +46,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
             if (ModelState.IsValid)
             {
 
-                int semesterId = _context.Semesters.FirstOrDefault(x => x.IsActive == 1).Id;
+                int semesterId = _context.Semesters.FirstOrDefault(x => x.IsActive == 2).Id;
                 var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
                 // kiểm tra trạng thái acc (0: chưa đánh giá, 1: đã đánh giá, 2:không được đánh giá)
                 int Iactive = _context.AccountStudents.Where(u => u.UserName == student.UserName).FirstOrDefault().IsActive.Value;
@@ -115,13 +115,18 @@ namespace PJ_DGRL.Areas.Student.Controllers
                     }
 
                 }
-                _context.SumaryOfPoints.Where(x => x.StudentId == studentId).FirstOrDefault(x => x.SemesterId == semesterId).ClassPoint = sum;
 
-
+                var point = _context.SumaryOfPoints.Where(x => x.StudentId == studentId).FirstOrDefault(x => x.SemesterId == semesterId);
+                if(point != null)
+                {
+                    point.ClassPoint = sum;
+                    point.UserClass = student.UserName;
+                    point.UpdateDate = DateTime.Now;
+                }
                 _context.SaveChanges();
                 return RedirectToAction("Index1","DGRL");
             }
-            return RedirectToAction("Index1", "DGRL");
+            return RedirectToAction("Index", "DGRL");
         }
 	}
 }
