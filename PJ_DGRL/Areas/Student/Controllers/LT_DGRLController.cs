@@ -21,8 +21,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
             var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
 			int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.IsActive == 1)?.Id ?? 0;
 
-            ViewBag.semesterId = semesterId;
-            ViewBag.studentId = studentId;
+
 
             var selfAnswer = _context.SelfAnswers.Where(x => x.StudentId == studentId && x.SemesterId == semesterId).ToList();
             var Answers = _context.AnswerLists.ToList();
@@ -36,7 +35,11 @@ namespace PJ_DGRL.Areas.Student.Controllers
 				_context.AnswerLists.Where(x => x.Id == item.AnswerId).FirstOrDefault().Checked = 1;
 
 			}
-			return View(GroupQuestions);
+
+
+            ViewBag.semesterId = semesterId;
+            ViewBag.studentId = studentId;
+            return View(GroupQuestions);
 		}
 		public IActionResult submit(string studentId, Dictionary<int, int> AnswerIds, Dictionary<int, int> AnswerId)
 		{
@@ -50,13 +53,9 @@ namespace PJ_DGRL.Areas.Student.Controllers
 
                 var classAnswers = _context.ClassAnswers.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).ToList();
                 if (classAnswers != null)
-                {
-                    // xoá tất cả đánh giá của sinh viên trong kì đang diễn ra
-                    
+                { 
                     _context.ClassAnswers.RemoveRange(classAnswers);
-                    //// xoá điểm đánh giá trước đó
-                    //var sumaryOfPoint = _context.SumaryOfPoints.Where(x => x.StudentId == student.UserName && x.SemesterId == semesterId).ToList();
-                    //_context.SumaryOfPoints.RemoveRange(sumaryOfPoint);
+
                 }
                 //tạo đối tượng selfAnswer để thêm vào bảng Self Answer
                 List<ClassAnswer> classAnswer = new List<ClassAnswer>();
@@ -95,14 +94,12 @@ namespace PJ_DGRL.Areas.Student.Controllers
 
                 // tính tổng điểm sinh viên tự đánh giá
                 var question = _context.QuestionLists.Include(u => u.AnswerLists).ThenInclude(u => u.SelfAnswers).ToList();
-                var SelfAnswers = _context.SelfAnswers.Where(u => u.StudentId == student.UserName && u.SemesterId == semesterId).ToList();
-
                 int sum = 0;
                 foreach (var item in question)
                 {
                     foreach (var answer in item.AnswerLists)
                     {
-                        foreach (var self in answer.SelfAnswers)
+                        foreach (var self in answer.ClassAnswers)
                         {
                             sum += self.Answer.AnswerScore.Value;
                             if (item.TypeQuestionId == 3)
@@ -118,15 +115,9 @@ namespace PJ_DGRL.Areas.Student.Controllers
                     }
 
                 }
+                _context.SumaryOfPoints.Where(x => x.StudentId == studentId).FirstOrDefault(x => x.SemesterId == semesterId).ClassPoint = sum;
 
-                // tạo sumaryOfPoint và thêm vào database
-                SumaryOfPoint sumaryOfPoints = new SumaryOfPoint()
-                {
-                    StudentId = student.UserName,
-                    SemesterId = semesterId,
-                    SelfPoint = sum
-                };
-                //_context.SumaryOfPoints.Add(sumaryOfPoints);
+
                 _context.SaveChanges();
                 return RedirectToAction("Index1","DGRL");
             }
