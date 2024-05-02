@@ -47,7 +47,7 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
         {
             HttpContext.Session.Remove("LecturerLogin");
             // huỷ session với key đã lưu trước đó
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Home", new { area = "" });
         }
         //static string GetSHA26Hash(string input)
         //{

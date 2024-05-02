@@ -1,20 +1,48 @@
-﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.Student>
+﻿@using PJ_DGRL.Models.DGRLModels
+@model IEnumerable<PJ_DGRL.Models.DGRLModels.Student>
 @{
     ViewData["Title"] = "LT_Student";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+    List<SumaryOfPoint> check = ViewBag.Check;
 }
+
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container-fluid">
+        <form asp-action="Index" method="get">
+            <input type="text" name="name" placeholder="Nhập tên sinh viên">
+            <button type="submit">Tìm kiếm</button>
+        </form>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
             <h5>Chọn sinh viên đánh giá</h5>
+            @if (Model.FirstOrDefault() != null)
+            {
             <ul class="navbar-nav flex-grow-1">
+
                 @foreach (var item in Model)
                 {
                     <li class="nav-item">
+                        
                         <a class="nav-link text-dark" asp-area="Student" asp-controller="LT_DGRL" asp-action="Index" asp-route-studentId="@item.Id"> @item.FullName (@item.Id)</a>
-                    </li>
+                            @{
+                                var a = check.FirstOrDefault(x => x.StudentId == item.Id)?.ClassPoint.Value ?? 0;
+                            }
+                            @if (a != 0)
+                            {
+                                <p class="text-success">Đã đánh giá</p>
+                            }
+                            else
+                            {
+                                <p class="text-danger">Chưa đánh giá</p>
+                            }
+                        </li>
                 }
             </ul>
+            }else
+            {
+                <div class="alert alert-danger">
+                    <h5>Không tìm thấy sinh viên nào !!!</h5>
+                </div>
+            }
         </div>
     </div>
 </nav>

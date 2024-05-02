@@ -1,0 +1,38 @@
+﻿
+@model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Lecturer/Views/Shared/_LayoutLecturer.cshtml";
+}
+
+<h4>Đáp án bạn đã trả lời</h4>
+<hr />
+<div class="row">
+    <div class="col">
+        @foreach (var questionGroup in Model)
+        {
+            <h4>@questionGroup.Name</h4>
+            foreach (var question in questionGroup.QuestionLists)
+            {
+                <h6>@question.ContentQuestion</h6>
+                foreach (var answer in question.AnswerLists)
+                {
+                    foreach (var selfAnswer in answer.SelfAnswers)
+                    {
+
+                        <p class="form-check-label">@selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
+                        <br />
+
+                    }
+                }
+            }
+        }
+    </div>
+    <div class="col">
+        <h2>Tổng điểm tự đánh giá: @ViewBag.SumSelfPoint</h2>
+    </div>
+</div>
+
+
+

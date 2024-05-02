@@ -53,8 +53,8 @@ namespace PJ_DGRL.Areas.Student.Controllers
         {
             HttpContext.Session.Remove("StudentLogin");
 			HttpContext.Session.Remove("LTLogin");
-			// huỷ session với key đã lưu trước đó
-			return RedirectToAction("Index");
+            // huỷ session với key đã lưu trước đó
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
         //static string GetSHA26Hash(string input)
         //{

@@ -17,7 +17,9 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
             var student = _context.Students.FirstOrDefault(u => u.Id == studentId);
 			ViewBag.StudentId = studentId;
 			ViewBag.semesterId = semesterId;
-			return View(student);
+			ViewBag.SelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId).FirstOrDefault(u => u.SemesterId == semesterId)?.SelfPoint??0;
+            ViewBag.ClassPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId).FirstOrDefault(u => u.SemesterId == semesterId)?.ClassPoint??0;
+            return View(student);
 		}
 		[HttpPost]
 		public IActionResult Submit(string? studentId, int LecturerPoint)

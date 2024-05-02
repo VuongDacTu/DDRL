@@ -19,6 +19,19 @@
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.FullName)
             </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.Gender == false)
+                {
+                    <p>Nam</p>
+                }
+                else
+                {
+                    <p>Nữ</p>
+                }
+            </dd>
             <dt class = "col-sm-2">
                 @Html.DisplayNameFor(model => model.Birthday)
             </dt>
@@ -37,20 +50,11 @@
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.Phone)
             </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Gender)
-            </dt>
-            <dd class = "col-sm-10">
-                @if(Model.Gender == false)
-                {
-                    <p>Nam</p>
-                }
-                else
-                {
-                    <p>Nữ</p>
-                }
-            </dd>
         </dl>
+
+            <p>Điểm tự đánh giá: @ViewBag.SelfPoint<a asp-controller="Result" asp-action="Index" asp-route-studentId="@Model.Id">Xem chi tiết</a></p>
+            <p>Điểm lớp trưởng đánh giá: @ViewBag.ClassPoint<a asp-controller="Result" asp-action="Class" asp-route-studentId="@Model.Id">Xem chi tiết</a></p>
+
     </div>
     <div class="col">
         <form asp-action="Submit" >
