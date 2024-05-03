@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.Semester>
-
 @{
     ViewData["Title"] = "History";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
@@ -15,10 +14,11 @@
                 @foreach (var item in Model)
                 {
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Student" asp-controller="ResultDGRL" asp-action="Index" asp-route-semesterId="@item.Id"> @item.SchoolYear (Kỳ @item.Name)</a>
+                        <a class="nav-link text-dark" asp-area="Student" asp-controller="History" asp-action="Self" asp-route-semesterId="@item.Id"> @item.SchoolYear (Kỳ @item.Name)</a>
                     </li>
                 }
             </ul>
+
         </div>
     </div>
 </nav>

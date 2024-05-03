@@ -12,7 +12,6 @@ namespace PJ_DGRL.Areas.Student.Controllers
 		{
 			_context = context;
 		}
-
 		public IActionResult Index(string? studentId)
 		{
             // group question

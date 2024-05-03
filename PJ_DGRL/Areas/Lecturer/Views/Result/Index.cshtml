@@ -1,12 +1,26 @@
-﻿
+﻿@using PJ_DGRL.Models.DGRLModels
+
 @model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Lecturer/Views/Shared/_LayoutLecturer.cshtml";
+    List<Semester> semesters = ViewBag.Semester;
 }
+<h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
+<form asp-action="Index" method="get">
+    <label>Chọn kì học:</label>
+    <input type="hidden" name="studentId" value="@ViewBag.StudentId" />
+    <select name="semesterId" class="form-control">
+        @foreach (var item in semesters)
+        {
+            <option value="@item.Id">Kì @item.Name - Năm học @item.SchoolYear</option>
+        }
+    </select>
+    <input type="submit" value="Tìm kiếm" />
+</form>
 
-<h4>Đáp án bạn đã trả lời</h4>
+<h4>Đáp án sinh viên đã trả lời</h4>
 <hr />
 <div class="row">
     <div class="col">

@@ -17,10 +17,10 @@ namespace PJ_DGRL.Areas.Student.Controllers
         {
             var student = HttpContext.Session.GetString("LTLogin");
             var LTLogin = _context.Students.FirstOrDefault(x => x.Id == student);
-            var students = _context.Students.Where(u => u.ClassId == LTLogin.ClassId && u.IsActive == 1).ToList();
+            var students = _context.Students.Where(u => u.ClassId == LTLogin.ClassId).ToList();
             if (!name.IsNullOrEmpty())
             {
-                students = _context.Students.Where(u => u.ClassId == LTLogin.ClassId && u.IsActive == 1 && u.FullName.Contains(name)).ToList();
+                students = _context.Students.Where(u => u.ClassId == LTLogin.ClassId && u.FullName.Contains(name)).ToList();
             }
             int semesterId = _context.Semesters.FirstOrDefault(x => x.IsActive >= 1)?.Id ?? 0;
             ViewBag.Check = _context.SumaryOfPoints.Where(x => x.SemesterId == semesterId).ToList();

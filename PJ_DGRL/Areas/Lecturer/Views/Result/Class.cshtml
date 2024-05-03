@@ -1,9 +1,23 @@
-﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
+﻿@using PJ_DGRL.Models.DGRLModels
+@model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Lecturer/Views/Shared/_LayoutLecturer.cshtml";
+    List<Semester> semesters = ViewBag.Semester;
 }
+<h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
+<form asp-action="Class" method="get">
+    <label>Chọn kì học:</label>
+    <input type="hidden" name="studentId" value="@ViewBag.StudentId" />
+    <select name="semesterId" class="form-control">
+        @foreach (var item in semesters)
+        {
+            <option value="@item.Id">Kì @item.Name - Năm học @item.SchoolYear</option>
+        }
+    </select>
+    <input type="submit" value="Tìm kiếm" />
+</form>
 
 <h4>Đáp án lớp trưởng đã trả lời</h4>
 <hr />
@@ -28,6 +42,7 @@
     </div>
     <div class="col">
         <h2>Tổng điểm tự đánh giá: @ViewBag.SumSelfPoint</h2>
+        <h2>Tổng điểm lớp trưởng đánh giá: @ViewBag.SumClassPoint</h2>
     </div>
 </div>
 

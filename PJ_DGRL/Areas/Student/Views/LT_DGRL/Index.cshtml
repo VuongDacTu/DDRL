@@ -13,7 +13,6 @@
             <form asp-action="Submit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" name="semesterId" value="@ViewBag.semesterId" />
-               
                 <input type="text" name="studentId" value="@ViewBag.studentId" readonly />
                 @foreach (var questionGroup in Model)
                 {
