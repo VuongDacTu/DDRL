@@ -5,11 +5,14 @@
     Layout = "~/Areas/Lecturer/Views/Shared/_LayoutLecturer.cshtml";
 }
 
+<div class="row g-0">
+    <div class="col-sm-6 col-md-8">
+        @await Component.InvokeAsync("ST", new { name = ViewBag.Name })
+    </div>
+    <div class="col-6 col-md-4">
+
 @if (@ViewBag.semesterId != 0)
 {
-<h1>Index</h1>
-<div class="row">
-    <div class="col">
         <h4>Student</h4>
         <hr />
         <dl class="row">
@@ -55,8 +58,6 @@
             <p>Điểm tự đánh giá: @ViewBag.SelfPoint<a asp-controller="Result" asp-action="Index" asp-route-studentId="@Model.Id">Xem chi tiết</a></p>
             <p>Điểm lớp trưởng đánh giá: @ViewBag.ClassPoint<a asp-controller="Result" asp-action="Class" asp-route-studentId="@Model.Id">Xem chi tiết</a></p>
 
-    </div>
-    <div class="col">
         <form asp-action="Submit" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>
@@ -68,8 +69,6 @@
                 <input type="submit" value="Xác nhận" class="btn btn-primary" />
             </div>
         </form>
-    </div>
-    </div>
 }
 else
 {
@@ -77,3 +76,5 @@ else
         <h2>Kì đánh giá của giảng viên chưa diễn ra !!!</h2>
     </div>
 }
+</div>
+   </div>

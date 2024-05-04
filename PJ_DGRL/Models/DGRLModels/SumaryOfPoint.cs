@@ -22,10 +22,12 @@ public partial class SumaryOfPoint
     public string? UserClass { get; set; }
 
     public string? UserLecturer { get; set; }
+    public int? ClassId { get; set; }
 
     public DateTime? UpdateDate { get; set; }
 
     public virtual Semester? Semester { get; set; }
 
     public virtual Student? Student { get; set; }
+    public virtual Class? Class { get; set; }
 }

@@ -275,3 +275,4 @@ E:\DGRL\PJ_DGRL\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 E:\DGRL\PJ_DGRL\bin\Debug\net8.0\Microsoft.JSInterop.dll
 E:\DGRL\PJ_DGRL\obj\Debug\net8.0\scopedcss\Areas\Student\Views\Shared\_LayoutStudent.cshtml.rz.scp.css
 E:\DGRL\PJ_DGRL\obj\Debug\net8.0\scopedcss\Areas\Lecturer\Views\Shared\_LayoutLecturer.cshtml.rz.scp.css
+E:\DGRL\PJ_DGRL\obj\Debug\net8.0\scopedcss\Areas\Admin\Views\Shared\_LayoutAdmin.cshtml.rz.scp.css

@@ -14,6 +14,7 @@ public partial class AnswerList
     public int? AnswerScore { get; set; }
 
     public byte? Status { get; set; }
+    public bool? IsEdit { get; set; }
 
     public DateTime? CreateDate { get; set; }
 

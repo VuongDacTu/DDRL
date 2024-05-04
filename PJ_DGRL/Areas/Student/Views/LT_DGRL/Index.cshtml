@@ -3,68 +3,72 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
 }
-
-@if (ViewBag.semesterId == 1)
-{
-    <h4>Vui lòng trả lời đúng và đầy đủ các câu hỏi!!</h4>
-    <hr />
-    <div class="row">
-        <div class="">
-            <form asp-action="Submit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" name="semesterId" value="@ViewBag.semesterId" />
-                <input type="text" name="studentId" value="@ViewBag.studentId" readonly />
-                @foreach (var questionGroup in Model)
-                {
-                    <h4>@questionGroup.Name</h4>
-                    foreach (var question in questionGroup.QuestionLists)
-                    {
-
-                        var questionList = question.QuestionHisories.Where(x => x.SemesterId == ViewBag.semesterId).FirstOrDefault();
-                        if (questionList != null)
+<div class="row g-0">
+    <div class="col-6 col-md-4">
+        @await Component.InvokeAsync("Student", new { name = ViewBag.Name })
+    </div>
+    <div class="col-sm-6 col-md-8">
+        @if (ViewBag.semesterId == 1)
+        {
+            <h4>Vui lòng trả lời đúng và đầy đủ các câu hỏi!!</h4>
+            <hr />
+            <div class="row">
+                <div class="">
+                    <form asp-action="Submit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" name="semesterId" value="@ViewBag.semesterId" />
+                        <input type="text" name="studentId" value="@ViewBag.studentId" readonly />
+                        @foreach (var questionGroup in Model)
                         {
-                            <h6>@question.ContentQuestion</h6>
-                            foreach (var answer in question.AnswerLists)
+                            <h4>@questionGroup.Name</h4>
+                            foreach (var question in questionGroup.QuestionLists)
                             {
-                                if (answer.Status == 1)
+
+                                var questionList = question.QuestionHisories.Where(x => x.SemesterId == ViewBag.semesterId).FirstOrDefault();
+                                if (questionList != null)
                                 {
-                                    bool check;
-                                    if (answer.Checked == 1)
+                                    <h6>@question.ContentQuestion</h6>
+                                    foreach (var answer in question.AnswerLists)
                                     {
-                                        check = true;
+                                        if (answer.Status == 1)
+                                        {
+                                            bool check;
+                                            if (answer.Checked == 1)
+                                            {
+                                                check = true;
+                                            }
+                                            else
+                                            {
+                                                check = false;
+                                            }
+                                            if (question.TypeQuestionId == 1)
+                                            {
+                                                <input class="form-check-input" type="radio" id="AnswerId[@answer.Id]" checked="@check" value="@answer.Id" name="AnswerIds[@question.Id]">
+                                            }
+                                            else
+                                            {
+                                                <input class="form-check-input" type="checkbox" value="@answer.Id" checked="@check" name="AnswerId[@answer.Id]" id="AnswerId[@answer.Id]">
+                                            }
+                                            <label class="form-check-label" for="AnswerId[@answer.Id]">@answer.ContentAnswer (@answer.AnswerScore điểm)</label>
+                                            <br />
+                                        }
                                     }
-                                    else
-                                    {
-                                        check = false;
-                                    }
-                                    if (question.TypeQuestionId == 1)
-                                    {
-                                        <input class="form-check-input" type="radio" id="AnswerId[@answer.Id]" checked="@check" value="@answer.Id" name="AnswerIds[@question.Id]">
-                                    }
-                                    else
-                                    {
-                                        <input class="form-check-input" type="checkbox" value="@answer.Id" checked="@check" name="AnswerId[@answer.Id]" id="AnswerId[@answer.Id]">
-                                    }
-                                    <label class="form-check-label" for="AnswerId[@answer.Id]">@answer.ContentAnswer (@answer.AnswerScore điểm)</label>
-                                    <br />
                                 }
                             }
                         }
-                    }
-                }
-                <div class="form-group">
-                    <input type="submit" value="Gửi đánh giá" class="btn btn-primary" />
+                        <div class="form-group">
+                            <input type="submit" value="Gửi đánh giá" class="btn btn-primary" />
+                        </div>
+
+                    </form>
                 </div>
-
-            </form>
-        </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                <h2>Kì đánh giá của lớp chưa diễn ra !!! </h2>
+            </div>
+        }
     </div>
-}
-else
-{
-    <div class="alert alert-danger">
-        <h2>Kì đánh giá của lớp chưa diễn ra !!! </h2>
-    </div>
-}
-
-
+</div>

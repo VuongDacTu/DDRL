@@ -12,19 +12,17 @@ namespace PJ_DGRL.Areas.Student.Controllers
 		{
 			_context = context;
 		}
-		public IActionResult Index(string? studentId)
+		public IActionResult Index(string? name,string? studentId)
 		{
             // group question
-            var GroupQuestions = _context.GroupQuestions.Include(u => u.QuestionLists).ThenInclude(u => u.QuestionHisories).Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ToList();
+            var groupQuestions = _context.GroupQuestions.Include(u => u.QuestionLists).ThenInclude(u => u.QuestionHisories).Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ToList();
             // lấy ra sinh viên đang đăng nhập lưu trong session
             var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
-			int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.IsActive == 2)?.Id ?? 0;
-
-
-
+			int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndStudent <= DateTime.Now && x.DateEndClass >= DateTime.Now)?.Id ?? 0;
+            ViewBag.Name = name;
             var selfAnswer = _context.SelfAnswers.Where(x => x.StudentId == studentId && x.SemesterId == semesterId).ToList();
-            var Answers = _context.AnswerLists.ToList();
-            foreach (var item in Answers)
+            var answers = _context.AnswerLists.ToList();
+            foreach (var item in answers)
             {
                 item.Checked = 0;
             }
@@ -38,14 +36,15 @@ namespace PJ_DGRL.Areas.Student.Controllers
 
             ViewBag.semesterId = semesterId;
             ViewBag.studentId = studentId;
-            return View(GroupQuestions);
+            return View(groupQuestions);
 		}
 		public IActionResult submit(string studentId, Dictionary<int, int> AnswerIds, Dictionary<int, int> AnswerId)
 		{
             if (ModelState.IsValid)
             {
 
-                int semesterId = _context.Semesters.FirstOrDefault(x => x.IsActive == 2).Id;
+                int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndStudent <= DateTime.Now && x.DateEndClass >= DateTime.Now)?.Id ?? 0;
+
                 var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
                 // kiểm tra trạng thái acc (0: chưa đánh giá, 1: đã đánh giá, 2:không được đánh giá)
                 int Iactive = _context.AccountStudents.Where(u => u.UserName == student.UserName).FirstOrDefault().IsActive.Value;
@@ -98,15 +97,17 @@ namespace PJ_DGRL.Areas.Student.Controllers
                 {
                     foreach (var answer in item.AnswerLists)
                     {
+                        bool check= false;
                         foreach (var self in answer.ClassAnswers)
                         {
                             sum += self.Answer.AnswerScore.Value;
                             if (item.TypeQuestionId == 3)
                             {
+                                check = true;
                                 break;
                             }
                         }
-                        if (item.TypeQuestionId == 3)
+                        if (check == true)
                         {
                             break;
                         }
@@ -123,7 +124,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
                     point.UpdateDate = DateTime.Now;
                 }
                 _context.SaveChanges();
-                return RedirectToAction("Index1","DGRL");
+                return RedirectToAction("Index","DGRL");
             }
             return RedirectToAction("Index", "DGRL");
         }

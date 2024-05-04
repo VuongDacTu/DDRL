@@ -37,7 +37,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
             return View(GroupQuestion);
         }
        
-        public IActionResult Class(int? semesterId,string? studentId)
+        public IActionResult Class(string? name,int? semesterId,string? studentId)
         {
             if(semesterId == null)
             {
@@ -47,7 +47,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
             ViewBag.StudentId = studentId;
             ViewBag.SumSelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).FirstOrDefault()?.SelfPoint ?? 0;
             ViewBag.SumClassPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).FirstOrDefault()?.ClassPoint ?? 0;
-
+            ViewBag.Name = name;
             ViewData["Semester"] = _context.Semesters.ToList();
             return View(GroupQuestion);
         }

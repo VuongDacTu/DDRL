@@ -12,28 +12,27 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
         {
             _context = context;
         }
-
         public IActionResult Index(int? semesterId, string? studentId)
         {
             if(semesterId == null) { 
-                semesterId = semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault().Id;
+                semesterId = semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault().Id;        
             }
-            var GroupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.SelfAnswers.Where(x => x.StudentId == studentId)).ToList();
+            var groupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.SelfAnswers.Where(x => x.StudentId == studentId)).ToList();
             ViewBag.SumSelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).FirstOrDefault()?.SelfPoint??0;
             ViewData["Semester"] = _context.Semesters.ToList();
-            return View(GroupQuestion);
+            return View(groupQuestion);
         }
         public IActionResult Class(int? semesterId, string? studentId)
         {
             if(semesterId == null) { 
                 semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault().Id;
             }
-            var GroupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.ClassAnswers.Where(x => x.StudentId == studentId)).ToList();
+            var groupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.ClassAnswers.Where(x => x.StudentId == studentId)).ToList();
             ViewBag.SumSelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).FirstOrDefault()?.SelfPoint ?? 0;
             ViewBag.SumClassPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).FirstOrDefault()?.ClassPoint ?? 0;
             ViewBag.StudentId = studentId;
             ViewData["Semester"] = _context.Semesters.ToList();
-            return View(GroupQuestion);
+            return View(groupQuestion);
         }
         public IActionResult Lecturer(int? semesterId, string? studentId)
         {

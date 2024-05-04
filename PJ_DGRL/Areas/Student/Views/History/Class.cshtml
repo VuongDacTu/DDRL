@@ -6,45 +6,53 @@
     List<ClassAnswer> classAnswers = ViewBag.ClassAnswer;
     List<Semester> semesters = ViewBag.Semester;
 }
-<h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
-    <form asp-action="Class" method="get">
-        <label>Chọn kì học:</label>
-        <input type="hidden" name="studentId" value="@ViewBag.StudentId" />
-        <select name="semesterId" class="form-control">
-        @foreach (var item in semesters)
-        {
-            <option value="@item.Id">Kì @item.Name - Năm học @item.SchoolYear</option>
-        }
-        </select>
-        <input type="submit" value="Tìm kiếm" />
-    </form>
+<div class="row g-0">
+    <div class="col-6 col-md-4">
+        @await Component.InvokeAsync("Student", new { name = ViewBag.Name })
+    </div>
 
-<hr />
-<div class="row">
-    <div class="col">
-        @foreach (var questionGroup in Model)
-        {
-            <h4>@questionGroup.Name</h4>
-            foreach (var question in questionGroup.QuestionLists)
-            {
-                <h6>@question.ContentQuestion</h6>
-                foreach (var answer in question.AnswerLists)
+     <div class="col-sm-6 col-md-8">
+
+        <h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
+            <form asp-action="Class" method="get">
+                <label>Chọn kì học:</label>
+                <input type="hidden" name="studentId" value="@ViewBag.StudentId" />
+                <select name="semesterId" class="form-control">
+                @foreach (var item in semesters)
                 {
-                    foreach (var selfAnswer in answer.ClassAnswers)
-                    {
+                    <option value="@item.Id">Kì @item.Name - Năm học @item.SchoolYear</option>
+                }
+                </select>
+                <input type="submit" value="Tìm kiếm" />
+            </form>
 
-                        <p class="form-check-label">@selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
-                        <br />
+        <hr />
+        <div class="row">
+            <div class="col">
+                @foreach (var questionGroup in Model)
+                {
+                    <h4>@questionGroup.Name</h4>
+                    foreach (var question in questionGroup.QuestionLists)
+                    {
+                        <h6>@question.ContentQuestion</h6>
+                        foreach (var answer in question.AnswerLists)
+                        {
+                            foreach (var selfAnswer in answer.ClassAnswers)
+                            {
+
+                                <p class="form-check-label">@selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
+                                <br />
+                            }
+                        }
                     }
                 }
-            }
-        }
+            </div>
+            <div class="col">
+                <h2>Tổng điểm tự đánh giá: @ViewBag.SumSelfPoint  <a asp-area="Student" asp-controller="History" asp-action="Self" asp-route-studentId="@ViewBag.StudentId">Xem chi tiết</a></h2>
+                <h2>Tổng điểm bạn đánh giá cho sinh viên: @ViewBag.SumClassPoint</h2>
+            </div>
+        </div>
+
     </div>
-    <div class="col">
-        <h2>Tổng điểm tự đánh giá: @ViewBag.SumSelfPoint  <a asp-area="Student" asp-controller="History" asp-action="Self" asp-route-studentId="@ViewBag.StudentId">Xem chi tiết</a></h2>
-        <h2>Tổng điểm bạn đánh giá cho sinh viên: @ViewBag.SumClassPoint</h2>
-    </div>
+
 </div>
-
-
-

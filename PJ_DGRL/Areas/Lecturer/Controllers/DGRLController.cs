@@ -11,31 +11,36 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
 		{
 			_context = context;
 		}
-		public IActionResult Index(string? studentId)
+		public IActionResult Index(string? name, string? studentId)
 		{
-            int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.IsActive == 3)?.Id ?? 0;
+			if(studentId == null)
+			{
+				studentId = _context.Students.FirstOrDefault()?.Id;
+			}
+            int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndClass <= DateTime.Now && x.DateEndLecturer >= DateTime.Now)?.Id ?? 0;
             var student = _context.Students.FirstOrDefault(u => u.Id == studentId);
 			ViewBag.StudentId = studentId;
 			ViewBag.semesterId = semesterId;
 			ViewBag.SelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId).FirstOrDefault(u => u.SemesterId == semesterId)?.SelfPoint??0;
             ViewBag.ClassPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId).FirstOrDefault(u => u.SemesterId == semesterId)?.ClassPoint??0;
+			ViewBag.Name = name;
             return View(student);
 		}
 		[HttpPost]
-		public IActionResult Submit(string? studentId, int LecturerPoint)
+		public IActionResult Submit(string? studentId, int lecturerPoint)
 		{
 			if (ModelState.IsValid)
 			{
                 var lecturer = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("LecturerLogin"));
 
-                int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.IsActive == 3)?.Id ?? 0;
+                int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndClass <= DateTime.Now && x.DateEndLecturer >= DateTime.Now)?.Id ?? 0;
                 var point = _context.SumaryOfPoints.Where(x => x.SemesterId == semesterId).FirstOrDefault(x => x.StudentId == studentId);
 				if(point != null)
 				{
 					point.UserLecturer = lecturer.UserName;
-					point.LecturerPoint = LecturerPoint;
+					point.LecturerPoint = lecturerPoint;
 					point.UpdateDate = DateTime.Now;
-                    float avg = (float)((point.SelfPoint + point.ClassPoint * 2 + point.LecturerPoint * 3) / 6);
+					int avg = (int)point.LecturerPoint;
                     if (avg >= 90)
 					{
 						point.Classify = "Xuất sắc";

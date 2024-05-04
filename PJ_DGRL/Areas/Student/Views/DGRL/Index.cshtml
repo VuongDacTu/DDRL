@@ -36,13 +36,13 @@
                                 }
                                 if (question.TypeQuestionId == 1)
                                 {
-                                    <input class="form-check-input" type="radio" id="AnswerId[@answer.Id]" checked="@check" value="@answer.Id" name="AnswerIds[@question.Id]">
+                                    <input class="form-check-input" type="radio" id="answerId[@answer.Id]" checked="@check" value="@answer.Id" name="answerIds[@question.Id]">
                                 }
                                 else
                                 {
-                                    <input class="form-check-input" type="checkbox" value="@answer.Id" checked="@check" name="AnswerId[@answer.Id]" id="AnswerId[@answer.Id]">
+                                    <input class="form-check-input" type="checkbox" value="@answer.Id" checked="@check" name="answerId[@answer.Id]" id="answerId[@answer.Id]">
                                 }
-                                <label class="form-check-label" for="AnswerId[@answer.Id]">@answer.ContentAnswer (@answer.AnswerScore điểm)</label>
+                                <label class="form-check-label" for="answerId[@answer.Id]">@answer.ContentAnswer (@answer.AnswerScore điểm)</label>
                                 <br />
                             }
                         }
