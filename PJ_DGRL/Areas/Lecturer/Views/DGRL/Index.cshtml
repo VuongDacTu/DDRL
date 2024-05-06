@@ -5,27 +5,27 @@
     Layout = "~/Areas/Lecturer/Views/Shared/_LayoutLecturer.cshtml";
 }
 
-<div class="row g-0">
-    <div class="col-sm-6 col-md-8">
+<div class="row">
+    <div class="col">
         @await Component.InvokeAsync("ST", new { name = ViewBag.Name })
     </div>
-    <div class="col-6 col-md-4">
+    <div class="col">
 
 @if (@ViewBag.semesterId != 0)
 {
         <h4>Student</h4>
         <hr />
         <dl class="row">
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.FullName)
+            <dt class = "col">
+                Họ và tên
             </dt>
-            <dd class = "col-sm-10">
+            <dd class = "col">
                 @Html.DisplayFor(model => model.FullName)
             </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Gender)
+            <dt class="col">
+                Giới tính
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col">
                 @if (Model.Gender == false)
                 {
                     <p>Nam</p>
@@ -35,22 +35,22 @@
                     <p>Nữ</p>
                 }
             </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Birthday)
+            <dt class = "col">
+                Ngày sinh
             </dt>
-            <dd class = "col-sm-10">
+            <dd class = "col">
                 @Html.DisplayFor(model => model.Birthday)
             </dd>
-            <dt class = "col-sm-2">
+            <dt class = "col">
                 @Html.DisplayNameFor(model => model.Email)
             </dt>
-            <dd class = "col-sm-10">
+            <dd class = "col">
                 @Html.DisplayFor(model => model.Email)
             </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Phone)
+            <dt class = "col">
+                Số điện thoại
             </dt>
-            <dd class = "col-sm-10">
+            <dd class = "col">
                 @Html.DisplayFor(model => model.Phone)
             </dd>
         </dl>

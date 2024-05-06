@@ -8221,24 +8221,28 @@
       "PackagePath": "staticwebassets\\Admin\\plugins\\uplot\\uPlot.min.css"
     },
     {
+      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Image\\Home\\background-home.jpg",
+      "PackagePath": "staticwebassets\\Image\\Home\\background-home.jpg"
+    },
+    {
+      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Image\\Home\\banner_DGRL.jpg",
+      "PackagePath": "staticwebassets\\Image\\Home\\banner_DGRL.jpg"
+    },
+    {
+      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Image\\Home\\banner_DGRL1.jpg",
+      "PackagePath": "staticwebassets\\Image\\Home\\banner_DGRL1.jpg"
+    },
+    {
+      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Image\\Home\\logo.png",
+      "PackagePath": "staticwebassets\\Image\\Home\\logo.png"
+    },
+    {
+      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Student\\Login\\css\\login.css",
+      "PackagePath": "staticwebassets\\Student\\Login\\css\\login.css"
+    },
+    {
       "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Student\\Login\\css\\style.css",
       "PackagePath": "staticwebassets\\Student\\Login\\css\\style.css"
-    },
-    {
-      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Student\\Login\\images\\e-mail.png",
-      "PackagePath": "staticwebassets\\Student\\Login\\images\\e-mail.png"
-    },
-    {
-      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Student\\Login\\images\\password.png",
-      "PackagePath": "staticwebassets\\Student\\Login\\images\\password.png"
-    },
-    {
-      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Student\\Login\\images\\tick.png",
-      "PackagePath": "staticwebassets\\Student\\Login\\images\\tick.png"
-    },
-    {
-      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Student\\Login\\images\\user.png",
-      "PackagePath": "staticwebassets\\Student\\Login\\images\\user.png"
     },
     {
       "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\css\\site.css",

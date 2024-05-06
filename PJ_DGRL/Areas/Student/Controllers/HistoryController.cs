@@ -21,20 +21,25 @@ namespace PJ_DGRL.Areas.Student.Controllers
         }
         public IActionResult Self(int? semesterId, string? studentId)
         {
-            var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
-            if (semesterId == null)
-            {
-                semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault().Id;
-            }
-            if (studentId == null)
-            {
-                studentId = student.StudentId;
-            }
-            var GroupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.SelfAnswers.Where(x => x.StudentId == studentId)).ToList();
-            ViewBag.SumSelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == student.UserName && u.SemesterId == semesterId).FirstOrDefault()?.SelfPoint ?? 0;
-            ViewData["Semester"] = _context.Semesters.ToList();
+            var ss = HttpContext.Session.GetString("StudentLogin");
+            if(ss != null){
+                var student = JsonConvert.DeserializeObject<AccountStudent>(ss);
+            
+                if (semesterId == null)
+                {
+                    semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault().Id;
+                }
+                if (studentId == null)
+                {
+                    studentId = student.StudentId;
+                }
+                var GroupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.SelfAnswers.Where(x => x.StudentId == studentId)).ToList();
+                ViewBag.SumSelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == student.UserName && u.SemesterId == semesterId).FirstOrDefault()?.SelfPoint ?? 0;
+                ViewData["Semester"] = _context.Semesters.ToList();
 
-            return View(GroupQuestion);
+                return View(GroupQuestion);
+            }
+            return RedirectToAction("Index","Login");
         }
        
         public IActionResult Class(string? name,int? semesterId,string? studentId)

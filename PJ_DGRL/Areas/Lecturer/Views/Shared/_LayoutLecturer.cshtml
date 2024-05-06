@@ -15,7 +15,23 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PJ_DGRL.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link href="~/student/login/css/login.css" rel="stylesheet" />
 </head>
+<style>
+    body {
+        background-color: darkslategrey !important;
+    }
+
+    .main {
+        background-color: navajowhite;
+        padding-top: 2rem;
+        box-shadow: 30px 20px 15px rgba(0, 0, 0, 0.5); /* Định dạng box shadow */
+        padding: 20px; /* Thêm padding để tạo khoảng cách giữa box shadow và nội dung */
+    }
+</style>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -27,9 +43,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Lecturer" asp-controller="DGRL" asp-action="Index">Đánh giá sinh viên</a>
                         </li>
@@ -46,7 +60,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container main">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

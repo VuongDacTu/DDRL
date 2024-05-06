@@ -1,8 +1,18 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+    var ss = HttpContextAccessor.HttpContext.Session.GetString("LTLogin");
+
 }
 
-<h1>Trang chủ</h1>
-
+    <div>
+        @if(ss != null){
+            @await Component.InvokeAsync("Student", new { name = ViewBag.Name })
+        }
+    </div>
+    <div>
+        <h1>Trang chủ</h1>
+    </div>

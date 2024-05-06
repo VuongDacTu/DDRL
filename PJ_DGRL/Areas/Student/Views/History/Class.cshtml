@@ -6,12 +6,12 @@
     List<ClassAnswer> classAnswers = ViewBag.ClassAnswer;
     List<Semester> semesters = ViewBag.Semester;
 }
-<div class="row g-0">
-    <div class="col-6 col-md-4">
+<div class="row">
+    <div class="col">
         @await Component.InvokeAsync("Student", new { name = ViewBag.Name })
     </div>
 
-     <div class="col-sm-6 col-md-8">
+     <div class="col">
 
         <h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
             <form asp-action="Class" method="get">
@@ -40,7 +40,7 @@
                             foreach (var selfAnswer in answer.ClassAnswers)
                             {
 
-                                <p class="form-check-label">@selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
+                                <p class="form-check-label"> - @selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
                                 <br />
                             }
                         }

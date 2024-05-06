@@ -18,7 +18,13 @@ namespace PJ_DGRL.Areas.Student.Controllers
             // group question
             var groupQuestions = _context.GroupQuestions.Include(u => u.QuestionLists).ThenInclude(u => u.QuestionHisories).Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ToList();
             // lấy ra sinh viên đang đăng nhập lưu trong session
-            var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
+
+            var ss = HttpContext.Session.GetString("StudentLogin");
+            if(ss == null)
+            {
+                return RedirectToAction("Index","Login");
+            }
+            var student = JsonConvert.DeserializeObject<AccountStudent>(ss);
 
             // kiểm tra trạng thái acc
             int iActive = _context.AccountStudents.Where(u => u.UserName == student.UserName).FirstOrDefault().IsActive.Value;

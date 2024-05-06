@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "Status";
+    Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+}
+@model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+}
+<div class="row">
+    <div class="col">
+        @await Component.InvokeAsync("Student", new { name = ViewBag.Name })
+    </div>
+    <div class="col">
+            <div class="alert alert-default-success">Đánh giá thành công</div>
+    </div>
+</div>

@@ -1,21 +1,25 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<style>
+    .w3-black {
+        font-size: 30px;
+        font-weight: 600;
+    }
 
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-    <div class="container-fluid">
-        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-            <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Student" asp-controller="Login" asp-action="Index">Đăng nhập sinh viên</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Lecturer" asp-controller="Login" asp-action="Index">Đăng nhập giảng viên</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Login" asp-action="Index">Đăng nhập Admin</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+    .fa-hand-point-right{
+        margin-right: 50px;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<ul class="navbar-nav flex-grow-1">
+    
+    <li class="w3-black w3-opacity w3-hover-opacity-off w3-padding-large w3-round-large">
+        <a class="nav-link text-white" asp-area="Student" asp-controller="Login" asp-action="Index"><i class="fa-solid fa-hand-point-right"></i>Đăng nhập sinh viên</a>
+    </li>
+
+    <li class="w3-black w3-opacity w3-hover-opacity-off w3-padding-large w3-round-large  mt-3">
+        <a class="nav-link text-white" asp-area="Lecturer" asp-controller="Login" asp-action="Index"><i class="fa-solid fa-hand-point-right"></i>Đăng nhập giảng viên</a>
+    </li>
+
+    <li class="w3-black w3-opacity w3-hover-opacity-off w3-padding-large w3-round-large  mt-3">
+        <a class="nav-link text-white" asp-area="Admin" asp-controller="Login" asp-action="Index"><i class="fa-solid fa-hand-point-right"></i>Đăng nhập Admin</a>
+    </li>
+</ul>

@@ -16,35 +16,39 @@
 <link href="//fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
 <!-- //Fonts -->
 
-<div class="w3layoutscontaineragileits">
-	<h2>Giảng viên đăng nhập tại đây</h2>
-	@{
-		var ss = HttpContextAccessor.HttpContext.Session.GetString("AdminLogin");
-		if (ss != null)
-		{
-			<div>
-				<h2 class="text-center my-2 py-2">Bạn đã đăng nhập thành công, @ViewBag.Admin.UserName</h2>
-			</div>
-		}
-		else
-		{
-			<form asp-action="Index" method="post">
-				<input type="text" asp-for="UserName" placeholder="Mã sinh viên" required="">
-				<input type="password" asp-for="Password" placeholder="Mật khẩu" required="">
-				<ul class="agileinfotickwthree">
-					<li>
-						<input type="checkbox" id="brand1" value="">
-						<label for="brand1"><span></span>Remember me</label>
-						<a href="#">Forgot password?</a>
-					</li>
-				</ul>
-				<div class="text-danger"><p>@TempData["errorLogin"]</p></div>
-				<div class="aitssendbuttonw3ls">
-					<input type="submit" value="LOGIN">
-				</div>
-			</form>
-		}
-	}
-</div>
+		<div class="w3layoutscontaineragileits">
+			<h2>Admin đăng nhập tại đây</h2>
+			@{
+				var ss = HttpContextAccessor.HttpContext.Session.GetString("AdminLogin");
+				if (ss != null)
+				{
+					<div>
+						<h2 class="text-center my-2 py-2">Bạn đã đăng nhập thành công, @ViewBag.Admin.UserName</h2>
+					</div>
+				}
+				else
+				{
+					<form asp-action="Index" method="post">
+						<input type="text" asp-for="UserName" placeholder="Mã sinh viên" required="">
+						<input type="password" asp-for="Password" placeholder="Mật khẩu" required="">
+						<ul class="agileinfotickwthree">
+							<li>
+								<input type="checkbox" id="brand1" value="">
+								<label for="brand1"><span></span>Remember me</label>
+								<a href="#">Forgot password?</a>
+							</li>
+						</ul>
+						<div class="text-danger"><p>@TempData["errorLogin"]</p></div>
+						<div class="aitssendbuttonw3ls">
+							<input type="submit" value="LOGIN">
+						</div>
+					</form>
+				}
+			}
+		</div>
+	</div>
+
+
+
 
 

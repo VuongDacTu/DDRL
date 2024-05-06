@@ -12,17 +12,12 @@
     <Folder Include="Areas\Lecturer\Data\" />
     <Folder Include="Areas\Lecturer\Models\" />
     <Folder Include="Areas\Student\Data\" />
-    <Folder Include="wwwroot\Student\Login\" />
     <Folder Include="Areas\Student\Models\" />
     <Folder Include="Models\DGRLModels\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\Student\Login\css\style.css" />
-    <None Include="wwwroot\Student\Login\images\e-mail.png" />
-    <None Include="wwwroot\Student\Login\images\password.png" />
-    <None Include="wwwroot\Student\Login\images\tick.png" />
-    <None Include="wwwroot\Student\Login\images\user.png" />
   </ItemGroup>
 
   <ItemGroup>

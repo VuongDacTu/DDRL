@@ -4,7 +4,7 @@
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
 }
 
-@if (ViewBag.semesterId == 1){
+@if (ViewBag.semesterId != 0){
 <h4>Vui lòng trả lời đúng và đầy đủ các câu hỏi!!</h4>
 <hr />
 <div class="row">
@@ -20,7 +20,7 @@
                     var questionList = question.QuestionHisories.Where(x => x.SemesterId == ViewBag.semesterId).FirstOrDefault();
                     if (questionList != null)
                     {
-                        <h6>@question.ContentQuestion</h6>
+                        <h5>@question.ContentQuestion</h5>
                         foreach (var answer in question.AnswerLists)
                         {
                             if (answer.Status == 1)
@@ -59,7 +59,7 @@
 }else
 {
     <div class="alert alert-danger">
-    <h2>Bạn không thể sửa đánh giá của mình vì phiên tự đánh giá đã kết thúc! </h2>
+    <p>Bạn không thể sửa đánh giá của mình vì phiên tự đánh giá đã kết thúc! </p>
     </div>
 }
 

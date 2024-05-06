@@ -3,18 +3,19 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
 }
-<div class="row g-0">
-    <div class="col-6 col-md-4">
+<div class="row">
+    <div class="col">
         @await Component.InvokeAsync("Student", new { name = ViewBag.Name })
     </div>
-    <div class="col-sm-6 col-md-8">
-        @if (ViewBag.semesterId == 1)
+
+    <div class="col">
+        @if (ViewBag.semesterId != 0)
         {
             <h4>Vui lòng trả lời đúng và đầy đủ các câu hỏi!!</h4>
             <hr />
             <div class="row">
                 <div class="">
-                    <form asp-action="Submit">
+                    <form asp-action="Submit" asp-controller="LT_DGRL">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" name="semesterId" value="@ViewBag.semesterId" />
                         <input type="text" name="studentId" value="@ViewBag.studentId" readonly />
@@ -27,7 +28,7 @@
                                 var questionList = question.QuestionHisories.Where(x => x.SemesterId == ViewBag.semesterId).FirstOrDefault();
                                 if (questionList != null)
                                 {
-                                    <h6>@question.ContentQuestion</h6>
+                                    <h5>@question.ContentQuestion</h5>
                                     foreach (var answer in question.AnswerLists)
                                     {
                                         if (answer.Status == 1)
@@ -67,7 +68,7 @@
         else
         {
             <div class="alert alert-danger">
-                <h2>Kì đánh giá của lớp chưa diễn ra !!! </h2>
+                <p>Kì đánh giá của lớp chưa diễn ra !!! </p>
             </div>
         }
     </div>

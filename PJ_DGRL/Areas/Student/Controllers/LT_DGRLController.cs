@@ -18,10 +18,16 @@ namespace PJ_DGRL.Areas.Student.Controllers
             var groupQuestions = _context.GroupQuestions.Include(u => u.QuestionLists).ThenInclude(u => u.QuestionHisories).Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ToList();
             // lấy ra sinh viên đang đăng nhập lưu trong session
             var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
-			int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndStudent <= DateTime.Now && x.DateEndClass >= DateTime.Now)?.Id ?? 0;
+			int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndStudent < DateTime.Now && x.DateEndClass >= DateTime.Now)?.Id ?? 0;
             ViewBag.Name = name;
             var selfAnswer = _context.SelfAnswers.Where(x => x.StudentId == studentId && x.SemesterId == semesterId).ToList();
             var answers = _context.AnswerLists.ToList();
+            // kiểm tra xem nếu sinh viên đã đánh giá thì mới hiển thị
+            int selfPoint = _context.SumaryOfPoints.Where(x => x.StudentId == studentId).FirstOrDefault(x => x.SemesterId == semesterId)?.SelfPoint ?? 0;
+            if (selfPoint == 0)
+            {
+                return RedirectToAction("Status1");
+            }
             foreach (var item in answers)
             {
                 item.Checked = 0;
@@ -55,6 +61,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
                     _context.ClassAnswers.RemoveRange(classAnswers);
 
                 }
+
                 //tạo đối tượng selfAnswer để thêm vào bảng Self Answer
                 List<ClassAnswer> classAnswer = new List<ClassAnswer>();
                 foreach (var item in AnswerIds)
@@ -124,9 +131,17 @@ namespace PJ_DGRL.Areas.Student.Controllers
                     point.UpdateDate = DateTime.Now;
                 }
                 _context.SaveChanges();
-                return RedirectToAction("Index","DGRL");
+                return RedirectToAction("Index", "LT_DGRL");
             }
-            return RedirectToAction("Index", "DGRL");
+            return RedirectToAction("Status", "LT_DGRL");
         }
-	}
+        public IActionResult Status()
+        {
+            return View();
+        }
+        public IActionResult Status1()
+        {
+            return View();
+        }
+    }
 }

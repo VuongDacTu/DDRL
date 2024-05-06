@@ -5,44 +5,38 @@
 @{
     ViewData["Title"] = "Đăng nhập giảng viên";
     Layout = "~/Areas/Lecturer/Views/Shared/_LayoutLecturer.cshtml";
+	var ss = HttpContextAccessor.HttpContext.Session.GetString("LecturerLogin");
+
 }
 
+@if (ss != null)
+{
+	<div>
+		<h2 class="text-center my-2 py-2">Bạn đã đăng nhập thành công, @ViewBag.Student.UserName</h2>
+	</div>
+}
+else
+{
+	<div class="Login">	
+		<div class="background">
+			<div class="shape"></div>
+			<div class="shape"></div>
+		</div>
+		<form asp-action="Index" method="post">
+			<h3>Giảng viên đăng nhập tại đây !!!</h3>
 
-<!-- Style -->
-<link href="~/Student/login/css/style.css" rel="stylesheet" />
-<!-- Fonts -->
-<link href="//fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
-<!-- //Fonts -->
+			<label for="username">Mã giảng viên</label>
+			<input type="text" asp-for=UserName placeholder="Mã giảng viên" id="username" required="">
 
-<div class="w3layoutscontaineragileits">
-	<h2>Giảng viên đăng nhập tại đây</h2>
-	@{
-		var ss = HttpContextAccessor.HttpContext.Session.GetString("LecturerLogin");
-		if (ss != null)
-		{
-			<div>
-				<h2 class="text-center my-2 py-2">Bạn đã đăng nhập thành công, @ViewBag.Lecturer.UserName</h2>
-			</div>
-		}
-		else
-		{
-			<form asp-action="Index" method="post">
-				<input type="text" asp-for="UserName" placeholder="Mã sinh viên" required="">
-				<input type="password" asp-for="Password" placeholder="Mật khẩu" required="">
-				<ul class="agileinfotickwthree">
-					<li>
-						<input type="checkbox" id="brand1" value="">
-						<label for="brand1"><span></span>Remember me</label>
-						<a href="#">Forgot password?</a>
-					</li>
-				</ul>
-				<div class="text-danger"><p>@TempData["errorLogin"]</p></div>
-				<div class="aitssendbuttonw3ls">
-					<input type="submit" value="LOGIN">
-				</div>
-			</form>
-		}
-	}
-</div>
+			<label for="password">Mật khẩu</label>
+			<input type="password" asp-for=Password placeholder="Mật khẩu" id="password" required="">
+			<div class="text-danger"><p>@TempData["errorLogin"]</p></div>
+
+			<input type="submit" value="Đăng nhập">
+		</form>
+	</div>
+
+}
+	
 
 

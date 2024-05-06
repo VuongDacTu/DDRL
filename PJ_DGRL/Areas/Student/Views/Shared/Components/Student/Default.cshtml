@@ -5,40 +5,42 @@
     <button type="submit">Tìm kiếm</button>
 </form>
 <hr />
-@if (Model.FirstOrDefault() != null){
-<ul class="">
+@if (Model.FirstOrDefault() != null)
+{
+    <table class="table">
+        <tbody class="table-group-divider">
 
-    @foreach (var item in Model)
-    {
-
-        <li class="nav-item">
-                @{
-                    int classPoint = item.SumaryOfPoints.FirstOrDefault()?.ClassPoint ?? 0;
-                    int selfPoint = item.SumaryOfPoints.FirstOrDefault()?.SelfPoint ?? 0;
-                }
-            @if (classPoint != 0)
+            @foreach (var item in Model)
             {
-
-                <h5>@item.FullName (@item.Id) - @selfPoint điểm - @classPoint điểm</h5>
+                <tr>
+                    @{
+                        int classPoint = item.SumaryOfPoints.FirstOrDefault()?.ClassPoint ?? 0;
+                        int selfPoint = item.SumaryOfPoints.FirstOrDefault()?.SelfPoint ?? 0;
+                    }
+                    <td><b><a asp-controller="History" asp-action="Class" asp-route-studentId ="@item.Id"> @item.FullName</a></b></td>
+                    <td><p>(@item.Id)</p></td>
+                    <td><p>@selfPoint điểm</p></td>
+                    
+                    @if (classPoint != 0)
+                    {
+                        <td><p>@classPoint điểm</p></td>
+                    }
+                    else
+                    {
+                        <td><p class="text-danger">Chưa đánh giá</p></td>
+                    }
+                    @if (item.IsActive == 1)
+                    {
+                        <td> <a class="nav-link text-dark btn btn-outline-warning" asp-area="Student" asp-controller="LT_DGRL" asp-action="Index" asp-route-studentId="@item.Id">Đánh giá</a></td>
+                    }
+                    else
+                    {
+                        <p class="text-danger">Không thể đánh giá do sinh viên đã nghỉ học hoặc bảo lưu</p>
+                    }
+                </tr>
             }
-            else
-            {
-                <h5>@item.FullName (@item.Id) - @selfPoint điểm - <nav class="text-danger">Chưa đánh giá</nav></h5>
-            }
-            @if (item.IsActive == 1)
-            {
-                <a class="nav-link" asp-area="Student" asp-controller="LT_DGRL" asp-action="Index" asp-route-studentId="@item.Id">Đánh giá</a>
-            }
-            else
-            {
-                <p class="text-danger">Không thể đánh giá do sinh viên đã nghỉ học hoặc bảo lưu</p>
-            }
-            <a class="nav-link" asp-area="Student" asp-controller="History" asp-action="Class" asp-route-studentId="@item.Id">Lịch sử đánh giá</a>
-
-        </li>
-    }
-</ul>
-
+        </tbody>
+    </table>
 }
 else
 {

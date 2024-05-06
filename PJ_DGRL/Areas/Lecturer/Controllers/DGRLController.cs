@@ -17,7 +17,7 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
 			{
 				studentId = _context.Students.FirstOrDefault()?.Id;
 			}
-            int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndClass <= DateTime.Now && x.DateEndLecturer >= DateTime.Now)?.Id ?? 0;
+            int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndClass < DateTime.Now && x.DateEndLecturer >= DateTime.Now)?.Id ?? 0;
             var student = _context.Students.FirstOrDefault(u => u.Id == studentId);
 			ViewBag.StudentId = studentId;
 			ViewBag.semesterId = semesterId;
@@ -33,7 +33,7 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
 			{
                 var lecturer = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("LecturerLogin"));
 
-                int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndClass <= DateTime.Now && x.DateEndLecturer >= DateTime.Now)?.Id ?? 0;
+                int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndClass < DateTime.Now && x.DateEndLecturer >= DateTime.Now)?.Id ?? 0;
                 var point = _context.SumaryOfPoints.Where(x => x.SemesterId == semesterId).FirstOrDefault(x => x.StudentId == studentId);
 				if(point != null)
 				{

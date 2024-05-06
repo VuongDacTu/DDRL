@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "Status1";
+    Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+}
+<div class="row">
+    <div class="col">
+        @await Component.InvokeAsync("Student", new { name = ViewBag.Name })
+    </div>
+    <div class="col">
+        <div class="alert alert-danger">Không thể đánh giá do sinh viên chưa đánh giá</div>
+    </div>
+</div>
+
+
