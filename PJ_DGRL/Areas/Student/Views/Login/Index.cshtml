@@ -28,7 +28,7 @@
 
 			<label for="password">Mật khẩu</label>
 			<input type="password" asp-for=Password placeholder="Mật khẩu" id="password" required="">
-			<div class="text-danger"><p>@TempData["errorLogin"]</p></div>
+			<div class="text-danger"><i class="text-danger">@TempData["errorLogin"]</i></div>
 
 			<input type="submit" value="Đăng nhập">
 		</form>

@@ -140,6 +140,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
                 _context.SumaryOfPoints.Add(sumaryOfPoints);
                 _context.AccountStudents.FirstOrDefault(x => x.StudentId == student.UserName).IsActive = 1;
                 _context.SaveChanges();
+                ViewBag.Id = student.Id;
                 return RedirectToAction(nameof(Index1));
             }
             return RedirectToAction(nameof(Index));

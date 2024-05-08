@@ -1,13 +1,26 @@
-﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
+﻿@using PJ_DGRL.Models.DGRLModels
+@model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+    Student students = ViewBag.Student;
 }
 <div class="row">
-    <div class="col">
-        @await Component.InvokeAsync("Student", new { name = ViewBag.Name })
+    <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+        <div class="col openMenu" >
+            <a href="#" onclick="w3_close()"
+               class="w3-bar-item w3-button"><i class="fa-solid fa-outdent"></i> Trở về</a>
+                @await Component.InvokeAsync("Student")
+        </div>
+</nav>
+    <!-- Top menu -->
+    <div class="">
+        <div class="" style="max-width:1200px;margin:auto">
+            <div class="menuStudent" onclick="w3_open()">☰</div>
+        </div>
     </div>
-
+    @await Component.InvokeAsync("InforStudent", new{id = ViewBag.Id})
+    </div>
     <div class="col">
         @if (ViewBag.semesterId != 0)
         {
@@ -18,7 +31,7 @@
                     <form asp-action="Submit" asp-controller="LT_DGRL">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" name="semesterId" value="@ViewBag.semesterId" />
-                        <input type="text" name="studentId" value="@ViewBag.studentId" readonly />
+                        <input type="text" name="studentId" value="@ViewBag.Id" readonly />
                         @foreach (var questionGroup in Model)
                         {
                             <h4>@questionGroup.Name</h4>
@@ -73,3 +86,4 @@
         }
     </div>
 </div>
+

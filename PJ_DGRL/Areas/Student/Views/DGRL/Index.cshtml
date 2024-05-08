@@ -3,6 +3,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
 }
+@await Component.InvokeAsync("InforStudent", new { id = ViewBag.Id })
 
 @if (ViewBag.semesterId != 0){
 <h4>Vui lòng trả lời đúng và đầy đủ các câu hỏi!!</h4>

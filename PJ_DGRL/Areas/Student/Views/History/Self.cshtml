@@ -9,7 +9,7 @@
 }
 <form asp-action="Self" method="get">
     <label>Chọn kì học:</label>
-    <input type="hidden" name="studentId" value="@ViewBag.StudentId" />
+    <input type="hidden" name="studentId" value="@ViewBag.Id" />
     <select name="semesterId" class="form-control">
         @foreach (var item in semesters)
         {
@@ -18,16 +18,18 @@
     </select>
     <input type="submit" value="Tìm kiếm" />
 </form>
+@await Component.InvokeAsync("InforStudent", new { id = ViewBag.Id })
+
 <h4>Đáp án bạn đã trả lời</h4>
 <hr />
 <div class="row">
     <div class="col">
             @foreach (var questionGroup in Model)
             {
-                <h4>@questionGroup.Name</h4>
+                <h3>@questionGroup.Name</h3>
                 foreach (var question in questionGroup.QuestionLists)
                 {
-                    <h6>@question.ContentQuestion</h6>
+                    <h5>@question.ContentQuestion</h5>
                     foreach (var answer in question.AnswerLists)
                     {
                         foreach (var selfAnswer in answer.SelfAnswers){

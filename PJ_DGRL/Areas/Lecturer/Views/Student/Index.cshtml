@@ -7,51 +7,35 @@
 
 }
 
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-    <div class="container-fluid">
-        <form asp-action="Index" method="get">
-            <input type="text" name="name" placeholder="Nhập tên sinh viên">
-            <button type="submit">Tìm kiếm</button>
-        </form>
-        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-            <h5>Chọn sinh viên đánh giá</h5>
-            @if(Model.FirstOrDefault() != null){
-                <ul class="navbar-nav flex-grow-1">
-                    @foreach (var item in Model)
-                    {
-                        <li class="nav-item">
-                            <h5>@item.FullName</h5>
-                            @{
-                                var a = check.FirstOrDefault(x => x.StudentId == item.Id)?.LecturerPoint??0;
-                            }
-                            @if (a != 0)
-                            {
-                                <span class="text-success"> - Đã đánh giá</span>
-                            }
-                            else
-                            {
-                                <span class="text-danger"> - Chưa đánh giá</span>
-                            }
-                            @if (item.IsActive == 1)
-                            {
-                                <a class="nav-link text-dark" asp-area="Lecturer" asp-controller="DGRL" asp-action="Index" asp-route-studentId="@item.Id">Đánh giá</a>
-                            }
-                            else
-                            {
-                                <p class="text-danger">Không thể đánh giá do sinh viên đã nghỉ học hoặc bảo lưu</p>
-                            }
-                            <a class="nav-link text-dark" asp-area="Lecturer" asp-controller="Result" asp-action="Lecturer" asp-route-studentId="@item.Id">Lịch sử đánh giá</a>
-                        </li>
-                    }
-                
-                </ul>
-            }
-            else
+<form asp-action="Index" method="get">
+    <input type="text" name="name" placeholder="Nhập tên sinh viên" value="@ViewBag.name">
+    <button type="submit">Tìm kiếm</button>
+</form>
+<hr />
+
+@if (Model.FirstOrDefault() != null)
+{
+    <table class="table">
+        <tbody class="table-group-divider">
+
+            @foreach (var item in Model)
             {
-                <div class="alert alert-danger">
-                    <h5>Không tìm thấy sinh viên nào !!!</h5>
-                </div>
+                <tr>
+                    <td><b>@item.FullName</b></td>
+                    <td><p>(@item.Id)</p></td>
+                    @if (item.IsActive == 1)
+                    {
+                        <td> <a class="nav-link text-dark btn btn-success" asp-area="Lecturer" asp-controller="Result" asp-action="Lecturer" asp-route-studentId="@item.Id">Chọn</a></td>
+                    }
+                </tr>
             }
-        </div>
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-danger">
+        <h5>Không tìm thấy sinh viên nào !!!</h5>
     </div>
-</nav>
+}
+

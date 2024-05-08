@@ -20,3 +20,57 @@ html {
 body {
   margin-bottom: 60px;
 }
+.menuStudent {
+    position: fixed;
+    right: 10%;
+    padding: 0 1rem;
+    background-color: azure;
+    font-size: 50px;
+}
+
+.openMenu {
+    position: fixed;
+    background-color: ghostwhite;
+    right: 10%;
+    overflow: auto;
+    height: 70%;
+    border-radius: 15px;
+    padding: 1rem;
+    transition: right 0.5s; /* Transition for smooth animation */
+    animation-name: slideInLeft; /* Specify the animation */
+    animation-duration: 0.5s; /* Animation duration */
+}
+
+.InfStudent {
+    position: fixed;
+    right: 0;
+    width: 200px;
+    padding: 2rem;
+    background-color: ghostwhite;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 20px;
+    color: sienna;
+}
+.menuStudent:hover{
+    cursor:pointer;
+}
+.openMenu > .w3-bar-item {
+    text-decoration: none;
+    font-size: 20px;
+    position: fixed;
+    right: 15%;
+    background-color: midnightblue;
+    padding: 0.5rem;
+    border-radius: inherit;
+}
+
+@keyframes slideInLeft{
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}

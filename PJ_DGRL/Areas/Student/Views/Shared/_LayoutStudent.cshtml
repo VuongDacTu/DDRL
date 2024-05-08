@@ -19,20 +19,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <link href="~/student/login/css/login.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: darkcyan !important;
+        }
 
+        .main {
+            background-color: navajowhite;
+            padding-top: 2rem;
+            box-shadow: 30px 20px 15px rgba(0, 0, 0, 0.5);
+            padding: 20px; 
+        }
+
+
+
+    </style>
 </head>
-<style>
-    body{
-        background-color:darkcyan !important;
 
-    }
-    .main{
-        background-color: navajowhite;
-        padding-top: 2rem;
-        box-shadow: 30px 20px 15px rgba(0, 0, 0, 0.5); /* Định dạng box shadow */
-        padding: 20px; /* Thêm padding để tạo khoảng cách giữa box shadow và nội dung */
-    }
-</style>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -63,6 +67,12 @@
                                 <a class="nav-link text-danger" asp-area="Student" asp-controller="Login" asp-action="Logout">Đăng xuất(@st.UserName)</a>
                             </li>
                         }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" asp-area="" asp-controller="Home" asp-action="Index">Quay lại</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -83,6 +93,17 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+    function w3_open() {
+        document.getElementById("mySidebar").style.display = "block";        
+    }
+
+    function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";   
+    }
+
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

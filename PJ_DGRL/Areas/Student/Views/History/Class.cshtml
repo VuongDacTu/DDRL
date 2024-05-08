@@ -7,16 +7,28 @@
     List<Semester> semesters = ViewBag.Semester;
 }
 <div class="row">
-    <div class="col">
-        @await Component.InvokeAsync("Student", new { name = ViewBag.Name })
+    <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+        <div class="col openMenu">
+            <a href="#" onclick="w3_close()"
+               class="w3-bar-item w3-button"><i class="fa-solid fa-outdent"></i> Trở về</a>
+            @await Component.InvokeAsync("Student")
+        </div>
+    </nav>
+
+    <!-- Top menu -->
+    <div class="">
+        <div class="" style="max-width:1200px;margin:auto">
+            <div class="menuStudent" onclick="w3_open()">☰</div>
+        </div>
     </div>
+    @await Component.InvokeAsync("InforStudent", new { id = ViewBag.Id })
 
      <div class="col">
 
-        <h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
+        <h5>Kết quả đánh giá cho sinh viên @ViewBag.Id</h5>
             <form asp-action="Class" method="get">
                 <label>Chọn kì học:</label>
-                <input type="hidden" name="studentId" value="@ViewBag.StudentId" />
+                <input type="hidden" name="studentId" value="@ViewBag.Id" />
                 <select name="semesterId" class="form-control">
                 @foreach (var item in semesters)
                 {

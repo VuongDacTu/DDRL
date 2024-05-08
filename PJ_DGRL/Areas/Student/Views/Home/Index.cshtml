@@ -7,12 +7,11 @@
     var ss = HttpContextAccessor.HttpContext.Session.GetString("LTLogin");
 
 }
-
-    <div>
-        @if(ss != null){
-            @await Component.InvokeAsync("Student", new { name = ViewBag.Name })
-        }
-    </div>
-    <div>
-        <h1>Trang chủ</h1>
-    </div>
+<div>
+    @if(ss != null){
+        @await Component.InvokeAsync("Student")
+    }
+</div>
+<div>
+    <h1>Trang chủ</h1>
+</div>

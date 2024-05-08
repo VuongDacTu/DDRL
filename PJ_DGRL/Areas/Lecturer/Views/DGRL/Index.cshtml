@@ -1,80 +1,72 @@
-﻿@model PJ_DGRL.Models.DGRLModels.Student
+﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.Student>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Lecturer/Views/Shared/_LayoutLecturer.cshtml";
+    int i = 0;
 }
+<form asp-action="Index" method="get">
+    <input type="text" name="name" placeholder="Nhập tên sinh viên" @ViewBag.Name>
+    <button type="submit">Tìm kiếm</button>
+</form>
+<form asp-action="Submit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <table class="table table-hover ">
+        <thead>
+            <tr>
+                <th>Họ và tên</th>
+                <th>Ngày sinh</th>
+                <th>Giới tính</th>
+                <th>Điểm tự đánh giá</th>
+                <th>Điểm cán bộ lớp đánh giá</th>
+                <th>Điểm giảng viên chấm</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        @foreach (var item in Model) {
 
-<div class="row">
-    <div class="col">
-        @await Component.InvokeAsync("ST", new { name = ViewBag.Name })
-    </div>
-    <div class="col">
-
-@if (@ViewBag.semesterId != 0)
-{
-        <h4>Student</h4>
-        <hr />
-        <dl class="row">
-            <dt class = "col">
-                Họ và tên
-            </dt>
-            <dd class = "col">
-                @Html.DisplayFor(model => model.FullName)
-            </dd>
-            <dt class="col">
-                Giới tính
-            </dt>
-            <dd class="col">
-                @if (Model.Gender == false)
+            <tr>
+                @{
+                    int selfPoint = item.SumaryOfPoints.FirstOrDefault()?.SelfPoint ?? 0;
+                    int classPoint = item.SumaryOfPoints.FirstOrDefault()?.ClassPoint ?? 0;
+                    int lecturerPoint = item.SumaryOfPoints.FirstOrDefault()?.LecturerPoint ?? 0;
+                }
+                <td>@item.FullName (@item.Id)</td>
+                <td>@item.Birthday</td>
+                @if (item.Gender == false)
                 {
-                    <p>Nam</p>
+                <td>Nam</td>
                 }
                 else
                 {
-                    <p>Nữ</p>
+                    <td>Nữ</td>
                 }
-            </dd>
-            <dt class = "col">
-                Ngày sinh
-            </dt>
-            <dd class = "col">
-                @Html.DisplayFor(model => model.Birthday)
-            </dd>
-            <dt class = "col">
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
-            <dd class = "col">
-                @Html.DisplayFor(model => model.Email)
-            </dd>
-            <dt class = "col">
-                Số điện thoại
-            </dt>
-            <dd class = "col">
-                @Html.DisplayFor(model => model.Phone)
-            </dd>
-        </dl>
+                <td>@selfPoint điểm</td>
+                <td>@classPoint điểm</td>   
+                <td>
+                    <div>
 
-            <p>Điểm tự đánh giá: @ViewBag.SelfPoint<a asp-controller="Result" asp-action="Index" asp-route-studentId="@Model.Id">Xem chi tiết</a></p>
-            <p>Điểm lớp trưởng đánh giá: @ViewBag.ClassPoint<a asp-controller="Result" asp-action="Class" asp-route-studentId="@Model.Id">Xem chi tiết</a></p>
-
-        <form asp-action="Submit" >
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div>
-                <input type="hidden" name="studentId" value="@ViewBag.StudentId" />
-                <label class="" for="LecturerPoint">Chấm điểm tại đây!!!</label>
-                <input class="" type="number" name="LecturerPoint" id="LecturerPoint">
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Xác nhận" class="btn btn-primary" />
-            </div>
-        </form>
-}
-else
-{
-    <div class="alert alert-danger">
-        <h2>Kì đánh giá của giảng viên chưa diễn ra !!!</h2>
-    </div>
-}
-</div>
-   </div>
+                        <input type="hidden" name="sum[@i].StudentId" value="@item.Id" />
+                        @if (selfPoint != 0)
+                        {
+                            <input class="" type="number" name="sum[@i].LecturerPoint" value="@lecturerPoint" id="LecturerPoint">
+                        }else{
+                            <p class="text-danger">Không thể đánh giá sinh viên này do sinh viên chưa tự đánh giá</p>
+                        }
+                    </div>
+                </td>
+                @{
+                    i++;
+                }
+            </tr>
+        }
+        </tbody>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <input type="submit" value="Lưu lại" class="btn btn-primary" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>

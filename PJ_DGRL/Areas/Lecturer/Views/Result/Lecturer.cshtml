@@ -6,31 +6,49 @@
     Layout = "~/Areas/Lecturer/Views/Shared/_LayoutLecturer.cshtml";
     List<Semester> semesters = ViewBag.Semester;
 }
-<h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
-    <form asp-action="Lecturer" method="get">
-        <label>Chọn kì học:</label>
-        <input type="hidden" name="studentId" value="@ViewBag.StudentId" />
-        <select name="semesterId" class="form-control">
-            @foreach (var item in semesters)
-            {
-                <option value="@item.Id">Kì @item.Name - Năm học @item.SchoolYear</option>
-            }
-        </select>
-        <input type="submit" value="Tìm kiếm" />
-    </form>
-<hr />
 <div class="row">
+    <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+        <div class="col openMenu">
+            <a href="#" onclick="w3_close()"
+               class="w3-bar-item w3-button"><i class="fa-solid fa-outdent"></i> Trở về</a>
+            @await Component.InvokeAsync("ST")
+        </div>
+    </nav>
+    <!-- Top menu -->
+    <div class="">
+        <div class="" style="max-width:1200px;margin:auto">
+            <div class="menuStudent" onclick="w3_open()">☰</div>
+        </div>
+    </div>
     <div class="col">
-        @foreach(var item in Model)
-        {
-            foreach(var i in item.SumaryOfPoints)
-            {
-                <h6>Điểm tự đánh giá: @i.SelfPoint <a asp-controller="Result" asp-action="Index" asp-route-studentId="@ViewBag.StudentId">Xem chi tiết</a></h6>
-                <h6>Điểm lớp trưởng đánh giá: @i.ClassPoint <a asp-controller="Result" asp-action="Class" asp-route-studentId="@ViewBag.StudentId">Xem chi tiết</a></h6>
-                <h6>Điểm giảng viên đánh giá: @i.LecturerPoint</h6>
-                <h6>Xếp loại: @i.Classify</h6>
-            }
-        }
+        <h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
+        <form asp-action="Lecturer" method="get">
+            <label>Chọn kì học:</label>
+            <input type="hidden" name="studentId" value="@ViewBag.StudentId" />
+            <select name="semesterId" class="form-control">
+                @foreach (var item in semesters)
+                {
+                    <option value="@item.Id">Kì @item.Name - Năm học @item.SchoolYear</option>
+                }
+            </select>
+            <input type="submit" value="Tìm kiếm" />
+        </form>
+        <hr />
+        <div class="row">
+            <div class="col">
+                @foreach (var item in Model)
+                {
+                    foreach (var i in item.SumaryOfPoints)
+                    {
+                        <h6>Điểm tự đánh giá: @i.SelfPoint <a asp-controller="Result" asp-action="Index" asp-route-studentId="@ViewBag.StudentId">Xem chi tiết</a></h6>
+                        <h6>Điểm lớp trưởng đánh giá: @i.ClassPoint <a asp-controller="Result" asp-action="Class" asp-route-studentId="@ViewBag.StudentId">Xem chi tiết</a></h6>
+                        <h6>Điểm giảng viên đánh giá: @i.LecturerPoint</h6>
+                        <h6>Xếp loại: @i.Classify</h6>
+                    }
+                }
+            </div>
+        </div>
+
     </div>
 </div>
 

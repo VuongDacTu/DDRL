@@ -36,14 +36,20 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
         }
         public IActionResult Lecturer(int? semesterId, string? studentId)
         {
-            var semester = _context.Semesters.Include(u => u.SumaryOfPoints).Where(x => x.Id == semesterId).ToList();
+            if (studentId == null)
+            {
+                return RedirectToAction("Status");
+            }
+
             if (semesterId == null)
             {
-                semester = _context.Semesters.Include(u => u.SumaryOfPoints.Where(x => x.StudentId == studentId)).OrderByDescending(x => x.Id).ToList();
+                semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault()?.Id;
             }
+            var semester = _context.Semesters.Include(u => u.SumaryOfPoints.Where(x => x.StudentId == studentId)).Where(x => x.Id == semesterId).ToList();
             ViewBag.StudentId = studentId;
             ViewData["Semester"] = _context.Semesters.ToList();
             return View(semester);
         }
+        public IActionResult Status() {  return View(); }
     }
 }

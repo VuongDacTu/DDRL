@@ -36,23 +36,22 @@ namespace PJ_DGRL.Areas.Student.Controllers
                 var GroupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.SelfAnswers.Where(x => x.StudentId == studentId)).ToList();
                 ViewBag.SumSelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == student.UserName && u.SemesterId == semesterId).FirstOrDefault()?.SelfPoint ?? 0;
                 ViewData["Semester"] = _context.Semesters.ToList();
-
+                ViewBag.Id = studentId;
                 return View(GroupQuestion);
             }
             return RedirectToAction("Index","Login");
         }
        
-        public IActionResult Class(string? name,int? semesterId,string? studentId)
+        public IActionResult Class(int? semesterId,string? studentId)
         {
             if(semesterId == null)
             {
                 semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault().Id;
             }
             var GroupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.ClassAnswers.Where(x => x.StudentId == studentId)).ToList();
-            ViewBag.StudentId = studentId;
+            ViewBag.Id = studentId;
             ViewBag.SumSelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).FirstOrDefault()?.SelfPoint ?? 0;
             ViewBag.SumClassPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).FirstOrDefault()?.ClassPoint ?? 0;
-            ViewBag.Name = name;
             ViewData["Semester"] = _context.Semesters.ToList();
             return View(GroupQuestion);
         }

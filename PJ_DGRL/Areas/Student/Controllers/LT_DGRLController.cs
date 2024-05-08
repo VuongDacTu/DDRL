@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using PJ_DGRL.Models.DGRLModels;
 
@@ -12,14 +13,21 @@ namespace PJ_DGRL.Areas.Student.Controllers
 		{
 			_context = context;
 		}
-		public IActionResult Index(string? name,string? studentId)
+		public IActionResult Index(string? studentId)
 		{
+
+            
             // group question
             var groupQuestions = _context.GroupQuestions.Include(u => u.QuestionLists).ThenInclude(u => u.QuestionHisories).Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ToList();
             // lấy ra sinh viên đang đăng nhập lưu trong session
             var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
 			int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndStudent < DateTime.Now && x.DateEndClass >= DateTime.Now)?.Id ?? 0;
-            ViewBag.Name = name;
+
+            if (semesterId == 0)
+            {
+                return RedirectToAction("Status1","LT_DGRL",new { id = studentId});
+            }
+
             var selfAnswer = _context.SelfAnswers.Where(x => x.StudentId == studentId && x.SemesterId == semesterId).ToList();
             var answers = _context.AnswerLists.ToList();
             // kiểm tra xem nếu sinh viên đã đánh giá thì mới hiển thị
@@ -38,10 +46,9 @@ namespace PJ_DGRL.Areas.Student.Controllers
 				_context.AnswerLists.Where(x => x.Id == item.AnswerId).FirstOrDefault().Checked = 1;
 
 			}
-
-
+            ViewBag.Student = _context.Students.Where(x => x.Id == studentId).FirstOrDefault();
             ViewBag.semesterId = semesterId;
-            ViewBag.studentId = studentId;
+            ViewBag.Id = studentId;
             return View(groupQuestions);
 		}
 		public IActionResult submit(string studentId, Dictionary<int, int> AnswerIds, Dictionary<int, int> AnswerId)
@@ -86,7 +93,6 @@ namespace PJ_DGRL.Areas.Student.Controllers
                         CreateBy = student.UserName,
                         CreateDate = DateTime.Now,
                     });
-
                 }
 
                 // thêm lại đánh giá của sinh viên đã chỉnh sửa
@@ -135,12 +141,23 @@ namespace PJ_DGRL.Areas.Student.Controllers
             }
             return RedirectToAction("Status", "LT_DGRL");
         }
-        public IActionResult Status()
+        public IActionResult Status(string? id)
         {
+            ViewBag.Id = id;
             return View();
         }
-        public IActionResult Status1()
+        public IActionResult Status1(string? id)
         {
+            int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndStudent < DateTime.Now && x.DateEndClass >= DateTime.Now)?.Id ?? 0;
+            if (semesterId == 0)
+            {
+                ViewBag.Status = "Kì đánh giá chưa diễn ra hoặc đã kết thúc";
+
+            }else
+            {
+                ViewBag.Status = "Không thể đánh giá do sinh viên chưa tự đánh giá";
+            }
+            ViewBag.Id = id;
             return View();
         }
     }
