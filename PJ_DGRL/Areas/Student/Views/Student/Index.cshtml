@@ -21,9 +21,16 @@
                             int classPoint = item.SumaryOfPoints.FirstOrDefault()?.ClassPoint ?? 0;
                             int selfPoint = item.SumaryOfPoints.FirstOrDefault()?.SelfPoint ?? 0;
                         }
-                        <td><b> @item.FullName</b></td>
-                        <td><p>(@item.Id)</p></td>
-                        <td><a asp-controller="History" asp-action="Self" asp-route-studentId="@item.Id">@selfPoint điểm</a></td>
+                        <td><a asp-controller="History" asp-action="Self" asp-route-studentId="@item.Id"><p>@item.Id</p></a></td>
+                        @if (item.PositionId == "LT")
+                        {
+                            <td><b class="text-green">@item.FullName</b></td>
+                        }
+                        else
+                        {
+                            <td><b> @item.FullName</b></td>
+                        }
+                        <td>@selfPoint điểm</td>
 
                         @if (classPoint != 0)
                         {

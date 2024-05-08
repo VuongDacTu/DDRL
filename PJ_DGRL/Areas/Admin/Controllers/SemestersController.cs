@@ -10,8 +10,7 @@ using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class SemestersController : Controller
+    public class SemestersController : BaseController
     {
         private readonly DbDgrlContext _context;
 
@@ -26,31 +25,11 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             return View(await _context.Semesters.ToListAsync());
         }
 
-        // GET: Admin/Semesters/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var semester = await _context.Semesters
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (semester == null)
-            {
-                return NotFound();
-            }
-
-            return View(semester);
-        }
-
         // GET: Admin/Semesters/Create
         public IActionResult Create()
         {
-            if (_context.Semesters.FirstOrDefault(x => x.IsActive >= 1) != null)
-            {
-                return RedirectToAction("Status");
-            }
+            ViewBag.Questions = _context.QuestionLists.Include(x => x.AnswerLists.Where(x => x.Status == 1)).Where(x => x.Status == 1).ToList();
+            ViewBag.SchoolYear = DateTime.Now.Year.ToString()+ " - " + (DateTime.Now.Year + 1).ToString();
             return View();
         }
 
@@ -63,28 +42,30 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(_context.Semesters.FirstOrDefault(x => x.IsActive >=1) != null)
-                {
-                    return RedirectToAction("Status");
-                }
                 var admin = JsonConvert.DeserializeObject<AccountAdmin>(HttpContext.Session.GetString("AdminLogin"));
                 _context.Add(semester);
-                var Questions = _context.QuestionLists.Where(x => x.Status == 1).ToList();
-                foreach(var item in Questions)
+                await _context.SaveChangesAsync();
+                var Questions = _context.QuestionLists.Include(x => x.AnswerLists.Where(x => x.Status == 1)).Where(x => x.Status == 1).ToList();
+                int a = 1;
+                foreach (var item in Questions)
                 {
-                    int i = 1;
                     QuestionHisory questionHisory = new QuestionHisory()
                     {
                         QuestionId = item.Id,
                         SemesterId = semester.Id,
-                        OrderBy = i++,
+                        OrderBy = a++,
                         CreateBy = admin.UserName,
                         CreateDate = DateTime.Now,
 
                     };
                     _context.QuestionHisories.Add(questionHisory);
+                    item.IsEdit = true;
+                    foreach (var item2 in item.AnswerLists)
+                    {
+                        item2.IsEdit = true;
+                    }
                 }
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(semester);
@@ -140,40 +121,6 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             }
             return View(semester);
         }
-
-        // GET: Admin/Semesters/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var semester = await _context.Semesters
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (semester == null)
-            {
-                return NotFound();
-            }
-
-            return View(semester);
-        }
-
-        // POST: Admin/Semesters/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var semester = await _context.Semesters.FindAsync(id);
-            if (semester != null)
-            {
-                _context.Semesters.Remove(semester);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool SemesterExists(int id)
         {
             return _context.Semesters.Any(e => e.Id == id);

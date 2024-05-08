@@ -1,0 +1,41 @@
+﻿@model PJ_DGRL.Models.DGRLModels.QuestionList
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>QuestionList</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="ContentQuestion" class="control-label">Nội dung</label>
+                <input asp-for="ContentQuestion" class="form-control" />
+                <span asp-validation-for="ContentQuestion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeQuestionId" class="control-label">Loại câu hỏi</label>
+                <select asp-for="TypeQuestionId" class="form-control" asp-items="ViewBag.TypeQuestionId"></select>
+                <span asp-validation-for="TypeQuestionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GroupQuestionId" class="control-label">Nhóm câu hỏi</label>
+                <select asp-for="GroupQuestionId" class="form-control" asp-items="ViewBag.GroupQuestionId"></select>
+                <span asp-validation-for="GroupQuestionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

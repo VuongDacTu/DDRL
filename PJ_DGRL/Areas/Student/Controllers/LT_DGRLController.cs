@@ -25,7 +25,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
 
             if (semesterId == 0)
             {
-                return RedirectToAction("Status1","LT_DGRL",new { id = studentId});
+                return RedirectToAction("Status1","LT_DGRL",new {id = studentId});
             }
 
             var selfAnswer = _context.SelfAnswers.Where(x => x.StudentId == studentId && x.SemesterId == semesterId).ToList();
@@ -34,7 +34,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
             int selfPoint = _context.SumaryOfPoints.Where(x => x.StudentId == studentId).FirstOrDefault(x => x.SemesterId == semesterId)?.SelfPoint ?? 0;
             if (selfPoint == 0)
             {
-                return RedirectToAction("Status1");
+                return RedirectToAction("Status1", new { id = studentId });
             }
             foreach (var item in answers)
             {

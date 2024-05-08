@@ -1,8 +1,10 @@
-﻿@model PJ_DGRL.Models.DGRLModels.Semester
+﻿@using PJ_DGRL.Models.DGRLModels
+@model PJ_DGRL.Models.DGRLModels.Semester
 
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    List<QuestionList> questionLists = ViewBag.Questions;
 }
 
 <h1>Create</h1>
@@ -14,48 +16,67 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <label asp-for="Name" class="control-label">Kì học</label>
+                <select asp-for="Name">
+                    <option value="1">Kỳ 1</option>
+                    <option value="2">Kỳ 2</option>
+                    <option value="3">Kỳ 3</option>
+                </select>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SchoolYear" class="control-label"></label>
-                <input asp-for="SchoolYear" class="form-control" />
+                <label asp-for="SchoolYear" class="control-label">Năm học</label>
+                <input asp-for="SchoolYear" class="form-control" value="@ViewBag.SchoolYear" readonly />
                 <span asp-validation-for="SchoolYear" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateOpenStudent" class="control-label"></label>
+                <label asp-for="DateOpenStudent" class="control-label">Ngày mở</label>
                 <input asp-for="DateOpenStudent" class="form-control" />
                 <span asp-validation-for="DateOpenStudent" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateEndStudent" class="control-label"></label>
+                <label asp-for="DateEndStudent" class="control-label">Ngày kết thúc tự đánh giá</label>
                 <input asp-for="DateEndStudent" class="form-control" />
                 <span asp-validation-for="DateEndStudent" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateEndClass" class="control-label"></label>
+                <label asp-for="DateEndClass" class="control-label">Ngày kết thúc cán bộ lớp đánh giá</label>
                 <input asp-for="DateEndClass" class="form-control" />
                 <span asp-validation-for="DateEndClass" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateEndLecturer" class="control-label"></label>
+                <label asp-for="DateEndLecturer" class="control-label">Ngày kết thúc giảng viên đánh giá</label>
                 <input asp-for="DateEndLecturer" class="form-control" />
                 <span asp-validation-for="DateEndLecturer" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IsActive" class="control-label"></label>
-                <input asp-for="IsActive" class="form-control" />
-                <span asp-validation-for="IsActive" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Bắt đầu kì đánh giá" class="btn btn-primary" />
+                <a class="btn btn-warning" asp-controller="QuestionLists" asp-action="Index" target="_blank">Sửa câu hỏi</a>
+                <button onclick="return false;" id="reloadButton">Refresh</button>
             </div>
         </form>
+    </div>
+    <div class="col-md-8">
+        <h2>Câu hỏi sẽ được thêm vào kì học này</h2>
+        @foreach(var item in questionLists)
+        {
+            <h4>@item.ContentQuestion</h4>
+            foreach(var i in item.AnswerLists)
+            {
+                <p>@i.ContentAnswer</p>
+            }
+        }
+
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Quay lại</a>
 </div>
 
+<script>
+    document.getElementById("reloadButton").addEventListener("click", function () {
+        event.preventDefault();
+        location.reload();
+    });
+</script>

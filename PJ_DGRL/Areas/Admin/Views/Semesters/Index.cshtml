@@ -14,25 +14,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Kì học
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SchoolYear)
+                Năm học
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateOpenStudent)
+                Ngày mở 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateEndStudent)
+                Kết thúc tự đánh giá
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateEndClass)
+                Kết thúc lớp đánh giá 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateEndLecturer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
+                kết thúc giảng viên đánh giá
             </th>
             <th></th>
         </tr>
@@ -59,14 +56,12 @@
                 @Html.DisplayFor(modelItem => item.DateEndLecturer)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-controller="QuestionHistory" asp-action="Index" asp-route-semesterId = "@item.Id">Câu hỏi kì này</a>
+       
             </td>
         </tr>
 }
     </tbody>
 </table>
+

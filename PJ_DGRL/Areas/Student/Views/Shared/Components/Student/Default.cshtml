@@ -14,6 +14,7 @@
                 <th>Họ và tên</th>
                 <th>Điểm tự đánh giá</th>
                 <th>Điểm cán bộ lớp</th>
+                <th></th>
             </tr>
         </thead>
         <tbody class="table-group-divider table-hover">
@@ -26,8 +27,12 @@
                         int selfPoint = item.SumaryOfPoints.FirstOrDefault()?.SelfPoint ?? 0;
                     }
                     <td><a asp-controller="History" asp-action="Self" asp-route-studentId="@item.Id"><p>@item.Id</p></a></td>
-                    <td><b> @item.FullName</b></td>
-           
+                    @if (item.PositionId == "LT")
+                    {
+                        <td><b class="text-green">@item.FullName</b></td>
+                    }else{
+                        <td><b> @item.FullName</b></td>
+                    }
                     <td>@selfPoint điểm</td>
                     
                     @if (classPoint != 0)

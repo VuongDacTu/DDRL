@@ -17,7 +17,6 @@
 <!-- //Fonts -->
 
 		<div class="w3layoutscontaineragileits">
-			<h2>Admin đăng nhập tại đây</h2>
 			@{
 				var ss = HttpContextAccessor.HttpContext.Session.GetString("AdminLogin");
 				if (ss != null)
@@ -28,25 +27,55 @@
 				}
 				else
 				{
-					<form asp-action="Index" method="post">
-						<input type="text" asp-for="UserName" placeholder="Mã sinh viên" required="">
-						<input type="password" asp-for="Password" placeholder="Mật khẩu" required="">
-						<ul class="agileinfotickwthree">
-							<li>
-								<input type="checkbox" id="brand1" value="">
-								<label for="brand1"><span></span>Remember me</label>
-								<a href="#">Forgot password?</a>
-							</li>
-						</ul>
-						<div class="text-danger"><p>@TempData["errorLogin"]</p></div>
-						<div class="aitssendbuttonw3ls">
-							<input type="submit" value="LOGIN">
-						</div>
-					</form>
+			<div class="login-box">
+				<div class="login-logo">
+					<a href="#"><b>Admin đăng nhập tại đây</b></a>
+				</div>
+
+				<div class="card">
+					<div class="card-body login-card-body">
+						<p class="login-box-msg">Đăng nhập</p>
+						<form asp-action="Index" method="post">
+							<div class="input-group mb-3">
+								<input class="form-control" placeholder="Tên đăng nhập" asp-for="UserName" required="">
+								<div class="input-group-append">
+									<div class="input-group-text">
+										<span class="fas fa-envelope"></span>
+									</div>
+								</div>
+							</div>
+							<div class="input-group mb-3">
+								<input type="password" class="form-control" placeholder="Mật khẩu" asp-for="Password" required="">
+								<div class="input-group-append">
+									<div class="input-group-text">
+										<span class="fas fa-lock"></span>
+									</div>
+								</div>
+							</div>
+							<div class="text-danger"><i class="text-danger">@TempData["errorLogin"]</i></div>
+							<div class="row">
+								<div class="col-8">
+									<div class="icheck-primary">
+										<input type="checkbox" id="remember">
+										<label for="remember">
+											Remember Me
+										</label>
+									</div>
+								</div>
+
+								<div class="col-4">
+									<button type="submit" class="btn btn-primary btn-block">Sign In</button>
+								</div>
+
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</div>
 				}
 			}
 		</div>
-	</div>
 
 
 

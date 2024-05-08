@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.QuestionHisory>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Câu hỏi của kì @ViewBag.SemesterId năm học @ViewBag.SemesterYear</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>
+                User khởi tạo
+            </th>
+            <th>
+                Ngày tạo
+            </th>
+            <th>
+                Câu hỏi
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Question.ContentQuestion)
+            </td>
+
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Chi tiết</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

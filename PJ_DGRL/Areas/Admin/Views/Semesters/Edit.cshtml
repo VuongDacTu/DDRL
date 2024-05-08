@@ -15,39 +15,30 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <input type="hidden" asp-for="Name" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="SchoolYear" class="control-label"></label>
-                <input asp-for="SchoolYear" class="form-control" />
-                <span asp-validation-for="SchoolYear" class="text-danger"></span>
+                <input type="hidden" asp-for="SchoolYear" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="DateOpenStudent" class="control-label"></label>
+                <label asp-for="DateOpenStudent" class="control-label">Ngày mở</label>
                 <input asp-for="DateOpenStudent" class="form-control" />
                 <span asp-validation-for="DateOpenStudent" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateEndStudent" class="control-label"></label>
+                <label asp-for="DateEndStudent" class="control-label">Ngày kết thúc tự đánh giá</label>
                 <input asp-for="DateEndStudent" class="form-control" />
                 <span asp-validation-for="DateEndStudent" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateEndClass" class="control-label"></label>
+                <label asp-for="DateEndClass" class="control-label">Ngày kết thúc cán bộ lớp đánh giá</label>
                 <input asp-for="DateEndClass" class="form-control" />
                 <span asp-validation-for="DateEndClass" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateEndLecturer" class="control-label"></label>
+                <label asp-for="DateEndLecturer" class="control-label">Ngày kết thúc giảng viên đánh giá</label>
                 <input asp-for="DateEndLecturer" class="form-control" />
                 <span asp-validation-for="DateEndLecturer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsActive" class="control-label"></label>
-                <input asp-for="IsActive" class="form-control" />
-                <span asp-validation-for="IsActive" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.QuestionList>
+@using PJ_DGRL.Models.DGRLModels;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    List<Semester> semesters = ViewBag.Semester;
+}
+
+<h1>Bộ câu hỏi</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+    <form asp-action="SelectAll">
+        <label>Sử dụng bộ câu hỏi kì</label>
+        <select name ="semesterId">
+            @foreach (var item in semesters)
+            {
+                <option value="@item.Id">Kì @item.Name - Năm học @item.SchoolYear</option>
+            }
+        </select>
+        <input type="submit" value="Chọn" class="btn btn-outline-dark" />
+    </form>
+    <a asp-action="SelectAll" class="btn-danger">Chọn tất cả</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Nội dung
+            </th>
+            <th>
+                Trạng thái
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContentQuestion)
+            </td>
+                @if(item.Status == 1)
+                {
+                    <td><a asp-action="UnSet" asp-route-questionId ="@item.Id" class="btn btn-danger">Bỏ chọn</a></td>
+                }else{
+                    <td><a asp-action="Set" asp-route-questionId="@item.Id" class="btn btn-success">Chọn</a></td>
+                }
+            <td>
+                @if(item.IsEdit == true)
+                {
+                    <i class="text-danger">Câu hỏi này không thể chỉnh sửa do đã được sử dụng</i>
+                }else{
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
+                <a asp-action="Details" asp-route-id="@item.Id">Chi tiết</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

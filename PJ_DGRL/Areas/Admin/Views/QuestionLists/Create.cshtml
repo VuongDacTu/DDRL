@@ -1,0 +1,48 @@
+﻿@model PJ_DGRL.Models.DGRLModels.QuestionList
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>QuestionList</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ContentQuestion" class="control-label">Nội dung</label>
+                <input asp-for="ContentQuestion" class="form-control" />
+                <span asp-validation-for="ContentQuestion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeQuestionId" class="control-label">Kiểu câu hỏi</label>
+                <select asp-for="TypeQuestionId" class ="form-control" asp-items="ViewBag.TypeQuestionId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="GroupQuestionId" class="control-label">Nhóm câu hỏi</label>
+                <select asp-for="GroupQuestionId" class ="form-control" asp-items="ViewBag.GroupQuestionId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label">Trạng thái</label>
+                <select asp-for="Status">
+                    <option value="1">Sử dụng ngay</option>
+                    <option value="0">Không sử dụng ngay</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
