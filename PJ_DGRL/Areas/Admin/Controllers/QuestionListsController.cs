@@ -27,6 +27,13 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             ViewBag.Semester = _context.Semesters.ToList();
             return View(await dbDgrlContext.ToListAsync());
         }
+        // GET: Admin/QuestionLists
+        public async Task<IActionResult> List()
+        {
+            ViewBag.Semester = _context.Semesters.ToList();
+            var dbDgrlContext = _context.GroupQuestions.Include(q => q.QuestionLists).ThenInclude(q => q.AnswerLists);
+            return View(await dbDgrlContext.ToListAsync());
+        }
 
         // GET: Admin/QuestionLists/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -167,6 +174,11 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             var questionList = await _context.QuestionLists.FindAsync(id);
             if (questionList != null)
             {
+                var answerInQuestion = _context.AnswerLists.Where(q => q.QuestionId == id).ToList();
+                foreach(var item in answerInQuestion)
+                {
+                    _context.AnswerLists.Remove(item);
+                }
                 _context.QuestionLists.Remove(questionList);
             }
 

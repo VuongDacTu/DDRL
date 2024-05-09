@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -13,7 +14,7 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
 		{
 			_context = context;
 		}
-		public IActionResult Index(string? name)
+		public IActionResult Index(string? name,int? classId)
         {
 			// lấy ra kì đánh giá của giảng viên đang diễn ra
             var semester = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndClass < DateTime.Now && x.DateEndLecturer >= DateTime.Now);
@@ -26,11 +27,23 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
             var lecturers = _context.Lecturers.Where(x => x.Id == lecturer.LecturerId);
 			// lấy ra sinh viên của khoa
 			var students = _context.Students.OrderByDescending(x => x.SumaryOfPoints.FirstOrDefault().SelfPoint).Include(x => x.SumaryOfPoints.Where(x => x.SemesterId == semester.Id)).Where(x => x.Class.DepartmentId == lecturers.FirstOrDefault().DepartmentId);
-			if (!name.IsNullOrEmpty())
+			if(classId != null)
+			{
+                students = _context.Students.OrderByDescending(x => x.SumaryOfPoints.FirstOrDefault().SelfPoint).Include(x => x.SumaryOfPoints.Where(x => x.SemesterId == semester.Id)).Where(x => x.ClassId == classId);
+                if (!name.IsNullOrEmpty())
+                {
+                    students = _context.Students.OrderByDescending(x => x.SumaryOfPoints.FirstOrDefault().SelfPoint).Include(x => x.SumaryOfPoints.Where(x => x.SemesterId == semester.Id)).Where(x => x.Class.DepartmentId == classId && (x.FullName.Contains(name) || x.Id.Contains(name)));
+
+                }
+
+            }
+            else if (!name.IsNullOrEmpty())
 			{
                 students = _context.Students.OrderByDescending(x => x.SumaryOfPoints.FirstOrDefault().SelfPoint).Include(x => x.SumaryOfPoints.Where(x => x.SemesterId == semester.Id)).Where(x => x.Class.DepartmentId == lecturers.FirstOrDefault().DepartmentId && (x.FullName.Contains(name) || x.Id.Contains(name)));
 
             }
+
+            ViewData["Class"] = new SelectList(_context.Classes.Where(x => x.DepartmentId == lecturers.FirstOrDefault().DepartmentId), "Id", "Name");
             ViewBag.Name = name;
             return View(students);
 		}

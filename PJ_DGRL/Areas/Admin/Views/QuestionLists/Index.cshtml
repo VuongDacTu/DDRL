@@ -21,7 +21,8 @@
         </select>
         <input type="submit" value="Chọn" class="btn btn-outline-dark" />
     </form>
-    <a asp-action="SelectAll" class="btn-danger">Chọn tất cả</a>
+    <a asp-action="SelectAll" class="btn btn-warning">Chọn tất cả</a>
+    <a asp-action="List" style="position:absolute; right: 10%;">Hiển thị dưới dạng câu hỏi</a>
 </p>
 <table class="table">
     <thead>
@@ -54,14 +55,16 @@
                     <td><a asp-action="Set" asp-route-questionId="@item.Id" class="btn btn-success">Chọn</a></td>
                 }
             <td>
+                    <a asp-controller="AnswerLists" asp-action="Index" asp-route-questionId="@item.Id">Xem câu trả lời</a>
+
                 @if(item.IsEdit == true)
                 {
                     <i class="text-danger">Câu hỏi này không thể chỉnh sửa do đã được sử dụng</i>
                 }else{
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Chỉnh sửa</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Xoá</a>
                 }
-                <a asp-action="Details" asp-route-id="@item.Id">Chi tiết</a>
+                <a class="text-warning" asp-action="Details" asp-route-id="@item.Id">Chi tiết</a>
             </td>
         </tr>
 }

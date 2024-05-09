@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace PJ_DGRL.Models.DGRLModels;
 
 public partial class Class
 {
     public int Id { get; set; }
-
+    [DisplayName("Lớp")]
     public string? Name { get; set; }
 
     public string? CourseId { get; set; }
@@ -19,5 +20,5 @@ public partial class Class
 
     public virtual Department? Department { get; set; }
 
-    public virtual ICollection<Student> Students { get; set; } = new List<Student>();
+    public virtual ICollection<Students> Students { get; set; } = new List<Students>();
 }

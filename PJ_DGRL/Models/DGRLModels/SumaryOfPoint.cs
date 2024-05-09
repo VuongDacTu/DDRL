@@ -28,6 +28,6 @@ public partial class SumaryOfPoint
 
     public virtual Semester? Semester { get; set; }
 
-    public virtual Student? Student { get; set; }
+    public virtual Students? Student { get; set; }
     public virtual Class? Class { get; set; }
 }

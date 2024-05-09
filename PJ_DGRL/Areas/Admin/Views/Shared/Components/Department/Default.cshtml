@@ -1,0 +1,21 @@
+﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.Department>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-tree"></i>
+        <p>
+            Danh sách sinh viên
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        @foreach(var item in Model)
+        {
+            <li class="nav-item">
+                <a asp-controller="Students" asp-action="Index" asp-route-departmentId ="@item.Id" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>@item.Name</p>
+                </a>
+            </li>
+        }
+    </ul>
+</li>

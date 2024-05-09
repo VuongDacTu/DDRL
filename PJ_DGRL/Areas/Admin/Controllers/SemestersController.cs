@@ -29,7 +29,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         public IActionResult Create()
         {
             ViewBag.Questions = _context.QuestionLists.Include(x => x.AnswerLists.Where(x => x.Status == 1)).Where(x => x.Status == 1).ToList();
-            ViewBag.SchoolYear = DateTime.Now.Year.ToString()+ " - " + (DateTime.Now.Year + 1).ToString();
+            ViewBag.SchoolYear = (DateTime.Now.Year - 1).ToString() + " - " + (DateTime.Now.Year).ToString();
             return View();
         }
 

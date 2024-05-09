@@ -57,21 +57,35 @@
                         </p>
                     </a>
                 </li>
+                @await Component.InvokeAsync("Department")
                 <li class="nav-item">
-                    <a asp-controller="Banners" asp-action="Index" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-tree"></i>
                         <p>
-                            Banner
+                            Quản lí tài khoản
+                            <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="Blogs" asp-action="Index" class="nav-link">
-                        <i class="nav-icon fas fa-calendar-alt"></i>
-                        <p>
-                            Blogs
-                        </p>
-                    </a>
+                    <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a asp-controller="AccountStudents" asp-action="Index"class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Tài khoản sinh viên</p>
+                                </a>
+                            </li>
+                        <li class="nav-item">
+                            <a asp-controller="AccountStudents" asp-action="Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tài khoản giảng viên</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="AccountStudents" asp-action="Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tài khoản Admin</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a asp-controller="Accounts" asp-action="Index" class="nav-link">

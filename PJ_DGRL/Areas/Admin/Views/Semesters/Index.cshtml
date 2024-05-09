@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.Semester>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Semester";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Kì đánh giá</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Bắt đầu kì đánh giá mới</a>
 </p>
 <table class="table">
     <thead>
@@ -56,7 +56,7 @@
                 @Html.DisplayFor(modelItem => item.DateEndLecturer)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Chỉnh sửa</a> |
                 <a asp-controller="QuestionHistory" asp-action="Index" asp-route-semesterId = "@item.Id">Câu hỏi kì này</a>
        
             </td>

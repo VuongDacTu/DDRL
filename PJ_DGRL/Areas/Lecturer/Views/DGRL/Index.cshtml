@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.Student>
+﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.Students>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,6 +6,8 @@
     int i = 0;
 }
 <form asp-action="Index" method="get">
+    <select name="classId" asp-items="@ViewBag.Class">
+    </select>
     <input type="text" name="name" placeholder="Nhập tên sinh viên" @ViewBag.Name>
     <button type="submit">Tìm kiếm</button>
 </form>

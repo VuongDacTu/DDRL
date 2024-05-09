@@ -1,0 +1,46 @@
+﻿@model PJ_DGRL.Models.DGRLModels.AnswerList
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<h1>Tạo mới</h1>
+
+<h4>Câu trả lời</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="text" asp-for="QuestionId" value="@ViewBag.QID" readonly />
+            <div class="form-group">
+                <label asp-for="ContentAnswer" class="control-label"></label>
+                <input asp-for="ContentAnswer" class="form-control" />
+                <span asp-validation-for="ContentAnswer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnswerScore" class="control-label"></label>
+                <input asp-for="AnswerScore" class="form-control" />
+                <span asp-validation-for="AnswerScore" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status">
+                    <option value="1">Sử dụng ngay</option>
+                    <option value="0">Không sử dụng ngay</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-questionId="@ViewBag.QID">Quay lạit</a>
+</div>
+

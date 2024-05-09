@@ -49,7 +49,7 @@ public partial class DbDgrlContext : DbContext
 
     public virtual DbSet<Semester> Semesters { get; set; }
 
-    public virtual DbSet<Student> Students { get; set; }
+    public virtual DbSet<Students> Students { get; set; }
 
     public virtual DbSet<SumaryOfPoint> SumaryOfPoints { get; set; }
 
@@ -388,7 +388,7 @@ public partial class DbDgrlContext : DbContext
                 .IsFixedLength();
         });
 
-        modelBuilder.Entity<Student>(entity =>
+        modelBuilder.Entity<Students>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Student__3214EC075BB1316D");
 

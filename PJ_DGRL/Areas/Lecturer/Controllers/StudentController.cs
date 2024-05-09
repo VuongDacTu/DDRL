@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using PJ_DGRL.Models.DGRLModels;
@@ -19,12 +20,16 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
 			var departmentId = _context.Lecturers.FirstOrDefault(x => x.Id == data.LecturerId).DepartmentId.Value;
 			var Class = _context.Classes.FirstOrDefault();
 			var students = _context.Students.Where(u => u.Class.DepartmentId == departmentId && u.IsActive == 1).ToList();
-			if (!name.IsNullOrEmpty())
-			{
-				students = _context.Students.Where(u => u.Class.DepartmentId == departmentId && u.IsActive == 1 && u.FullName.Contains(name)).ToList();
-			}
+
+			if(!name.IsNullOrEmpty())
+            {
+                students = _context.Students.Where(u => u.Class.DepartmentId == departmentId && u.IsActive == 1 && u.FullName.Contains(name)).ToList();
+            }
+     
+				
+
 			int semesterId = _context.Semesters.FirstOrDefault(x => x.IsActive >= 1)?.Id ?? 0;
-			ViewBag.Check = _context.SumaryOfPoints.Where(x => x.SemesterId == semesterId).ToList();
+            ViewBag.Check = _context.SumaryOfPoints.Where(x => x.SemesterId == semesterId).ToList();
 			return View(students);
 		}
 	}

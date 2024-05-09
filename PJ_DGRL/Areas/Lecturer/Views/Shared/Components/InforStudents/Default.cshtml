@@ -1,0 +1,23 @@
+﻿@model PJ_DGRL.Models.DGRLModels.Students;
+@{
+    int selfPoint = Model.SumaryOfPoints.FirstOrDefault()?.SelfPoint ?? 0;
+}
+<div class="InfStudent">
+    <div class="row row-cols-1">
+        <div class="col" style="font-size:80px"><i class="fa-solid fa-user-tie"></i></div>
+        <div class="col"><b>@Model.FullName</b></div>
+        <div class="col">@Model.Id</div>
+        @if (Model.Gender == false)
+        {
+            <div class="col">Nam</div>
+        }
+        else
+        {
+            <div class="col">Nữ</div>
+        }
+        <div class="col">@Model.Birthday</div>
+        <div class="col">@Model.Phone</div>
+        <div class="col"><b>@selfPoint điểm</b></div>
+        <div class="col"><a class="btn btn-outline-warning" asp-controller="Result" asp-action="Lecturer" asp-route-studentId="@Model.Id">Xem chi tiết</a></div>
+    </div>
+</div>

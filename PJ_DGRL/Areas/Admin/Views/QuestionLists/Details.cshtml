@@ -1,14 +1,13 @@
 ﻿@model PJ_DGRL.Models.DGRLModels.QuestionList
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "DetailsQuestionList";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Details</h1>
 
 <div>
-    <h4>QuestionList</h4>
+    <h4>Chi tiết câu hỏi</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -23,13 +22,13 @@
         @if (Model.Status == 1)
         {
             <dd class = "col-sm-10">
-                <a asp-action="UnSet" asp-route-questionId="@Model.Id" class="btn btn-danger">Bỏ chọn</a>
+                Đang được sử dụng
             </dd>
         }
         else
         {
             <dd class = "col-sm-10">
-                <a asp-action="Set" asp-route-questionId="@Model.Id" class="btn btn-success">Chọn</a>
+                Đang không sử dụng
             </dd>
         }
         <dt class = "col-sm-2">
@@ -74,5 +73,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Quay lại</a>
 </div>

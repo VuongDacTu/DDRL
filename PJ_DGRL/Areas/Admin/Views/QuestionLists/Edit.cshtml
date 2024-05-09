@@ -1,13 +1,13 @@
 ﻿@model PJ_DGRL.Models.DGRLModels.QuestionList
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "QuestionList";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Chỉnh sửa</h1>
 
-<h4>QuestionList</h4>
+<h4>Danh sách câu hỏi</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -31,11 +31,12 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Quay lại</a>
 </div>
 

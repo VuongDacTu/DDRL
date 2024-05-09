@@ -1,0 +1,64 @@
+﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.AccountStudent>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Quản lí tài khoản</h1>
+<form asp-action="Index">
+    <div class="form-group">
+        <input name="stId" value="@ViewBag.stId" class="form-control" placeholder="Nhập mã sinh viên"/>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Tìm kiếm" class="btn btn-outline-secondary" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.Id)
+            </th>
+            <th>
+                
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.Id)
+                </td>
+                @if(item.IsActive == 1)
+                {
+                    <td><a asp-controller="AccountStudents" asp-action="Passive" asp-route-accId ="@item.Id" class="btn btn-outline-danger">Ngừng kích hoạt</a></td>
+                }
+                else
+                {
+                    <td><a asp-controller="AccountStudents" asp-action="Active" asp-route-accId="@item.Id" class="btn btn-outline-success">Kích hoạt</a></td>
+                }
+
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Chi tiết</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

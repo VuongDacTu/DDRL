@@ -20,6 +20,7 @@
             <div class="menuStudent" onclick="w3_open()">☰</div>
         </div>
     </div>
+    @await Component.InvokeAsync("InforStudents", new { id = ViewBag.StudentId })
     <div class="col">
         <h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
         <form asp-action="Lecturer" method="get">

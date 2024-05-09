@@ -1,0 +1,112 @@
+﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.Students>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách sinh viên</h1>
+<form asp-action="Index" method="get">
+    <input type="hidden" value="@ViewBag.DepartmentId" name="departmentId" />
+    <div class="form-group">
+        <select name="classId" class="form-control" asp-items="@ViewBag.ClassId">
+            <option selected>Tất cả</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <input name="name" class="form-control" value="@ViewBag.Name" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Tìm kiếm" class="btn btn-primary" />
+    </div>
+</form>
+<p>
+    <a asp-action="Create">Thêm mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthday)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Position.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthday)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+                @if(item.Gender == true)
+                {
+                    <td>
+                        Nữ
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Nam
+                    </td>
+                }
+                @if(item.IsActive == 1)
+                {
+                    <td>Đang học</td>
+                }else if(item.IsActive == 2)
+                {
+                    <td>Bảo lưu</td>
+                }else if(item.IsActive == 3)
+                {
+                    <td>Tốt nghiệp</td>
+                }
+                else
+                {
+                    <td>Thôi học</td>
+                }
+            <td>
+                @Html.DisplayFor(modelItem => item.Class.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" asp-route-departmentId ="@item.Class.DepartmentId">Sửa</a> |
+                <a asp-action="Details" asp-route-id="@item.Id" asp-route-departmentId="@item.Class.DepartmentId">Chi tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id" asp-route-departmentId="@item.Class.DepartmentId">Xoá</a> |
+                <a asp-controller="AccountStudents" asp-action="Index" asp-route-msv="@item.Id">Tài khoản</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

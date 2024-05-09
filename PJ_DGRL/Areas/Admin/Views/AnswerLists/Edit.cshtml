@@ -1,0 +1,61 @@
+﻿@model PJ_DGRL.Models.DGRLModels.AnswerList
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>AnswerList</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" name="questionId" value="@ViewBag.QID" />
+            <div class="form-group">
+                <label asp-for="QuestionId" class="control-label">Thay đổi câu hỏi</label>
+                <select asp-for="QuestionId" class="form-control" asp-items="ViewBag.QuestionId"></select>
+                <span asp-validation-for="QuestionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContentAnswer" class="control-label">Nội dung</label>
+                <input asp-for="ContentAnswer" class="form-control" />
+                <span asp-validation-for="ContentAnswer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnswerScore" class="control-label">Điểm</label>
+                <input asp-for="AnswerScore" class="form-control" />
+                <span asp-validation-for="AnswerScore" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label">Trạng thái</label>
+                <select asp-for="Status">
+                    <option value="1">Sử dụng ngay</option>
+                    <option value="0">Không sử dụng ngay</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="IsEdit" readonly class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="CreateDate" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" asp-for="Checked" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-questionId="@ViewBag.QID">Back to List</a>
+</div>
+
