@@ -15,23 +15,27 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
         public IActionResult Index(int? semesterId, string? studentId)
         {
             if(semesterId == null) { 
-                semesterId = semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault().Id;        
+                semesterId = semesterId = _context.Semesters.OrderBy(x => x.Id).FirstOrDefault(x => x.IsActive == 1).Id;        
             }
-            var groupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.SelfAnswers.Where(x => x.StudentId == studentId)).ToList();
+            var groupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.SelfAnswers).ToList();
             ViewBag.SumSelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).FirstOrDefault()?.SelfPoint??0;
-            ViewData["Semester"] = _context.Semesters.ToList();
+            ViewData["Semester"] = _context.Semesters.Where(x => x.IsActive == 1).ToList();
+            ViewBag.StudentId = studentId;
+            ViewBag.SemesterId = semesterId;
             return View(groupQuestion);
         }
         public IActionResult Class(int? semesterId, string? studentId)
         {
             if(semesterId == null) { 
-                semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault().Id;
+                semesterId = _context.Semesters.OrderBy(x => x.Id).FirstOrDefault(x => x.IsActive == 1).Id;
             }
-            var groupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.ClassAnswers.Where(x => x.StudentId == studentId)).ToList();
+            var groupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ThenInclude(x => x.ClassAnswers).ToList();
             ViewBag.SumSelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).FirstOrDefault()?.SelfPoint ?? 0;
             ViewBag.SumClassPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).FirstOrDefault()?.ClassPoint ?? 0;
             ViewBag.StudentId = studentId;
-            ViewData["Semester"] = _context.Semesters.ToList();
+            ViewBag.SemesterId = semesterId;
+
+            ViewData["Semester"] = _context.Semesters.Where(x => x.IsActive == 1).ToList();
             return View(groupQuestion);
         }
         public IActionResult Lecturer(int? semesterId, string? studentId)
@@ -43,11 +47,12 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
 
             if (semesterId == null)
             {
-                semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault()?.Id;
+                semesterId = _context.Semesters.OrderBy(x => x.Id).FirstOrDefault(x => x.IsActive == 1)?.Id;
             }
-            var semester = _context.Semesters.Include(u => u.SumaryOfPoints.Where(x => x.StudentId == studentId)).Where(x => x.Id == semesterId).ToList();
+            var semester = _context.Semesters.Include(u => u.SumaryOfPoints.Where(x => x.StudentId == studentId)).Where(x => x.Id == semesterId).Where(x => x.IsActive == 1).ToList();
             ViewBag.StudentId = studentId;
-            ViewData["Semester"] = _context.Semesters.ToList();
+            ViewBag.SemesterId = semesterId;
+            ViewData["Semester"] = _context.Semesters.Where(x => x.IsActive == 1).ToList();
             return View(semester);
         }
         public IActionResult Status() {  return View(); }

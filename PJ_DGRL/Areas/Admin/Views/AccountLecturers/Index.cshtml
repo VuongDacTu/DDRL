@@ -1,0 +1,53 @@
+﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.AccountLecturer>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Tài khoản giảng viên</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Lecturer.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lecturer.FullName)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+                @if(item.IsActive == 1)
+                {
+                    <td>
+                        <a class="btn btn-outline-danger" asp-action="Passive" asp-route-accId ="@item.Id">Dừng kích hoạt</a>
+                    </td>
+                }else 
+                {
+                    <td>
+                        <a class="btn btn-outline-success" asp-action="Active" asp-route-accId="@item.Id">Kích hoạt</a>
+                    </td>
+                }
+
+            <td>
+                    <a asp-action="ResetPassword" asp-route-accId="@item.Id">Đặt lại mật khẩu</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Chi tiết</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

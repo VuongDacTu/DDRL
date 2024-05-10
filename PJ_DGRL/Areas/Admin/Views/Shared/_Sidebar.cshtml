@@ -59,6 +59,14 @@
                 </li>
                 @await Component.InvokeAsync("Department")
                 <li class="nav-item">
+                    <a asp-controller="Lecturers" asp-action="Index" class="nav-link">
+                        <i class="nav-icon fas fa-tree"></i>
+                        <p>
+                            Danh sách giảng viên
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
                         <p>
@@ -74,50 +82,18 @@
                                 </a>
                             </li>
                         <li class="nav-item">
-                            <a asp-controller="AccountStudents" asp-action="Index" class="nav-link">
+                            <a asp-controller="AccountLecturers" asp-action="Index" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tài khoản giảng viên</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-controller="AccountStudents" asp-action="Index" class="nav-link">
+                            <a asp-controller="AccountLecturers" asp-action="Index" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tài khoản Admin</p>
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="Accounts" asp-action="Index" class="nav-link">
-                        <i class="nav-icon fas fa-tree"></i>
-                        <p>
-                            Account
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="Customers" asp-action="Index" class="nav-link">
-                        <i class="nav-icon fas fa-columns"></i>
-                        <p>
-                            Customers
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="Orders" asp-action="Index" class="nav-link">
-                        <i class="nav-icon far fa-plus-square"></i>
-                        <p>
-                            Order
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="OrderDetails" asp-action="Index" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>
-                            Order Detail
-                        </p>
-                    </a>
                 </li>
             </ul>
         </nav>

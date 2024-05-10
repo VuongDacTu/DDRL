@@ -104,5 +104,27 @@
 @*     <script src="~/Admin/dist/js/demo.js"></script> *@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="~/Admin/dist/js/pages/dashboard.js"></script>
+    <script>
+        function compareDates() {
+            var date1 = new Date(document.getElementById('DateOpenStudent').value);
+            var date2 = new Date(document.getElementById('DateEndStudent').value);
+            var date3 = new Date(document.getElementById('DateEndClass').value);
+            var date4 = new Date(document.getElementById('DateEndLecturer').value);
+            var check = true;
+            if (date1 > date2) {
+                alert("Ngày kết thúc đánh giá cho sinh viên phải lớn hơn ngày mở kì đánh giá");
+                check = false;
+            }
+            if (date2 > date3) {
+                alert("Ngày kết thúc đánh giá của cán bộ lớp phải lớn hơn ngày kết thúc của đánh giá cho sinh viên");
+                check = false;
+            } 
+            if (date3 > date4) {
+                alert("Ngày kết thúc đánh giá của giảng viên phải lớn hơn ngày kết thúc đánh giá của cán bộ lớp");
+                check = false;
+            }
+            return check;
+        }
+    </script>
 </body>
 </html>

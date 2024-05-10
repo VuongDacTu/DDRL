@@ -7,6 +7,7 @@
 }
 <form asp-action="Index" method="get">
     <select name="classId" asp-items="@ViewBag.Class">
+        <option selected>Tất cả</option>
     </select>
     <input type="text" name="name" placeholder="Nhập tên sinh viên" @ViewBag.Name>
     <button type="submit">Tìm kiếm</button>

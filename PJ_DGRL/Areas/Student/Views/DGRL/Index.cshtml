@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+    int stt = 1;
 }
 @await Component.InvokeAsync("InforStudent", new { id = ViewBag.Id })
 
@@ -15,13 +16,15 @@
             <input type="hidden" name="semesterId" value="@ViewBag.semesterId" />
             @foreach(var questionGroup in Model)
             {
-                <h4>@questionGroup.Name</h4>
+                <h4> @questionGroup.Name</h4>
+
                 foreach(var question in questionGroup.QuestionLists){
                     
                     var questionList = question.QuestionHisories.Where(x => x.SemesterId == ViewBag.semesterId).FirstOrDefault();
                     if (questionList != null)
                     {
-                        <h5>@question.ContentQuestion</h5>
+                            <h5>@stt.@question.ContentQuestion</h5>
+                            stt++;
                         foreach (var answer in question.AnswerLists)
                         {
                             if (answer.Status == 1)

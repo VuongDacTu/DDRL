@@ -27,7 +27,7 @@
 			<input type="text" asp-for=UserName placeholder="Mã sinh viên" id="username" required="">
 
 			<label for="password">Mật khẩu</label>
-			<input type="password" asp-for=Password placeholder="Mật khẩu" id="password" required="">
+			<input type="password" asp-for=Password placeholder="Mật khẩu" id="password" required="" value="12345">
 			<div class="text-danger"><i class="text-danger">@TempData["errorLogin"]</i></div>
 
 			<input type="submit" value="Đăng nhập">

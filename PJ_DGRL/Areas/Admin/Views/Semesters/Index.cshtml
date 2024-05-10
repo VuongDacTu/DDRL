@@ -14,22 +14,27 @@
     <thead>
         <tr>
             <th>
-                Kì học
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                Năm học
+                @Html.DisplayNameFor(model => model.SchoolYear)
+
             </th>
             <th>
-                Ngày mở 
+                @Html.DisplayNameFor(model => model.DateOpenStudent)
+
             </th>
             <th>
-                Kết thúc tự đánh giá
+                @Html.DisplayNameFor(model => model.DateEndStudent)
+
             </th>
             <th>
-                Kết thúc lớp đánh giá 
+                @Html.DisplayNameFor(model => model.DateEndClass)
+
             </th>
             <th>
-                kết thúc giảng viên đánh giá
+                @Html.DisplayNameFor(model => model.DateEndLecturer)
+
             </th>
             <th></th>
         </tr>
@@ -57,8 +62,8 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Chỉnh sửa</a> |
-                <a asp-controller="QuestionHistory" asp-action="Index" asp-route-semesterId = "@item.Id">Câu hỏi kì này</a>
-       
+                <a asp-controller="QuestionHistory" asp-action="Index" asp-route-semesterId = "@item.Id">Câu hỏi kì này</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Ẩn</a>
             </td>
         </tr>
 }

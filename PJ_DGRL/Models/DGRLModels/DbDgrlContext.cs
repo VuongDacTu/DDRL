@@ -35,7 +35,7 @@ public partial class DbDgrlContext : DbContext
 
     public virtual DbSet<GroupQuestion> GroupQuestions { get; set; }
 
-    public virtual DbSet<Lecturer> Lecturers { get; set; }
+    public virtual DbSet<Lecturers> Lecturers { get; set; }
 
     public virtual DbSet<Position> Positions { get; set; }
 
@@ -252,7 +252,7 @@ public partial class DbDgrlContext : DbContext
             entity.Property(e => e.Name).HasMaxLength(255);
         });
 
-        modelBuilder.Entity<Lecturer>(entity =>
+        modelBuilder.Entity<Lecturers>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Lecturer__3214EC0766CCFF5A");
 

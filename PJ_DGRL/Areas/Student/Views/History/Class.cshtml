@@ -5,6 +5,7 @@
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
     List<ClassAnswer> classAnswers = ViewBag.ClassAnswer;
     List<Semester> semesters = ViewBag.Semester;
+    var semester = semesters.FirstOrDefault(x => x.Id == ViewBag.SemesterId);
 }
 <div class="row">
     <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
@@ -25,7 +26,7 @@
 
      <div class="col">
 
-        <h5>Kết quả đánh giá cho sinh viên @ViewBag.Id</h5>
+        <h5>Kết quả đánh giá kì @semester.Name năm học @semester.SchoolYear</h5>
             <form asp-action="Class" method="get">
                 <label>Chọn kì học:</label>
                 <input type="hidden" name="studentId" value="@ViewBag.Id" />
@@ -41,22 +42,29 @@
         <hr />
         <div class="row">
             <div class="col">
-                @foreach (var questionGroup in Model)
+                @if (ViewBag.SumClassPoint != 0)
                 {
-                    <h4>@questionGroup.Name</h4>
-                    foreach (var question in questionGroup.QuestionLists)
+                    @foreach (var questionGroup in Model)
                     {
-                        <h6>@question.ContentQuestion</h6>
-                        foreach (var answer in question.AnswerLists)
+                        <h4>@questionGroup.Name</h4>
+                        foreach (var question in questionGroup.QuestionLists)
                         {
-                            foreach (var selfAnswer in answer.ClassAnswers)
+                            <h6>@question.ContentQuestion</h6>
+                            foreach (var answer in question.AnswerLists)
                             {
+                                foreach (var selfAnswer in answer.ClassAnswers.Where(x => x.StudentId == ViewBag.Id && x.SemesterId == ViewBag.SemesterId))
+                                {
 
-                                <p class="form-check-label"> - @selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
-                                <br />
+                                    <p class="form-check-label"> - @selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
+                                    <br />
+                                }
                             }
                         }
                     }
+                }
+                else
+                {
+                    <p class="text-danger">Không tồn tại lịch sử đánh giá kì @semester.Name năm học @semester.SchoolYear</p>
                 }
             </div>
             <div class="col">

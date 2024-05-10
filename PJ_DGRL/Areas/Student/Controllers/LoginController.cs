@@ -33,18 +33,27 @@ namespace PJ_DGRL.Areas.Student.Controllers
             }
             //đăng nhập cho sinh viên
             //var pass = GetSHA26Hash(model.Password);
-            var dataLogin = _context.AccountStudents.Where(x => x.UserName.Equals(model.UserName)).FirstOrDefault(x => x.Password.Equals(model.Password));
+            var dataLogin = _context.AccountStudents.Where(x => x.UserName.Equals(model.UserName)).FirstOrDefault(x => x.Password.Equals(model.Password) );
            
             if (dataLogin != null)
             {
-                // Lưu lại session khi đăng nhập thành công
-                HttpContext.Session.SetString("StudentLogin", dataLogin.ToJson());
-                var lTLogin = _context.Students.Where(x => x.Id.Equals(dataLogin.StudentId)).FirstOrDefault(x => x.PositionId.Equals("LT"));
-                if (lTLogin != null)
+                if(dataLogin.IsActive == 1 )
                 {
-					HttpContext.Session.SetString("LTLogin", dataLogin.UserName);
+					// Lưu lại session khi đăng nhập thành công
+					HttpContext.Session.SetString("StudentLogin", dataLogin.ToJson());
+					var lTLogin = _context.Students.Where(x => x.Id.Equals(dataLogin.StudentId)).FirstOrDefault(x => x.PositionId.Equals("LT"));
+					if (lTLogin != null)
+					{
+						HttpContext.Session.SetString("LTLogin", dataLogin.UserName);
+					}
+					return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+					TempData["errorLogin"] = "Tài khoản đã bị khoá";
+					return RedirectToAction("Index", "Login");
 				}
-				return RedirectToAction("Index", "Home");
+
             }
             TempData["errorLogin"] = "Mã sinh viên hoặc mật khẩu không đúng";
             return View(model);

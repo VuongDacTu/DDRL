@@ -22,9 +22,6 @@
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Student.Id)
             </th>
             <th>
@@ -41,11 +38,8 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Password)
+                @Html.DisplayFor(modelItem => item.Student.Id)
             </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Student.Id)
-                </td>
                 @if(item.IsActive == 1)
                 {
                     <td><a asp-controller="AccountStudents" asp-action="Passive" asp-route-accId ="@item.Id" class="btn btn-outline-danger">Ngừng kích hoạt</a></td>
@@ -56,6 +50,7 @@
                 }
 
             <td>
+                <a asp-action="ResetPassword" asp-route-accId="@item.Id">Đặt lại mật khẩu</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Chi tiết</a> 
             </td>
         </tr>

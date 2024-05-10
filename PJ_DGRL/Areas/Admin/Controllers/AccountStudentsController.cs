@@ -102,5 +102,11 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        public IActionResult ResetPassword(int? accId)
+        {
+            _context.AccountStudents.FirstOrDefault(x => x.Id == accId).Password = "12345";
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

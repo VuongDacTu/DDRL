@@ -22,12 +22,17 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // GET: Admin/Semesters
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Semesters.ToListAsync());
+            return View(await _context.Semesters.Where(x => x.IsActive == 1).ToListAsync());
         }
 
         // GET: Admin/Semesters/Create
         public IActionResult Create()
         {
+            var semester = _context.Semesters.FirstOrDefault(x => x.DateEndLecturer > DateTime.Now);
+            if(semester != null)
+            {
+                return RedirectToAction("Status");
+            }
             ViewBag.Questions = _context.QuestionLists.Include(x => x.AnswerLists.Where(x => x.Status == 1)).Where(x => x.Status == 1).ToList();
             ViewBag.SchoolYear = (DateTime.Now.Year - 1).ToString() + " - " + (DateTime.Now.Year).ToString();
             return View();
@@ -43,6 +48,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var admin = JsonConvert.DeserializeObject<AccountAdmin>(HttpContext.Session.GetString("AdminLogin"));
+                semester.IsActive = 1;
                 _context.Add(semester);
                 await _context.SaveChangesAsync();
                 var Questions = _context.QuestionLists.Include(x => x.AnswerLists.Where(x => x.Status == 1)).Where(x => x.Status == 1).ToList();
@@ -59,6 +65,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
 
                     };
                     _context.QuestionHisories.Add(questionHisory);
+
                     item.IsEdit = true;
                     foreach (var item2 in item.AnswerLists)
                     {
@@ -103,6 +110,11 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             {
                 try
                 {
+                    var s = _context.Semesters.Where(x => x.Id != id).FirstOrDefault(x => x.DateEndLecturer > DateTime.Now);
+                    if (s != null)
+                    {
+                        return RedirectToAction("Status");
+                    }
                     _context.Update(semester);
                     await _context.SaveChangesAsync();
                 }
@@ -127,7 +139,43 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
         public IActionResult Status()
         {
-            return View();
+            var semester = _context.Semesters.FirstOrDefault(x => x.DateEndLecturer > DateTime.Now);
+            return View(semester);
         }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var semester = await _context.Semesters
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (semester.DateEndLecturer > DateTime.Now)
+            {
+                RedirectToAction("Status");
+            }
+            if (semester == null)
+            {
+                return NotFound();
+            }
+
+            return View(semester);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var semester = await _context.Semesters.FindAsync(id);
+            if (semester != null)
+            {
+                semester.IsActive = 0;
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

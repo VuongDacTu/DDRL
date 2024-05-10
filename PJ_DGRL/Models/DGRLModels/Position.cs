@@ -10,7 +10,7 @@ public partial class Position
     [DisplayName("Chức vụ")]
     public string? Name { get; set; }
 
-    public virtual ICollection<Lecturer> Lecturers { get; set; } = new List<Lecturer>();
+    public virtual ICollection<Lecturers> Lecturers { get; set; } = new List<Lecturers>();
 
     public virtual ICollection<Students> Students { get; set; } = new List<Students>();
 }

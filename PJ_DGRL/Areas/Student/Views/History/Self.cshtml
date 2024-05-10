@@ -5,7 +5,8 @@
     ViewData["Title"] = "kết quả đánh giá";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
     List<Semester> semesters = ViewBag.Semester;
-
+    var semester = semesters.FirstOrDefault(x => x.Id == ViewBag.SemesterId);
+    int stt = 1;
 }
 <form asp-action="Self" method="get">
     <label>Chọn kì học:</label>
@@ -20,31 +21,56 @@
 </form>
 @await Component.InvokeAsync("InforStudent", new { id = ViewBag.Id })
 
-<h4>Đáp án bạn đã trả lời</h4>
+<h4>Đáp án bạn đã trả lời kì @semester.Name năm học @semester.SchoolYear</h4>
+<div>
+    <h2>Tổng điểm tự đánh giá: @ViewBag.SumSelfPoint</h2>
+</div>
 <hr />
 <div class="row">
-    <div class="col">
+    <div>
+        @if (ViewBag.SumSelfPoint != 0){
             @foreach (var questionGroup in Model)
             {
                 <h3>@questionGroup.Name</h3>
                 foreach (var question in questionGroup.QuestionLists)
                 {
-                    <h5>@question.ContentQuestion</h5>
+                    <h5>@stt. @question.ContentQuestion</h5>
+                    stt++;
                     foreach (var answer in question.AnswerLists)
                     {
-                        foreach (var selfAnswer in answer.SelfAnswers){
 
-                        <p class="form-check-label">@selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
-                                <br />
-            
+                        if (answer.Status == 1)
+                        {
+                            bool check;
+                            if (answer.Checked == 1)
+                            {
+                                check = true;
+                            }
+                            else
+                            {
+                                check = false;
+                            }
+                            if (question.TypeQuestionId == 1)
+                            {
+                                <input class="form-check-input" type="radio" id="answerId[@answer.Id]" checked="@check" value="@answer.Id" name="answerIds[@question.Id]" onclick="return false;">
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" value="@answer.Id" checked="@check" name="answerId[@answer.Id]" id="answerId[@answer.Id]" onclick="return false;">
+                            }
+                            <label class="form-check-label" for="answerId[@answer.Id]">@answer.ContentAnswer (@answer.AnswerScore điểm)</label>
+                            <br />
                         }
                     }
                 }
             }
-    </div>
-    <div class="col">
-        <h2>Tổng điểm tự đánh giá: @ViewBag.SumSelfPoint</h2>
-    </div>
+        }
+        else
+            {
+                <p class="text-danger">Sinh viên đã không tự đánh giá kì @semester.Name năm học @semester.SchoolYear</p>
+            }
+            </div>
+
 </div>
 
 

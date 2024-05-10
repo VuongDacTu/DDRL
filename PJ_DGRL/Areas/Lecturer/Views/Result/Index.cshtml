@@ -6,6 +6,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Lecturer/Views/Shared/_LayoutLecturer.cshtml";
     List<Semester> semesters = ViewBag.Semester;
+    var semester = semesters.FirstOrDefault(x => x.Id == ViewBag.SemesterId);
 }
 <div class="row">
     <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
@@ -21,7 +22,7 @@
             <div class="menuStudent" onclick="w3_open()">☰</div>
         </div>
     </div>
-    @await Component.InvokeAsync("InforStudents", new { id = ViewBag.StudentId })
+    @await Component.InvokeAsync("InforStudents", new { id = ViewBag.StudentId})
     <div class="col">
         <h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
         <form asp-action="Index" method="get">
@@ -36,27 +37,34 @@
             <input type="submit" value="Tìm kiếm" />
         </form>
 
-        <h4>Đáp án sinh viên đã trả lời</h4>
+        <h4>Đáp án sinh viên đã trả lời trong kì @semester.Name năm học @semester.SchoolYear</h4>
         <hr />
         <div class="row">
             <div class="col">
-                @foreach (var questionGroup in Model)
+                @if (ViewBag.SumSelfPoint != 0)
                 {
-                    <h4>@questionGroup.Name</h4>
-                    foreach (var question in questionGroup.QuestionLists)
+                    @foreach (var questionGroup in Model)
                     {
-                        <h6>@question.ContentQuestion</h6>
-                        foreach (var answer in question.AnswerLists)
+                        <h4>@questionGroup.Name</h4>
+                        foreach (var question in questionGroup.QuestionLists)
                         {
-                            foreach (var selfAnswer in answer.SelfAnswers)
+                            <h6>@question.ContentQuestion</h6>
+                            foreach (var answer in question.AnswerLists)
                             {
+                                foreach (var selfAnswer in answer.SelfAnswers.Where(x => x.StudentId == ViewBag.StudentId && x.SemesterId == ViewBag.SemesterId))
+                                {
 
-                                <p class="form-check-label">@selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
-                                <br />
+                                    <p class="form-check-label">@selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
+                                    <br />
 
+                                }
                             }
                         }
                     }
+                }
+                else
+                {
+                    <p class ="text-danger">Sinh viên đã không tự đánh giá kì @semester.Name năm học @semester.SchoolYear</p>
                 }
             </div>
             <div class="col">

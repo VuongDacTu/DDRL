@@ -14,5 +14,5 @@ public partial class Department
 
     public virtual ICollection<Class> Classes { get; set; } = new List<Class>();
 
-    public virtual ICollection<Lecturer> Lecturers { get; set; } = new List<Lecturer>();
+    public virtual ICollection<Lecturers> Lecturers { get; set; } = new List<Lecturers>();
 }

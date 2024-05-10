@@ -5,14 +5,15 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Sửa thời gian</h1>
 
-<h4>Semester</h4>
+<h4>Kì đánh giá</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IsActive" value="1" />
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <input type="hidden" asp-for="Name" class="form-control" />
@@ -22,26 +23,26 @@
             </div>
             <div class="form-group">
                 <label asp-for="DateOpenStudent" class="control-label">Ngày mở</label>
-                <input asp-for="DateOpenStudent" class="form-control" />
+                <input asp-for="DateOpenStudent" id="DateOpenStudent" class="form-control" />
                 <span asp-validation-for="DateOpenStudent" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateEndStudent" class="control-label">Ngày kết thúc tự đánh giá</label>
-                <input asp-for="DateEndStudent" class="form-control" />
+                <input asp-for="DateEndStudent" id="DateEndStudent" class="form-control" />
                 <span asp-validation-for="DateEndStudent" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateEndClass" class="control-label">Ngày kết thúc cán bộ lớp đánh giá</label>
-                <input asp-for="DateEndClass" class="form-control" />
+                <input asp-for="DateEndClass" id="DateEndClass" class="form-control" />
                 <span asp-validation-for="DateEndClass" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateEndLecturer" class="control-label">Ngày kết thúc giảng viên đánh giá</label>
-                <input asp-for="DateEndLecturer" class="form-control" />
+                <input asp-for="DateEndLecturer" id="DateEndLecturer" class="form-control" />
                 <span asp-validation-for="DateEndLecturer" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <button type="submit" onclick="return compareDates();" class="btn btn-primary">Lưu lại</button>
             </div>
         </form>
     </div>

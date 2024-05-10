@@ -22,10 +22,11 @@
     </div>
     @await Component.InvokeAsync("InforStudents", new { id = ViewBag.StudentId })
     <div class="col">
-        <h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
+        <h5>Kết quả đánh giá</h5>
+        
         <form asp-action="Lecturer" method="get">
             <label>Chọn kì học:</label>
-            <input type="hidden" name="studentId" value="@ViewBag.StudentId" />
+            <input type="hidden" name="studentId" value="@ViewBag.StudentId"/>
             <select name="semesterId" class="form-control">
                 @foreach (var item in semesters)
                 {
@@ -39,14 +40,20 @@
             <div class="col">
                 @foreach (var item in Model)
                 {
+                    <h4>Kết quả đánh giá kì @item.Name năm học @item.SchoolYear</h4>
                     foreach (var i in item.SumaryOfPoints)
                     {
-                        <h6>Điểm tự đánh giá: @i.SelfPoint <a asp-controller="Result" asp-action="Index" asp-route-studentId="@ViewBag.StudentId">Xem chi tiết</a></h6>
-                        <h6>Điểm lớp trưởng đánh giá: @i.ClassPoint <a asp-controller="Result" asp-action="Class" asp-route-studentId="@ViewBag.StudentId">Xem chi tiết</a></h6>
+                        <h6>Điểm tự đánh giá: @i.SelfPoint <a asp-controller="Result" asp-action="Index" asp-route-studentId="@ViewBag.StudentId" asp-route-semesterId="@item.Id">Xem chi tiết</a></h6>
+                        <h6>Điểm lớp trưởng đánh giá: @i.ClassPoint <a asp-controller="Result" asp-action="Class" asp-route-studentId="@ViewBag.StudentId" asp-route-semesterId="@item.Id">Xem chi tiết</a></h6>
                         <h6>Điểm giảng viên đánh giá: @i.LecturerPoint</h6>
                         <h6>Xếp loại: @i.Classify</h6>
                     }
+                    if(item.SumaryOfPoints.FirstOrDefault() == null)
+                    {
+                        <p class="text-danger">Sinh viên đã không đánh giá trong kì @item.Name năm học @item.SchoolYear !!!</p>
+                    }
                 }
+                
             </div>
         </div>
 

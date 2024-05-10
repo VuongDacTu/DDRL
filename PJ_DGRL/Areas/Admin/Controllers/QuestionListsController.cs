@@ -24,13 +24,13 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var dbDgrlContext = _context.QuestionLists.Include(q => q.GroupQuestion).Include(q => q.TypeQuestion);
-            ViewBag.Semester = _context.Semesters.ToList();
+            ViewBag.Semester = _context.Semesters.Where(x => x.IsActive == 1).ToList();
             return View(await dbDgrlContext.ToListAsync());
         }
         // GET: Admin/QuestionLists
         public async Task<IActionResult> List()
         {
-            ViewBag.Semester = _context.Semesters.ToList();
+            ViewBag.Semester = _context.Semesters.Where(x => x.IsActive == 1).ToList();
             var dbDgrlContext = _context.GroupQuestions.Include(q => q.QuestionLists).ThenInclude(q => q.AnswerLists);
             return View(await dbDgrlContext.ToListAsync());
         }

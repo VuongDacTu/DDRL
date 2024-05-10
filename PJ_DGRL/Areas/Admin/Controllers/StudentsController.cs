@@ -138,6 +138,16 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 {
                     _context.Update(student);
                     await _context.SaveChangesAsync();
+                    var st = _context.Students.FirstOrDefault(x => x.Id == id);
+                    if(st.IsActive == 1)
+                    {
+                        _context.AccountStudents.FirstOrDefault(x => x.StudentId == id).IsActive = 1;
+                    }
+                    else
+                    {
+                        _context.AccountStudents.FirstOrDefault(x => x.StudentId == id).IsActive = 0;
+                    }
+                    _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
