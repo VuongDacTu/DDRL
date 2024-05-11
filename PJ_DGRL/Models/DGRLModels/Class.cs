@@ -15,7 +15,7 @@ public partial class Class
     public int? DepartmentId { get; set; }
     [DisplayName("Trạng thái")]
     public byte? IsActive { get; set; }
-
+    public bool? IsDelete { get; set; }
     public virtual Course? Course { get; set; }
 
     public virtual Department? Department { get; set; }

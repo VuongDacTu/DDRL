@@ -63,7 +63,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // GET: Admin/Students/Create
         public IActionResult Create(int? departmentId)
         {
-            ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "Name");
+            ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == false), "Id", "Name");
             ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Id != "GV"), "Id", "Name");
             ViewBag.DepartmentId = departmentId;
             return View();
@@ -95,7 +95,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "Name", student.ClassId);
+            ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == false), "Id", "Name", student.ClassId);
             ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Id != "GV"), "Id", "Name", student.PositionId);
             return View(student);
         }
@@ -113,7 +113,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "Name", student.ClassId);
+            ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == false), "Id", "Name", student.ClassId);
             ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Id != "GV"), "Id", "Name", student.PositionId);
             ViewBag.DepartmentId = departmentId;
 
@@ -162,7 +162,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index), new {departmentId = departmentId});
             }
-            ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "Name", student.ClassId);
+            ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == false), "Id", "Name", student.ClassId);
             ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Id !="GV"), "Id", "Name", student.PositionId);
             return RedirectToAction(nameof(Index), new { departmentId = departmentId });
         }

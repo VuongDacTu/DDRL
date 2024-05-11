@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
@@ -19,9 +20,39 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
 
         // GET: Admin/Classes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? departmentId, string? coursesId,string? name)
         {
-            var dbDgrlContext = _context.Classes.Include(@c => @c.Course).Include(@c => @c.Department);
+            var c = _context.Classes.Include(@c => @c.Course).Include(@c => @c.Department);
+            var dbDgrlContext = c.Where(x => x.IsDelete == false);
+            if(departmentId != null)
+            {
+                dbDgrlContext = c.Where(x => x.IsDelete == false && x.DepartmentId == departmentId);
+                if(coursesId != null)
+                {
+                    dbDgrlContext = c.Where(x => x.IsDelete == false && x.DepartmentId == departmentId && x.CourseId == coursesId);
+                    if (!name.IsNullOrEmpty())
+                    {
+                        dbDgrlContext =c.Where(x => x.IsDelete == false && x.DepartmentId == departmentId && x.CourseId == coursesId && x.Name.Contains(name));
+                    }
+                }
+                else if (!name.IsNullOrEmpty())
+                {
+                    dbDgrlContext = c.Where(x => x.IsDelete == false && x.DepartmentId == departmentId && x.Name.Contains(name));
+                }
+            }
+            else if (coursesId != null)
+            {
+                dbDgrlContext = c.Where(x => x.IsDelete == false && x.CourseId == coursesId);
+                if (!name.IsNullOrEmpty())
+                {
+                    dbDgrlContext = c.Where(x => x.IsDelete == false && x.CourseId == coursesId && x.Name.Contains(name));
+                }
+            }else if (!name.IsNullOrEmpty())
+            {
+                dbDgrlContext = c.Where(x => x.IsDelete == false && x.Name.Contains(name));
+            }
+            ViewBag.DepartmentId = new SelectList(_context.Departments, "Id", "Name");
+            ViewBag.CoursesId = new SelectList(_context.Courses.Where(x => x.IsDelete == false), "Id", "Id");
             return View(await dbDgrlContext.ToListAsync());
         }
 
@@ -48,7 +79,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // GET: Admin/Classes/Create
         public IActionResult Create()
         {
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id");
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name");
             return View();
         }
@@ -62,12 +93,12 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                @class.IsDelete = false;
                 _context.Add(@class);
-
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", @class.CourseId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", @class.CourseId);
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", @class.DepartmentId);
             return View(@class);
         }
@@ -78,11 +109,6 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             if (id == null)
             {
                 return NotFound();
-            }
-            var student = _context.Students.FirstOrDefault(x => x.ClassId == id);
-            if (student != null)
-            {
-                return RedirectToAction("Status");
             }
             var @class = await _context.Classes
                 .Include(@c => @c.Course)
@@ -104,7 +130,16 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             var @class = await _context.Classes.FindAsync(id);
             if (@class != null)
             {
-                _context.Classes.Remove(@class);
+                var student = _context.Students.Where(x => x.ClassId == id).ToList();
+                @class.IsDelete = true;
+                foreach(var item in student)
+                {
+                    var acc = _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id);
+                    item.IsActive = 3;
+                    item.IsDelete = true;
+                    acc.IsDelete = true;
+                    acc.IsActive = 0;
+                }
             }
 
             await _context.SaveChangesAsync();
@@ -119,5 +154,30 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult Passive(int? classId)
+        {
+            var c = _context.Classes.FirstOrDefault(x => x.Id == classId);
+            var student = _context.Students.Where(x => x.ClassId == classId).ToList();
+            c.IsActive = 0;
+            foreach(var item in student)
+            {
+                _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id).IsActive = 0;
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public IActionResult Active(int? classId)
+        {
+            var c = _context.Classes.FirstOrDefault(x => x.Id == classId);
+            var student = _context.Students.Where(x => x.ClassId == classId).ToList();
+            c.IsActive = 1;
+            foreach (var item in student)
+            {
+                _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id).IsActive = 1;
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }

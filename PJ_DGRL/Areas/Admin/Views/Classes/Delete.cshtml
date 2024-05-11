@@ -5,11 +5,12 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Delete</h1>
+<h1>Xác nhận hoàn thành</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Bạn có chắc chắn muốn hoàn thành lớp học</h3>
+<p class="text-danger">Khi hoàn 1 lớp học các học sinh và tài khoản của học sinh cũng sẽ bị ẩn và dừng hoạt động</p>
 <div>
-    <h4>Class</h4>
+    <h4>Lớp học</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -21,26 +22,35 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IsActive)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
+        @if (Model.IsActive == 1)
+        {
+            <dd class="col-sm-10">
+                Đang hoạt động
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                Đã dừng hoạt động
+            </dd>
+        }
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Course)
+            @Html.DisplayNameFor(model => model.Course.Name)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Course.Id)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Department)
+            @Html.DisplayNameFor(model => model.Department.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Department.Id)
+            @Html.DisplayFor(model => model.Department.Name)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="hidden" asp-for="Id"/>
+        <input type="submit" value="Xác nhận" class="btn btn-danger" /> |
+        <a asp-action="Index">Quay lại</a>
     </form>
 </div>
