@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Semester";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+
 }
 
 <h1>Kì đánh giá</h1>
@@ -41,23 +43,29 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
+        string color = "";
+        @if (item.DateEndLecturer > DateTime.Now)
+        {
+            color = "red";
+        }
+
         <tr>
-            <td>
+            <td style="color:@color;">
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
+                <td style="color:@color;">
                 @Html.DisplayFor(modelItem => item.SchoolYear)
             </td>
-            <td>
+            <td style="color:@color;">
                 @Html.DisplayFor(modelItem => item.DateOpenStudent)
             </td>
-            <td>
+                <td style="color:@color;">
                 @Html.DisplayFor(modelItem => item.DateEndStudent)
             </td>
-            <td>
+            <td style="color:@color;">
                 @Html.DisplayFor(modelItem => item.DateEndClass)
             </td>
-            <td>
+                <td style="color:@color;">
                 @Html.DisplayFor(modelItem => item.DateEndLecturer)
             </td>
             <td>

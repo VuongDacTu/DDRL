@@ -8,8 +8,16 @@
     var semester = semesters.FirstOrDefault(x => x.Id == ViewBag.SemesterId);
     int stt = 1;
 }
+<h3 class="text-center">Kết quả tự đánh giá kì @semester.Name năm học @semester.SchoolYear</h3>
+
+@await Component.InvokeAsync("InforStudent", new { id = ViewBag.Id })
+
+
+<div>
+    <h5 style="color:green;">Tổng điểm tự đánh giá: @ViewBag.SumSelfPoint</h5>
+</div>
+<hr />
 <form asp-action="Self" method="get">
-    <label>Chọn kì học:</label>
     <input type="hidden" name="studentId" value="@ViewBag.Id" />
     <select name="semesterId" class="form-control">
         @foreach (var item in semesters)
@@ -17,30 +25,21 @@
             <option value="@item.Id">Kì @item.Name - Năm học @item.SchoolYear</option>
         }
     </select>
-    <input type="submit" value="Tìm kiếm" />
+    <input type="submit" value="Tìm kiếm" class="btn btn-outline-secondary " />
 </form>
-@await Component.InvokeAsync("InforStudent", new { id = ViewBag.Id })
-
-<h4>Đáp án bạn đã trả lời kì @semester.Name năm học @semester.SchoolYear</h4>
-<div>
-    <h2>Tổng điểm tự đánh giá: @ViewBag.SumSelfPoint</h2>
-</div>
-<hr />
 <div class="row">
     <div>
         @if (ViewBag.SumSelfPoint != 0){
             @foreach (var questionGroup in Model)
             {
-                <h3>@questionGroup.Name</h3>
+                <h4>@questionGroup.Name</h4>
                 foreach (var question in questionGroup.QuestionLists)
                 {
                     <h5>@stt. @question.ContentQuestion</h5>
                     stt++;
                     foreach (var answer in question.AnswerLists)
                     {
-
-                        if (answer.Status == 1)
-                        {
+                        if(answer.IsEdit == true){
                             bool check;
                             if (answer.Checked == 1)
                             {
@@ -61,13 +60,14 @@
                             <label class="form-check-label" for="answerId[@answer.Id]">@answer.ContentAnswer (@answer.AnswerScore điểm)</label>
                             <br />
                         }
+                       
                     }
                 }
             }
         }
         else
             {
-                <p class="text-danger">Sinh viên đã không tự đánh giá kì @semester.Name năm học @semester.SchoolYear</p>
+                <p class="text-danger">Không tồn tại kết quả tự đánh giá kì @semester.Name năm học @semester.SchoolYear</p>
             }
             </div>
 

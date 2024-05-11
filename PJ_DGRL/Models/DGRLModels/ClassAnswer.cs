@@ -13,7 +13,6 @@ public partial class ClassAnswer
     public int? SemesterId { get; set; }
 
     public string? CreateBy { get; set; }
-
     public DateTime? CreateDate { get; set; }
 
     public virtual AnswerList? Answer { get; set; }

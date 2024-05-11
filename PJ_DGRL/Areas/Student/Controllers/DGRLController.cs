@@ -26,13 +26,10 @@ namespace PJ_DGRL.Areas.Student.Controllers
             }
             var student = JsonConvert.DeserializeObject<AccountStudent>(ss);
 
-            // kiểm tra trạng thái acc
-            int iActive = _context.AccountStudents.Where(u => u.UserName == student.UserName).FirstOrDefault().IsActive.Value;
-            ViewBag.Iactive = iActive;
             // set lại checked cho Answer
             var answers = _context.AnswerLists.ToList();
             int semesterId = _context.Semesters.FirstOrDefault(x => x.DateOpenStudent <= DateTime.Now && x.DateEndStudent >= DateTime.Now)?.Id??0;
-            ViewBag.semesterId = semesterId;
+            
             var selfAnswers = _context.SelfAnswers.Where(u => u.StudentId == student.UserName && u.SemesterId == semesterId).ToList();
             foreach (var item in answers)
             {
@@ -43,7 +40,8 @@ namespace PJ_DGRL.Areas.Student.Controllers
                 _context.AnswerLists.Where(u => u.Id == item.AnswerId).FirstOrDefault().Checked = 1;
 
             }
-
+            ViewBag.SemesterId = semesterId;
+            ViewBag.Semester = _context.Semesters.FirstOrDefault(x => x.Id == semesterId);
             return View(groupQuestions);
         }
         public IActionResult Index1()

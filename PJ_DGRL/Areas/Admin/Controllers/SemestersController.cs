@@ -85,7 +85,11 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            var s = _context.Semesters.Where(x => x.Id != id).FirstOrDefault(x => x.DateEndLecturer > DateTime.Now);
+            if (s != null)
+            {
+                return RedirectToAction("Status");
+            }
             var semester = await _context.Semesters.FindAsync(id);
             if (semester == null)
             {
@@ -110,11 +114,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             {
                 try
                 {
-                    var s = _context.Semesters.Where(x => x.Id != id).FirstOrDefault(x => x.DateEndLecturer > DateTime.Now);
-                    if (s != null)
-                    {
-                        return RedirectToAction("Status");
-                    }
+    
                     _context.Update(semester);
                     await _context.SaveChangesAsync();
                 }
@@ -147,6 +147,11 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             if (id == null)
             {
                 return NotFound();
+            }
+            var s = _context.Semesters.Where(x => x.Id == id).FirstOrDefault(x => x.DateEndLecturer > DateTime.Now);
+            if (s != null)
+            {
+                return RedirectToAction("Status");
             }
 
             var semester = await _context.Semesters

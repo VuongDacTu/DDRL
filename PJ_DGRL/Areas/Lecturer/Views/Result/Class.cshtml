@@ -1,9 +1,9 @@
 ﻿@using PJ_DGRL.Models.DGRLModels
 @model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "kết quả đánh giá";
     Layout = "~/Areas/Lecturer/Views/Shared/_LayoutLecturer.cshtml";
+    List<ClassAnswer> classAnswers = ViewBag.ClassAnswer;
     List<Semester> semesters = ViewBag.Semester;
     var semester = semesters.Where(x => x.Id == ViewBag.SemesterId).FirstOrDefault();
 }
@@ -15,18 +15,24 @@
             @await Component.InvokeAsync("ST")
         </div>
     </nav>
+
     <!-- Top menu -->
     <div class="">
         <div class="" style="max-width:1200px;margin:auto">
             <div class="menuStudent" onclick="w3_open()">☰</div>
         </div>
     </div>
-    @await Component.InvokeAsync("InforStudents", new { id = ViewBag.StudentId })
-    <div class="col">
-        <h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
+    @await Component.InvokeAsync("InforStudents", new { id = ViewBag.Id })
+    <h4 class="text-center">Kết quả cán bộ lớp đánh giá kì @semester.Name năm học @semester.SchoolYear</h4>
+    <div class="">
+        <h5 style="color:green;">Tổng điểm tự đánh giá: @ViewBag.SumSelfPoint  <a asp-area="Student" asp-controller="History" asp-action="Self" asp-route-studentId="@ViewBag.StudentId">Xem chi tiết</a></h5>
+        <h5 style="color:green;">Tổng điểm cán bộ lớp đánh giá cho sinh viên: @ViewBag.SumClassPoint</h5>
+    </div>
+     <div class="col">
+        <hr />
         <form asp-action="Class" method="get">
             <label>Chọn kì học:</label>
-            <input type="hidden" name="studentId" value="@ViewBag.StudentId" />
+            <input type="hidden" name="studentId" value="@ViewBag.Id" />
             <select name="semesterId" class="form-control">
                 @foreach (var item in semesters)
                 {
@@ -35,11 +41,8 @@
             </select>
             <input type="submit" value="Tìm kiếm" />
         </form>
-
-        <h4>Đáp án cán bộ lớp đánh giá kì @semester.Name năm học @semester.SchoolYear</h4>
-        <hr />
         <div class="row">
-            <div class="col">
+            <div class="">
                 @if (ViewBag.SumClassPoint != 0)
                 {
                     @foreach (var questionGroup in Model)
@@ -50,9 +53,25 @@
                             <h6>@question.ContentQuestion</h6>
                             foreach (var answer in question.AnswerLists)
                             {
-                                foreach (var selfAnswer in answer.ClassAnswers.Where(x => x.StudentId == ViewBag.StudentId && x.SemesterId == ViewBag.SemesterId))
-                                {
-                                    <p class="form-check-label">@selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
+                                if(answer.IsEdit == true){
+                                    bool check;
+                                    if (answer.Checked == 1)
+                                    {
+                                        check = true;
+                                    }
+                                    else
+                                    {
+                                        check = false;
+                                    }
+                                    if (question.TypeQuestionId == 1)
+                                    {
+                                        <input class="form-check-input" type="radio" id="answerId[@answer.Id]" checked="@check" value="@answer.Id" name="answerIds[@question.Id]" onclick="return false;">
+                                    }
+                                    else
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="@answer.Id" checked="@check" name="answerId[@answer.Id]" id="answerId[@answer.Id]" onclick="return false;">
+                                    }
+                                    <label class="form-check-label" for="answerId[@answer.Id]">@answer.ContentAnswer (@answer.AnswerScore điểm)</label>
                                     <br />
                                 }
                             }
@@ -61,18 +80,12 @@
                 }
                 else
                 {
-                    <p class="text-danger">Không tồn tại đánh giá kì @semester.Name năm học @semester.SchoolYear</p>
+                    <p class="text-danger">Không tồn tại kết quả đánh giá kì @semester.Name năm học @semester.SchoolYear</p>
                 }
             </div>
-            <div class="col">
-                <h2>Tổng điểm tự đánh giá: @ViewBag.SumSelfPoint</h2>
-                <h2>Tổng điểm lớp trưởng đánh giá: @ViewBag.SumClassPoint</h2>
-            </div>
+
         </div>
 
-
-
-
     </div>
-</div>
 
+</div>

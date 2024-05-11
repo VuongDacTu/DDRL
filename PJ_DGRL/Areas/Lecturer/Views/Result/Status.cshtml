@@ -3,14 +3,10 @@
     ViewData["Title"] = "Status";
     Layout = "~/Areas/Lecturer/Views/Shared/_LayoutLecturer.cshtml";
 }
+<p class="text-danger">Chọn sinh viên để xem lịch sử đánh giá</p>
 <div class="row">
         <div class="col ">
             @await Component.InvokeAsync("ST")
         </div>
-    <div class="col">
-        <div class="alert alert-default-info">
-            <p>Chọn sinh viên để xem lịch sử đánh giá</p>
-        </div>
-    </div>
 </div>
 

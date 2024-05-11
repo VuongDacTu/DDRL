@@ -41,7 +41,7 @@
                 @foreach (var item in Model)
                 {
                     <h4>Kết quả đánh giá kì @item.Name năm học @item.SchoolYear</h4>
-                    foreach (var i in item.SumaryOfPoints)
+                    foreach (var i in item.SumaryOfPoints.Where(x => x.StudentId == ViewBag.StudentId))
                     {
                         <h6>Điểm tự đánh giá: @i.SelfPoint <a asp-controller="Result" asp-action="Index" asp-route-studentId="@ViewBag.StudentId" asp-route-semesterId="@item.Id">Xem chi tiết</a></h6>
                         <h6>Điểm lớp trưởng đánh giá: @i.ClassPoint <a asp-controller="Result" asp-action="Class" asp-route-studentId="@ViewBag.StudentId" asp-route-semesterId="@item.Id">Xem chi tiết</a></h6>

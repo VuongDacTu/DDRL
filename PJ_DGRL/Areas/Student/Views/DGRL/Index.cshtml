@@ -1,21 +1,24 @@
-﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
+﻿@using PJ_DGRL.Models.DGRLModels
+@model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
     int stt = 1;
+    Semester semester = ViewBag.Semester;
 }
 @await Component.InvokeAsync("InforStudent", new { id = ViewBag.Id })
 
-@if (ViewBag.semesterId != 0){
-<h4>Vui lòng trả lời đúng và đầy đủ các câu hỏi!!</h4>
+@if (ViewBag.SemesterId != 0){
+<h2 class="text-center">Câu hỏi kì @semester.Name năm học @semester.SchoolYear</h2>
+
 <hr />
 <div class="row">
     <div class="">
             <form asp-action="Submit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" name="semesterId" value="@ViewBag.semesterId" />
+            <input type="hidden" name="semesterId" value="@ViewBag.SemesterId" />
             @foreach(var questionGroup in Model)
-            {
+                {
                 <h4> @questionGroup.Name</h4>
 
                 foreach(var question in questionGroup.QuestionLists){

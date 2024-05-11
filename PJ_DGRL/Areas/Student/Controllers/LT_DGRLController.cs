@@ -21,7 +21,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
             var groupQuestions = _context.GroupQuestions.Include(u => u.QuestionLists).ThenInclude(u => u.QuestionHisories).Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ToList();
             // lấy ra sinh viên đang đăng nhập lưu trong session
             var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
-			int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndStudent < DateTime.Now && x.DateEndClass >= DateTime.Now)?.Id ?? 0;
+			int semesterId = _context.Semesters.FirstOrDefault(x => x.DateEndStudent < DateTime.Now && x.DateEndClass > DateTime.Now)?.Id ?? 0;
 
             if (semesterId == 0)
             {
@@ -49,6 +49,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
             ViewBag.Student = _context.Students.Where(x => x.Id == studentId).FirstOrDefault();
             ViewBag.semesterId = semesterId;
             ViewBag.Id = studentId;
+            ViewBag.Semester = _context.Semesters.FirstOrDefault(x => x.Id == semesterId);
             return View(groupQuestions);
 		}
 		public IActionResult submit(string studentId, Dictionary<int, int> AnswerIds, Dictionary<int, int> AnswerId)
@@ -137,9 +138,9 @@ namespace PJ_DGRL.Areas.Student.Controllers
                     point.UpdateDate = DateTime.Now;
                 }
                 _context.SaveChanges();
-                return RedirectToAction("Index", "LT_DGRL");
+                return RedirectToAction("Status", "LT_DGRL");
             }
-            return RedirectToAction("Status", "LT_DGRL");
+            return RedirectToAction("Index", "LT_DGRL", new { studentId = studentId });
         }
         public IActionResult Status(string? id)
         {
@@ -148,7 +149,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
         }
         public IActionResult Status1(string? id)
         {
-            int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndStudent < DateTime.Now && x.DateEndClass >= DateTime.Now)?.Id ?? 0;
+            int semesterId = _context.Semesters.FirstOrDefault(x => x.DateEndStudent < DateTime.Now && x.DateEndClass > DateTime.Now)?.Id ?? 0;
             if (semesterId == 0)
             {
                 ViewBag.Status = "Kì đánh giá chưa diễn ra hoặc đã kết thúc";

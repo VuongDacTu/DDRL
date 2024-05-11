@@ -1,80 +1,91 @@
-﻿@using PJ_DGRL.Models.DGRLModels
-
+﻿
+@using PJ_DGRL.Models.DGRLModels
 @model IEnumerable<PJ_DGRL.Models.DGRLModels.GroupQuestion>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "kết quả đánh giá";
     Layout = "~/Areas/Lecturer/Views/Shared/_LayoutLecturer.cshtml";
     List<Semester> semesters = ViewBag.Semester;
     var semester = semesters.FirstOrDefault(x => x.Id == ViewBag.SemesterId);
+    int stt = 1;
 }
-<div class="row">
-    <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
-        <div class="col openMenu">
-            <a href="#" onclick="w3_close()"
-               class="w3-bar-item w3-button"><i class="fa-solid fa-outdent"></i> Trở về</a>
-            @await Component.InvokeAsync("ST")
-        </div>
-    </nav>
-    <!-- Top menu -->
-    <div class="">
-        <div class="" style="max-width:1200px;margin:auto">
-            <div class="menuStudent" onclick="w3_open()">☰</div>
-        </div>
+<h3 class="text-center">Kết quả tự đánh giá kì @semester.Name năm học @semester.SchoolYear</h3>
+<nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+    <div class="col openMenu">
+        <a href="#" onclick="w3_close()"
+           class="w3-bar-item w3-button"><i class="fa-solid fa-outdent"></i> Trở về</a>
+        @await Component.InvokeAsync("ST")
     </div>
-    @await Component.InvokeAsync("InforStudents", new { id = ViewBag.StudentId})
-    <div class="col">
-        <h5>Kết quả đánh giá cho sinh viên @ViewBag.StudentId</h5>
-        <form asp-action="Index" method="get">
-            <label>Chọn kì học:</label>
-            <input type="hidden" name="studentId" value="@ViewBag.StudentId" />
-            <select name="semesterId" class="form-control">
-                @foreach (var item in semesters)
-                {
-                    <option value="@item.Id">Kì @item.Name - Năm học @item.SchoolYear</option>
-                }
-            </select>
-            <input type="submit" value="Tìm kiếm" />
-        </form>
+</nav>
 
-        <h4>Đáp án sinh viên đã trả lời trong kì @semester.Name năm học @semester.SchoolYear</h4>
-        <hr />
-        <div class="row">
-            <div class="col">
-                @if (ViewBag.SumSelfPoint != 0)
-                {
-                    @foreach (var questionGroup in Model)
-                    {
-                        <h4>@questionGroup.Name</h4>
-                        foreach (var question in questionGroup.QuestionLists)
-                        {
-                            <h6>@question.ContentQuestion</h6>
-                            foreach (var answer in question.AnswerLists)
-                            {
-                                foreach (var selfAnswer in answer.SelfAnswers.Where(x => x.StudentId == ViewBag.StudentId && x.SemesterId == ViewBag.SemesterId))
-                                {
-
-                                    <p class="form-check-label">@selfAnswer.Answer.ContentAnswer (@selfAnswer.Answer.AnswerScore điểm)</p>
-                                    <br />
-
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    <p class ="text-danger">Sinh viên đã không tự đánh giá kì @semester.Name năm học @semester.SchoolYear</p>
-                }
-            </div>
-            <div class="col">
-                <h2>Tổng điểm tự đánh giá: @ViewBag.SumSelfPoint</h2>
-            </div>
-        </div>
-
-
-
-
+<!-- Top menu -->
+<div class="">
+    <div class="" style="max-width:1200px;margin:auto">
+        <div class="menuStudent" onclick="w3_open()">☰</div>
     </div>
 </div>
+@await Component.InvokeAsync("InforStudents", new { id = ViewBag.Id })
+
+
+<div>
+    <h5 style="color:green;">Tổng điểm tự đánh giá: @ViewBag.SumSelfPoint</h5>
+</div>
+<hr />
+<form asp-action="Self" method="get">
+    <input type="hidden" name="studentId" value="@ViewBag.Id" />
+    <select name="semesterId" class="form-control">
+        @foreach (var item in semesters)
+        {
+            <option value="@item.Id">Kì @item.Name - Năm học @item.SchoolYear</option>
+        }
+    </select>
+    <input type="submit" value="Tìm kiếm" class="btn btn-outline-secondary " />
+</form>
+<div class="row">
+    <div>
+        @if (ViewBag.SumSelfPoint != 0){
+            @foreach (var questionGroup in Model)
+            {
+                <h4>@questionGroup.Name</h4>
+                foreach (var question in questionGroup.QuestionLists)
+                {
+                    <h5>@stt. @question.ContentQuestion</h5>
+                    stt++;
+                    foreach (var answer in question.AnswerLists)
+                    {
+                        if(answer.IsEdit == true){
+                            bool check;
+                            if (answer.Checked == 1)
+                            {
+                                check = true;
+                            }
+                            else
+                            {
+                                check = false;
+                            }
+                            if (question.TypeQuestionId == 1)
+                            {
+                                <input class="form-check-input" type="radio" id="answerId[@answer.Id]" checked="@check" value="@answer.Id" name="answerIds[@question.Id]" onclick="return false;">
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" value="@answer.Id" checked="@check" name="answerId[@answer.Id]" id="answerId[@answer.Id]" onclick="return false;">
+                            }
+                            <label class="form-check-label" for="answerId[@answer.Id]">@answer.ContentAnswer (@answer.AnswerScore điểm)</label>
+                            <br />
+                        }
+                       
+                    }
+                }
+            }
+        }
+        else
+            {
+                <p class="text-danger">Không tồn tại kết quả tự đánh giá kì @semester.Name năm học @semester.SchoolYear</p>
+            }
+            </div>
+
+</div>
+
+
 

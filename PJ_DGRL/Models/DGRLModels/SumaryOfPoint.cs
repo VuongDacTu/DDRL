@@ -23,7 +23,7 @@ public partial class SumaryOfPoint
 
     public string? UserLecturer { get; set; }
     public int? ClassId { get; set; }
-
+    public float LastPoint { get; set; }
     public DateTime? UpdateDate { get; set; }
 
     public virtual Semester? Semester { get; set; }

@@ -13,7 +13,7 @@ public partial class Class
     public string? CourseId { get; set; }
 
     public int? DepartmentId { get; set; }
-
+    [DisplayName("Trạng thái")]
     public byte? IsActive { get; set; }
 
     public virtual Course? Course { get; set; }

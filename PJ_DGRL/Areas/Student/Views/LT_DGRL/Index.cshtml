@@ -4,6 +4,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
     Students students = ViewBag.Student;
+    int stt = 1;
+    Semester semester = ViewBag.Semester;
 }
 <div class="row">
     <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
@@ -24,24 +26,26 @@
     <div class="col">
         @if (ViewBag.semesterId != 0)
         {
-            <h4>Vui lòng trả lời đúng và đầy đủ các câu hỏi!!</h4>
+        <h4 class="text-center">Câu hỏi kì @semester.Name năm học @semester.SchoolYear</h4>
             <hr />
             <div class="row">
                 <div class="">
                     <form asp-action="Submit" asp-controller="LT_DGRL">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" name="semesterId" value="@ViewBag.semesterId" />
-                        <input type="text" name="studentId" value="@ViewBag.Id" readonly />
+                        <input type="hidden" name="semesterId" value="@ViewBag.semesterId" readonly />
+                        <input type="hidden" name="studentId" value="@ViewBag.Id" readonly />
                         @foreach (var questionGroup in Model)
                         {
-                            <h4>@questionGroup.Name</h4>
-                            foreach (var question in questionGroup.QuestionLists)
+                        <h4>@questionGroup.Name</h4>
+
+                        foreach (var question in questionGroup.QuestionLists)
                             {
 
                                 var questionList = question.QuestionHisories.Where(x => x.SemesterId == ViewBag.semesterId).FirstOrDefault();
                                 if (questionList != null)
                                 {
-                                    <h5>@question.ContentQuestion</h5>
+                                <h5>@stt. @question.ContentQuestion</h5>
+                                stt++;
                                     foreach (var answer in question.AnswerLists)
                                     {
                                         if (answer.Status == 1)

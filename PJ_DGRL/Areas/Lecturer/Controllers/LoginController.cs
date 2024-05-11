@@ -36,9 +36,17 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
 
             if (dataLogin != null)
             {
-                // Lưu lại session khi đăng nhập thành công
-                HttpContext.Session.SetString("LecturerLogin", dataLogin.ToJson());
-                return RedirectToAction("Index", "Home");
+                if(dataLogin.IsActive == 1)
+                {
+                    // Lưu lại session khi đăng nhập thành công
+                    HttpContext.Session.SetString("LecturerLogin", dataLogin.ToJson());
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["errorLogin"] = "Tài khoản đã bị khoá";
+                    return View(model);
+                }
             }
             TempData["errorLogin"] = "Mã giảng viên hoặc mật khẩu không đúng";
             return View(model);
