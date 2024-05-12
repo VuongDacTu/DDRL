@@ -151,7 +151,6 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                         student.IsActive = 3;
                         student.IsDelete = true;
                         _context.AccountStudents.FirstOrDefault(x => x.StudentId == student.Id).IsActive = 0;
-                        _context.AccountStudents.FirstOrDefault(x => x.StudentId == student.Id).IsDelete = true;
                     }
                 }
             }

@@ -54,16 +54,10 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a asp-controller="Dashboard" asp-action="Index" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Trang chính
-                            <span class="right badge badge-danger">New</span>
-                        </p>
-                    </a>
+
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="Semesters" asp-action="Index" class="nav-link">
+                    <a asp-controller="Semesters" asp-action="Index" asp-route-isActive="1" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Kì đánh giá
@@ -78,7 +72,7 @@
                         </p>
                     </a>
                 </li>
-                @await Component.InvokeAsync("Department")
+                @await Component.InvokeAsync("Department", new{isDelete = false})
                 <li class="nav-item">
                     <a asp-controller="Lecturers" asp-action="Index" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
@@ -87,7 +81,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+        @*         <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
                         <p>
@@ -115,7 +109,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> *@
                 <li class="nav-item">
                     <a asp-controller="Classes" asp-action="Index" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>

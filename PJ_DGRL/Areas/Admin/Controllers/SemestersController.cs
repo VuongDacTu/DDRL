@@ -20,9 +20,14 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
 
         // GET: Admin/Semesters
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? isActive)
         {
-            return View(await _context.Semesters.Where(x => x.IsActive == 1).ToListAsync());
+            if(isActive == null)
+            {
+                isActive = 1;
+            }
+            ViewBag.IsActive = isActive;
+            return View(await _context.Semesters.Where(x => x.IsActive == isActive).ToListAsync());
         }
 
         // GET: Admin/Semesters/Create
@@ -175,12 +180,57 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             var semester = await _context.Semesters.FindAsync(id);
             if (semester != null)
             {
+
                 semester.IsActive = 0;
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult Show(int? semesterId)
+        {
+            var semester =  _context.Semesters.Find(semesterId);
+            if (semester != null)
+            {
 
+                semester.IsActive = 1;
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", new {isActive = 0});
+        }
+        public async Task<IActionResult> Remove(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var semester = await _context.Semesters
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (semester == null)
+            {
+                return NotFound();
+            }
+
+            return View(semester);
+        }
+
+        [HttpPost, ActionName("Remove")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveConfirmed(int id)
+        {
+            var semester = await _context.Semesters.FindAsync(id);
+            
+            if (semester != null)
+            {
+                var questionHistory = _context.QuestionHisories.Where(x => x.SemesterId == id).ToList();
+                foreach(var item in  questionHistory)
+                {
+                    _context.QuestionHisories.Remove(item);
+                }
+                _context.Semesters.Remove(semester);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index), new { isActive = 0 });
+        }
     }
 }

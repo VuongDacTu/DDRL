@@ -6,14 +6,6 @@
 }
 
 <h1>Quản lí tài khoản</h1>
-<form asp-action="Index">
-    <div class="form-group">
-        <input name="stId" value="@ViewBag.stId" class="form-control" placeholder="Nhập mã sinh viên"/>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Tìm kiếm" class="btn btn-outline-secondary" />
-    </div>
-</form>
 
 <table class="table">
     <thead>
@@ -22,7 +14,7 @@
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student.Id)
+                @Html.DisplayNameFor(model => model.Student.FullName)
             </th>
             <th>
                 
@@ -38,20 +30,18 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Student.Id)
+                @Html.DisplayFor(modelItem => item.Student.FullName)
             </td>
                 @if(item.IsActive == 1)
                 {
-                    <td><a asp-controller="AccountStudents" asp-action="Passive" asp-route-accId ="@item.Id" class="btn btn-outline-danger">Ngừng kích hoạt</a></td>
+                    <td><a asp-controller="AccountStudents" asp-action="Passive" asp-route-msv ="@item.StudentId" asp-route-accId ="@item.Id" class="btn btn-outline-danger">Ngừng kích hoạt</a></td>
                 }
                 else
                 {
-                    <td><a asp-controller="AccountStudents" asp-action="Active" asp-route-accId="@item.Id" class="btn btn-outline-success">Kích hoạt</a></td>
+                    <td><a asp-controller="AccountStudents" asp-action="Active" asp-route-msv="@item.StudentId" asp-route-accId="@item.Id" class="btn btn-outline-success">Kích hoạt</a></td>
                 }
-
             <td>
-                <a asp-action="ResetPassword" asp-route-accId="@item.Id">Đặt lại mật khẩu</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Chi tiết</a> 
+                    <a asp-action="ResetPassword" asp-route-msv="@item.StudentId" asp-route-accId="@item.Id">Đặt lại mật khẩu</a>
             </td>
         </tr>
 }

@@ -13,8 +13,9 @@ namespace PJ_DGRL.Areas.Admin.ViewComponents
         {
             _context = context;
         }
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(bool isDelete)
         {
+            ViewBag.IsDelete = isDelete;
             var department = await _context.Departments.ToListAsync();
             return View(department);
         }

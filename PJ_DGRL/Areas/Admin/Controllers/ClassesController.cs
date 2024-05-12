@@ -137,7 +137,6 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                     var acc = _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id);
                     item.IsActive = 3;
                     item.IsDelete = true;
-                    acc.IsDelete = true;
                     acc.IsActive = 0;
                 }
             }

@@ -23,7 +23,5 @@ public partial class AccountLecturer
     public byte? IsActive { get; set; }
 
     public string? LecturerId { get; set; }
-    public bool? IsDelete { get; set; }
-
     public virtual Lecturers? Lecturer { get; set; }
 }

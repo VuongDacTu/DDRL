@@ -83,8 +83,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                     Password = "12345",
                     CreateBy = admin.UserName,
                     CreateDate = DateTime.Now,
-                    LecturerId = lecturer.Id,
-                    IsDelete = false
+                    LecturerId = lecturer.Id
                 };
                 _context.AccountLecturers.Add(acc);
                 _context.Lecturers.Add(lecturer);
@@ -190,7 +189,6 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             if (lecturer != null)
             {
                 lecturer.IsDelete = true;
-                _context.AccountLecturers.FirstOrDefault(x => x.LecturerId == id).IsDelete = true;
                 _context.AccountLecturers.FirstOrDefault(x => x.LecturerId == id).IsActive = 0;
 
             }

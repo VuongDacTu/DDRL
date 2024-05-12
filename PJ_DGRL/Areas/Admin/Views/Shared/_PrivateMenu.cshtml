@@ -1,0 +1,41 @@
+﻿@using PJ_DGRL.Models.DGRLModels;
+@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var ss = HttpContextAccessor.HttpContext.Session.GetString("AdminLogin");
+    if (ss != null)
+    {
+        var admin = Newtonsoft.Json.JsonConvert.DeserializeObject<AccountAdmin>(ss);
+    }
+}
+<style>
+    .list-group-item{
+        padding-left: 15px;
+    }
+</style>
+
+    <li class="list-group-item">
+        <a asp-controller="Semesters" asp-action="Index" asp-route-isActive="0" class="nav-link">
+            <i class="nav-icon fas fa-copy"></i>
+            <p style="margin:0">
+                Kì đánh giá
+            </p>
+        </a>
+    </li>
+    <li class="list-group-item">
+
+    </li>
+    <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-align:left;width:100%; color:#c2c7d0;background-color:#454d55; border-color:#454d55">
+            Danh sách sinh viên
+        </button>
+        <ul class="dropdown-menu" style="background-color:#000">
+            @await Component.InvokeAsync("Department", new { isDelete = true })
+        </ul>
+    </div>
+
+    
+    <li class="list-group-item">A third item</li>
+    <li class="list-group-item">A fourth item</li>
+    <li class="list-group-item">And a fifth one</li>

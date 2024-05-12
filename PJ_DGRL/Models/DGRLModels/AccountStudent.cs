@@ -23,7 +23,6 @@ public partial class AccountStudent
     public byte? IsActive { get; set; }
 
     public string? StudentId { get; set; }
-    public bool IsDelete { get; set; }
     public virtual Students? Student { get; set; }
 
 }

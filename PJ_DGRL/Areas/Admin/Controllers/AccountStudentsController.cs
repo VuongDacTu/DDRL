@@ -20,93 +20,37 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
 
         // GET: Admin/AccountStudents
-        public async Task<IActionResult> Index(string? msv, string stId)
+        public async Task<IActionResult> Index(string? msv, bool? isDelete)
         {
-            var dbDgrlContext = _context.AccountStudents.Include(a => a.Student).Where(x => x.IsDelete == false);
-            if(!msv.IsNullOrEmpty())
+            var dbDgrlContext = _context.AccountStudents.Include(a => a.Student);
+            if (!msv.IsNullOrEmpty())
             {
-                dbDgrlContext = _context.AccountStudents.Include(a => a.Student).Where(x => x.IsDelete == false && x.StudentId == msv);
+                dbDgrlContext = _context.AccountStudents.Where(x => x.StudentId == msv).Include(a => a.Student);
             }
-            if (!stId.IsNullOrEmpty())
-            {
-                dbDgrlContext = _context.AccountStudents.Include(a => a.Student).Where(x => x.IsDelete == false && x.StudentId.Contains(stId));
-            }
+            ViewBag.IsDelete = isDelete;
             return View(await dbDgrlContext.OrderBy(x => x.IsActive).ToListAsync());
-        }
-        // GET: Admin/AccountStudents/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var accountStudent = await _context.AccountStudents
-                .Include(a => a.Student)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (accountStudent == null)
-            {
-                return NotFound();
-            }
-
-            return View(accountStudent);
-        }
-
-        // GET: Admin/AccountStudents/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var accountStudent = await _context.AccountStudents
-                .Include(a => a.Student)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (accountStudent == null)
-            {
-                return NotFound();
-            }
-
-            return View(accountStudent);
-        }
-
-        // POST: Admin/AccountStudents/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var accountStudent = await _context.AccountStudents.FindAsync(id);
-
-            if (accountStudent != null)
-            {
-                accountStudent.IsDelete = true;
-                accountStudent.IsActive = 0;
-            }
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
         private bool AccountStudentExists(int id)
         {
             return _context.AccountStudents.Any(e => e.Id == id);
         }
-        public IActionResult Active(int? accId)
+        public IActionResult Active(string? msv,int? accId)
         {
             _context.AccountStudents.FirstOrDefault(x => x.Id == accId).IsActive = 1;
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new {msv = msv});
         }
-        public IActionResult Passive(int? accId)
+        public IActionResult Passive(string? msv,int? accId)
         {
             _context.AccountStudents.FirstOrDefault(x => x.Id == accId).IsActive = 0;
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { msv = msv });
         }
-        public IActionResult ResetPassword(int? accId)
+        public IActionResult ResetPassword(string? msv, int? accId)
         {
             _context.AccountStudents.FirstOrDefault(x => x.Id == accId).Password = "12345";
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { msv = msv });
         }
     }
 }

@@ -13,6 +13,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="isDelete" value="@ViewBag.IsDelete.ToString()" />
             <input type="hidden" asp-for="Id" readonly />
             <input type="hidden" name="departmentId" value="@ViewBag.DepartmentId" />
             <div class="form-group">
@@ -64,13 +65,13 @@
                 <span asp-validation-for="IsActive" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Lưu" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index" asp-route-departmentId="@ViewBag.DepartmentId">Back to List</a>
+    <a asp-action="Index" asp-route-departmentId="@ViewBag.DepartmentId" asp-route-isDelete="@ViewBag.IsDelete">Quay lại</a>
 </div>
 
