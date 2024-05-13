@@ -5,6 +5,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
     List<Semester> semesters = ViewBag.Semester;
+    int stt = 1;
 }
 
 <h1>Bộ câu hỏi</h1>
@@ -12,6 +13,7 @@
 <p>
     <a asp-action="Create">Tạo câu hỏi mới</a>
     <form asp-action="SelectAll">
+        <input type="hidden" name="list" value="false"  />
         <label>Sử dụng bộ câu hỏi kì</label>
         <select name ="semesterId">
             @foreach (var item in semesters)
@@ -21,7 +23,7 @@
         </select>
         <input type="submit" value="Chọn" class="btn btn-outline-dark" />
     </form>
-    <a asp-action="SelectAll" class="btn btn-warning">Chọn tất cả</a>
+    <a asp-action="SelectAll" asp-route-list="false" class="btn btn-warning">Chọn tất cả</a>
     <a asp-action="List" style="position:absolute; right: 10%;">Hiển thị dưới dạng câu hỏi</a>
 </p>
 <table class="table">
@@ -43,16 +45,17 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.OrderBy)
+                @stt
+                @{stt++;}
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ContentQuestion)
             </td>
                 @if(item.Status == 1)
                 {
-                    <td><a asp-action="UnSet" asp-route-questionId ="@item.Id" class="btn btn-danger">Bỏ chọn</a></td>
+                    <td><a asp-action="UnSet" asp-route-questionId="@item.Id" class="btn btn-danger" asp-route-list="false">Bỏ chọn</a></td>
                 }else{
-                    <td><a asp-action="Set" asp-route-questionId="@item.Id" class="btn btn-success">Chọn</a></td>
+                    <td><a asp-action="Set" asp-route-questionId="@item.Id" class="btn btn-success" asp-route-list="false">Chọn</a></td>
                 }
             <td>
                     <a asp-controller="AnswerLists" asp-action="Index" asp-route-questionId="@item.Id">Xem câu trả lời</a>

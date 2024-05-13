@@ -14,7 +14,6 @@ public partial class AnswerList
     public int? AnswerScore { get; set; }
 
     public byte? Status { get; set; }
-    public bool? IsEdit { get; set; }
 
     public DateTime? CreateDate { get; set; }
 
@@ -23,6 +22,8 @@ public partial class AnswerList
     public string? UpdateBy { get; set; }
 
     public byte? Checked { get; set; }
+
+    public bool? IsEdit { get; set; }
 
     public virtual ICollection<ClassAnswer> ClassAnswers { get; set; } = new List<ClassAnswer>();
 

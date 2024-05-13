@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -189,20 +190,34 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         private bool QuestionListExists(int id)
         {
             return _context.QuestionLists.Any(e => e.Id == id);
-        } 
-        public IActionResult Set(int? questionId)
+        }
+        public IActionResult Set(int? questionId, bool? list)
         {
             _context.QuestionLists.FirstOrDefault(x => x.Id == questionId).Status = 1; 
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (list == true)
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
-        public IActionResult UnSet(int? questionId)
+        public IActionResult UnSet(int? questionId, bool? list)
         {
             _context.QuestionLists.FirstOrDefault(x => x.Id == questionId).Status = 0;
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (list == true)
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
-        public IActionResult SelectAll(int? semesterId)
+        public IActionResult SelectAll(int? semesterId, bool? list)
         {
             var questions = _context.QuestionLists.Include(x => x.QuestionHisories).ToList();
             if (semesterId != null)
@@ -218,14 +233,28 @@ namespace PJ_DGRL.Areas.Admin.Controllers
 
                 }
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                if (list == true)
+                {
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             foreach(var item in questions)
             {
                 item.Status = 1;
             }
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (list == true)
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
     }
 }

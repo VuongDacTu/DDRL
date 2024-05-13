@@ -207,6 +207,10 @@ public partial class DbDgrlContext : DbContext
                 .HasForeignKey(d => d.AnswerId)
                 .HasConstraintName("FK__ClassAnsw__Answe__6D0D32F4");
 
+            entity.HasOne(d => d.Semester).WithMany(p => p.ClassAnswers)
+                .HasForeignKey(d => d.SemesterId)
+                .HasConstraintName("FK__ClassAnsw__Semes__01142BA1");
+
             entity.HasOne(d => d.Student).WithMany(p => p.ClassAnswers)
                 .HasForeignKey(d => d.StudentId)
                 .HasConstraintName("FK__ClassAnsw__Stude__6C190EBB");
@@ -383,9 +387,8 @@ public partial class DbDgrlContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.SchoolYear)
-                .HasMaxLength(10)
-                .IsUnicode(false)
-                .IsFixedLength();
+                .HasMaxLength(20)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Students>(entity =>
@@ -439,6 +442,10 @@ public partial class DbDgrlContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .IsFixedLength();
+
+            entity.HasOne(d => d.Class).WithMany(p => p.SumaryOfPoints)
+                .HasForeignKey(d => d.ClassId)
+                .HasConstraintName("fk_htk_ClassId");
 
             entity.HasOne(d => d.Semester).WithMany(p => p.SumaryOfPoints)
                 .HasForeignKey(d => d.SemesterId)

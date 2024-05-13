@@ -4,11 +4,13 @@
     ViewData["Title"] = "GroupQuestion";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
     List<Semester> semesters = ViewBag.Semester;
+    int stt = 1;
 }
     <h4>Danh sách câu hỏi</h4>
 <div>
     <a asp-action="Create">Tạo câu hỏi mới</a>
     <form asp-action="SelectAll">
+        <input type="hidden" name="list" value="true" />
         <label>Sử dụng bộ câu hỏi kì</label>
         <select name="semesterId">
             @foreach (var item in semesters)
@@ -18,7 +20,7 @@
         </select>
         <input type="submit" value="Chọn" class="btn btn-outline-dark" />
     </form>
-    <a asp-action="SelectAll" class="btn btn-warning">Chọn tất cả câu hỏi</a>
+    <a asp-action="SelectAll" class="btn btn-warning" asp-route-list="true">Chọn tất cả câu hỏi</a>
     <a asp-controller="QuestionLists" asp-action="Index" style="position:absolute; right: 10%; margin-top: 1.5rem;">Hiển thị dưới dạng danh sách</a>
 </div>
 
@@ -33,16 +35,19 @@
            
                     <div class="row">
                         <div class="col">
-                        <h5>@question.ContentQuestion</h5>
+                        <h5>@stt. @question.ContentQuestion</h5>
+                        @{
+                            stt++;
+                        }
                         </div>
                         <div class="col">
                         @if (question.Status == 1)
                         {
-                            <a asp-action="UnSet" asp-route-questionId="@question.Id" class="btn btn-outline-warning">Bỏ chọn</a>
+                            <a asp-action="UnSet" asp-route-questionId="@question.Id" class="btn btn-outline-warning" asp-route-list="true">Bỏ chọn</a>
                         }
                         else
                         {
-                            <a asp-action="Set" asp-route-questionId="@question.Id" class="btn btn-outline-primary">Chọn</a>
+                            <a asp-action="Set" asp-route-questionId="@question.Id" class="btn btn-outline-primary" asp-route-list="true">Chọn</a>
                         }
                         </div>
                         <div class="col">
@@ -57,7 +62,6 @@
                             <a asp-action="Edit" asp-route-id="@question.Id">Chỉnh sửa</a>
                             <a asp-action="Delete" asp-route-id="@question.Id">Xoá</a>
                             }
-                        <a class="text-warning" asp-action="Details" asp-route-id="@question.Id">Chi tiết</a>
                         </div>
                     </div>
                                    
@@ -68,16 +72,6 @@
                     <div class="row" style="border-bottom: 1px solid #ccc; margin: 0 2rem">
                         <div class="col">
                             <p> - @answer.ContentAnswer</p>
-                        </div>
-                        <div class="col">
-                            @if (answer.Status == 1)
-                            {
-                                <a asp-action="UnSet" asp-route-answerId="@answer.Id" asp-route-questionId="@answer.QuestionId" class="btn btn-danger">Bỏ chọn</a>
-                            }
-                            else
-                            {
-                                <a asp-action="Set" asp-route-answerId="@answer.Id" asp-route-questionId="@answer.QuestionId" class="btn btn-success">Chọn</a>
-                            }
                         </div>
                     </div>
                     }

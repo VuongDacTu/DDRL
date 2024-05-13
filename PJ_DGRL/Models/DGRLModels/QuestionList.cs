@@ -22,7 +22,9 @@ public partial class QuestionList
     public DateTime? UpdateDate { get; set; }
 
     public string? UpdateBy { get; set; }
+
     public bool? IsEdit { get; set; }
+
     public virtual ICollection<AnswerList> AnswerLists { get; set; } = new List<AnswerList>();
 
     public virtual GroupQuestion? GroupQuestion { get; set; }

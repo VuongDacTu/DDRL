@@ -81,10 +81,16 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 AccountLecturer acc = new AccountLecturer() {
                     UserName = lecturer.Id,
                     Password = "12345",
+                    IsActive = 1,
                     CreateBy = admin.UserName,
                     CreateDate = DateTime.Now,
                     LecturerId = lecturer.Id
                 };
+                if (lecturer.IsActive != 1)
+                {
+                    acc.IsActive = 0;
+                }
+                lecturer.IsDelete = false;
                 _context.AccountLecturers.Add(acc);
                 _context.Lecturers.Add(lecturer);
                 await _context.SaveChangesAsync();

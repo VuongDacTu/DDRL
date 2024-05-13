@@ -96,6 +96,10 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                     IsActive = 1,
                     StudentId = student.Id                    
                 };
+                if(student.IsActive != 1)
+                {
+                    accountStudent.IsActive = 0;
+                }
                 student.IsDelete = false;
                 _context.AccountStudents.Add(accountStudent);
                 _context.Students.Add(student);

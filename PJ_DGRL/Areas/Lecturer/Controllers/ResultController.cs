@@ -14,43 +14,33 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
         }
         public IActionResult Index(int? semesterId, string? studentId)
         {
-            var ss = HttpContext.Session.GetString("LecturerLogin");
             var GroupQuestion = _context.GroupQuestions.Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ToList();
             var semester = _context.Semesters.OrderBy(x => x.Id).Where(x => x.IsActive == 1);
-            if (ss != null)
+            //
+            if (semesterId == null)
             {
-                var student = JsonConvert.DeserializeObject<AccountStudent>(ss);
-                //
-                if (semesterId == null)
-                {
-                    semesterId = semester.FirstOrDefault()?.Id;
-                }
-                if (studentId == null)
-                {
-                    studentId = student.StudentId;
-                }
-                // set lại checked cho Answer
-                var answers = _context.AnswerLists.ToList();
-                ViewBag.semesterId = semesterId;
-                var selfAnswers = _context.SelfAnswers.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).ToList();
-                foreach (var item in answers)
-                {
-                    item.Checked = 0;
-                }
-                foreach (var item in selfAnswers)
-                {
-                    _context.AnswerLists.Where(u => u.Id == item.AnswerId).FirstOrDefault().Checked = 1;
-
-                }
-
-                // điểm tự đánh giá, nếu chưa đánh giá điểm = 0
-                ViewBag.SumSelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).FirstOrDefault()?.SelfPoint ?? 0;
-                ViewData["Semester"] = semester.ToList();
-                ViewBag.Id = studentId;
-                ViewBag.SemesterId = semesterId;
-                return View(GroupQuestion);
+                semesterId = semester.FirstOrDefault()?.Id;
             }
-            return RedirectToAction("Index", "Login");
+            // set lại checked cho Answer
+            var answers = _context.AnswerLists.ToList();
+            ViewBag.semesterId = semesterId;
+            var selfAnswers = _context.SelfAnswers.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).ToList();
+            foreach (var item in answers)
+            {
+                item.Checked = 0;
+            }
+            foreach (var item in selfAnswers)
+            {
+                _context.AnswerLists.Where(u => u.Id == item.AnswerId).FirstOrDefault().Checked = 1;
+
+            }
+            _context.SumaryOfPoints.FirstOrDefault();
+            // điểm tự đánh giá, nếu chưa đánh giá điểm = 0
+            ViewBag.SumSelfPoint = _context.SumaryOfPoints.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).FirstOrDefault()?.SelfPoint??0;
+            ViewData["Semester"] = semester.ToList();
+            ViewBag.Id = studentId;
+            ViewBag.SemesterId = semesterId;
+            return View(GroupQuestion);
         }
         public IActionResult Class(int? semesterId, string? studentId)
         {

@@ -6,7 +6,7 @@
 }
 
 <h1>@Model.FirstOrDefault()?.Question.ContentQuestion</h1>
-<a asp-controller="QuestionLists" asp-action="List" style="position:absolute; right: 10%;">Hiển thị dưới dạng câu hỏi</a>
+<a asp-controller="QuestionLists" asp-action="List" style="position:absolute; right: 10%;">Danh sách câu hỏi</a>
 <h3>Câu trả lời</h3>
 <p>
     <a asp-controller="AnswerLists" asp-action="Create" asp-route-questionId="@ViewBag.QID">Tạo câu trả lời</a>
