@@ -36,6 +36,27 @@
     </div>
 
     
-    <li class="list-group-item">A third item</li>
-    <li class="list-group-item">A fourth item</li>
-    <li class="list-group-item">And a fifth one</li>
+    <li class="list-group-item">
+        <a asp-controller="Lecturers" asp-action="Index" asp-route-isDelete="true" class="nav-link">
+            <i class="nav-icon fas fa-tree"></i>
+            <p>
+                Danh sách giảng viên
+            </p>
+        </a>
+    </li>
+    <li class="list-group-item">
+    <a asp-controller="Classes" asp-action="Index" asp-route-isDelete="true" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Quản lý lớp học
+        </p>
+    </a>
+    </li>
+<li class="list-group-item">
+    <a asp-controller="Courses" asp-action="Index" asp-route-isDelete="true" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Quản lý khoá học
+        </p>
+    </a>
+</li>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using Newtonsoft.Json;
 using PJ_DGRL.Models.DGRLModels;
 
@@ -21,27 +22,28 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
 
         // GET: Admin/Lecturers
-        public async Task<IActionResult> Index(int? departmentId,string? name)
+        public async Task<IActionResult> Index(int? departmentId,string? name, bool? isDelete)
         {
-            var dbDgrlContext = _context.Lecturers.Include(l => l.Department).Include(l => l.Position).Where(x => x.IsDelete == false);
+            var dbDgrlContext = _context.Lecturers.Include(l => l.Department).Include(l => l.Position).Where(x => x.IsDelete == isDelete);
             if(departmentId != null)
             {
-                dbDgrlContext = _context.Lecturers.Include(l => l.Department).Include(l => l.Position).Where(x => x.IsDelete == false && x.DepartmentId == departmentId);
+                dbDgrlContext = _context.Lecturers.Include(l => l.Department).Include(l => l.Position).Where(x => x.IsDelete == isDelete && x.DepartmentId == departmentId);
                 if (!name.IsNullOrEmpty())
                 {
-                    dbDgrlContext = _context.Lecturers.Include(l => l.Department).Include(l => l.Position).Where(x => x.IsDelete == false && x.DepartmentId == departmentId && x.FullName.Contains(name));
+                    dbDgrlContext = _context.Lecturers.Include(l => l.Department).Include(l => l.Position).Where(x => x.IsDelete == isDelete && x.DepartmentId == departmentId && x.FullName.Contains(name));
                 }
             }else if (!name.IsNullOrEmpty())
             {
-                dbDgrlContext = _context.Lecturers.Include(l => l.Department).Include(l => l.Position).Where(x => x.IsDelete == false && x.FullName.Contains(name));
+                dbDgrlContext = _context.Lecturers.Include(l => l.Department).Include(l => l.Position).Where(x => x.IsDelete == isDelete && x.FullName.Contains(name));
             }
             ViewBag.Department = _context.Departments.ToList();
             ViewBag.Name = name;
+            ViewBag.IsDelete = isDelete;
             return View(await dbDgrlContext.ToListAsync());
         }
 
         // GET: Admin/Lecturers/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string id, bool? isDelete)
         {
             if (id == null)
             {
@@ -56,7 +58,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.IsDelete=isDelete;
             return View(lecturer);
         }
 
@@ -94,7 +96,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 _context.AccountLecturers.Add(acc);
                 _context.Lecturers.Add(lecturer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new {isDelete = false});
             }
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", lecturer.DepartmentId);
             ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", lecturer.PositionId);
@@ -102,7 +104,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
 
         // GET: Admin/Lecturers/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string id,bool? isDelete)
         {
             if (id == null)
             {
@@ -116,6 +118,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             }
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", lecturer.DepartmentId);
             ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", lecturer.PositionId);
+            ViewBag.IsDelete = isDelete;
             return View(lecturer);
         }
 
@@ -124,7 +127,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,FullName,DepartmentId,PositionId,Birthday,Email,Phone,IsActive")] Lecturers lecturer)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,FullName,DepartmentId,PositionId,Birthday,Email,Phone,IsActive")] Lecturers lecturer, bool? isDelete)
         {
             if (id != lecturer.Id)
             {
@@ -135,6 +138,8 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             {
                 try
                 {
+                    lecturer.IsDelete = isDelete;
+
                     _context.Update(lecturer);
                     await _context.SaveChangesAsync();
                     var gv = _context.Lecturers.FirstOrDefault(x => x.Id == id);
@@ -159,7 +164,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),new {isDelete = isDelete});
             }
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", lecturer.DepartmentId);
             ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", lecturer.PositionId);
@@ -194,17 +199,64 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             var lecturer = await _context.Lecturers.FindAsync(id);
             if (lecturer != null)
             {
+                var acc = _context.AccountLecturers.FirstOrDefault(x => x.LecturerId == id);
                 lecturer.IsDelete = true;
-                _context.AccountLecturers.FirstOrDefault(x => x.LecturerId == id).IsActive = 0;
+                acc.IsActive = 0;
 
             }
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new {isDelete = false});
         }
 
         private bool LecturerExists(string id)
         {
             return _context.Lecturers.Any(e => e.Id == id);
         }
+        public IActionResult Show(string id)
+        {
+            var lecturer = _context.Lecturers.Find(id);
+            if (lecturer != null)
+            {
+                var acc = _context.AccountLecturers.FirstOrDefault(x => x.LecturerId == id);
+                lecturer.IsDelete = false;
+                acc.IsActive = 1;
+
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", new { isDelete = true});
+        }
+        public async Task<IActionResult> Remove(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var lecturer = await _context.Lecturers
+                .Include(l => l.Department)
+                .Include(l => l.Position)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (lecturer == null)
+            {
+                return NotFound();
+            }
+            return View(lecturer);
+        }
+
+        [HttpPost, ActionName("Remove")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveConfirmed(string id)
+        {
+            var lecturer = await _context.Lecturers.FindAsync(id);
+            if (lecturer != null)
+            {
+                var acc = _context.AccountLecturers.FirstOrDefault(x => x.LecturerId == id);
+                _context.Lecturers.Remove(lecturer);
+                _context.AccountLecturers.Remove(acc);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index), new { isDelete = true });
+        }
+
     }
 }

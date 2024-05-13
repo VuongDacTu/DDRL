@@ -74,7 +74,7 @@
                 </li>
                 @await Component.InvokeAsync("Department", new{isDelete = false})
                 <li class="nav-item">
-                    <a asp-controller="Lecturers" asp-action="Index" class="nav-link">
+                    <a asp-controller="Lecturers" asp-action="Index" asp-route-isDelete="false" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
                         <p>
                             Danh sách giảng viên
@@ -111,16 +111,15 @@
                     </ul>
                 </li> *@
                 <li class="nav-item">
-                    <a asp-controller="Classes" asp-action="Index" class="nav-link">
+                    <a asp-controller="Classes" asp-action="Index" asp-route-isDelete="false" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Quản lý lớp học
-                            <span class="right badge badge-danger">New</span>
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="Courses" asp-action="Index" class="nav-link">
+                    <a asp-controller="Courses" asp-action="Index" asp-route-isDelete="false" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Quản lý khoá học

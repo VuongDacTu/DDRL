@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PJ_DGRL.Models.DGRLModels;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
 {
@@ -20,44 +21,45 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
 
         // GET: Admin/Classes
-        public async Task<IActionResult> Index(int? departmentId, string? coursesId,string? name)
+        public async Task<IActionResult> Index(int? departmentId, string? coursesId,string? name,bool? isDelete)
         {
             var c = _context.Classes.Include(@c => @c.Course).Include(@c => @c.Department);
-            var dbDgrlContext = c.Where(x => x.IsDelete == false);
+            var dbDgrlContext = c.Where(x => x.IsDelete == isDelete);
             if(departmentId != null)
             {
-                dbDgrlContext = c.Where(x => x.IsDelete == false && x.DepartmentId == departmentId);
+                dbDgrlContext = c.Where(x => x.IsDelete == isDelete && x.DepartmentId == departmentId);
                 if(coursesId != null)
                 {
-                    dbDgrlContext = c.Where(x => x.IsDelete == false && x.DepartmentId == departmentId && x.CourseId == coursesId);
+                    dbDgrlContext = c.Where(x => x.IsDelete == isDelete && x.DepartmentId == departmentId && x.CourseId == coursesId);
                     if (!name.IsNullOrEmpty())
                     {
-                        dbDgrlContext =c.Where(x => x.IsDelete == false && x.DepartmentId == departmentId && x.CourseId == coursesId && x.Name.Contains(name));
+                        dbDgrlContext =c.Where(x => x.IsDelete == isDelete && x.DepartmentId == departmentId && x.CourseId == coursesId && x.Name.Contains(name));
                     }
                 }
                 else if (!name.IsNullOrEmpty())
                 {
-                    dbDgrlContext = c.Where(x => x.IsDelete == false && x.DepartmentId == departmentId && x.Name.Contains(name));
+                    dbDgrlContext = c.Where(x => x.IsDelete == isDelete && x.DepartmentId == departmentId && x.Name.Contains(name));
                 }
             }
             else if (coursesId != null)
             {
-                dbDgrlContext = c.Where(x => x.IsDelete == false && x.CourseId == coursesId);
+                dbDgrlContext = c.Where(x => x.IsDelete == isDelete && x.CourseId == coursesId);
                 if (!name.IsNullOrEmpty())
                 {
-                    dbDgrlContext = c.Where(x => x.IsDelete == false && x.CourseId == coursesId && x.Name.Contains(name));
+                    dbDgrlContext = c.Where(x => x.IsDelete == isDelete && x.CourseId == coursesId && x.Name.Contains(name));
                 }
             }else if (!name.IsNullOrEmpty())
             {
-                dbDgrlContext = c.Where(x => x.IsDelete == false && x.Name.Contains(name));
+                dbDgrlContext = c.Where(x => x.IsDelete == isDelete && x.Name.Contains(name));
             }
             ViewBag.DepartmentId = new SelectList(_context.Departments, "Id", "Name");
             ViewBag.CoursesId = new SelectList(_context.Courses.Where(x => x.IsDelete == false), "Id", "Id");
+            ViewBag.IsDelete = isDelete;
             return View(await dbDgrlContext.ToListAsync());
         }
 
         // GET: Admin/Classes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id,bool? isDelete)
         {
             if (id == null)
             {
@@ -72,7 +74,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.IsDelete = isDelete;
             return View(@cclass);
         }
 
@@ -96,7 +98,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 @class.IsDelete = false;
                 _context.Add(@class);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { isDelete=false }) ;
             }
             ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", @class.CourseId);
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", @class.DepartmentId);
@@ -142,7 +144,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new {isDelete=false});
         }
 
         private bool ClassExists(int id)
@@ -177,6 +179,68 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> Show(int? id) 
+        {
+            var @class = await _context.Classes.FindAsync(id);
+            if (@class != null)
+            {
+                var student = _context.Students.Where(x => x.ClassId == id).ToList();
+                @class.IsDelete = false;
+                foreach (var item in student)
+                {
+                    var acc = _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id);
+                    item.IsActive = 1;
+                    item.IsDelete = false;
+                    acc.IsActive = 1;
+                }
+            }
 
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", new {isDelete=true});
+        }
+        public async Task<IActionResult> Remove(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var @class = await _context.Classes
+                .Include(@c => @c.Course)
+                .Include(@c => @c.Department)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (@class == null)
+            {
+                return NotFound();
+            }
+
+            return View(@class);
+        }
+
+        [HttpPost, ActionName("Remove")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveConfirmed(int id)
+        {
+            var @class = await _context.Classes.FindAsync(id);
+            if (@class != null)
+            {
+                var student = _context.Students.Where(x => x.ClassId == id).ToList();
+
+                foreach (var item in student)
+                {
+                    var acc = _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id);
+                    _context.Remove(acc);
+                }
+                _context.SaveChanges();
+                _context.Students.RemoveRange(student);
+                _context.SaveChanges();
+                _context.Classes.Remove(@class);
+
+
+
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index), new {isDelete=true});
+        }
     }
 }

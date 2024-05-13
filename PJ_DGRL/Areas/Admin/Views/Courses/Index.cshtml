@@ -6,10 +6,17 @@
 }
 
 <h1>Khoá học</h1>
+@if(ViewBag.IsDelete == false)
+{
+    <p>
+        <a asp-action="Create">Tạo mới</a>
+    </p>
+}
+else
+{
+    <h3 class="text-danger">Danh sách ẩn</h3>
+}
 
-<p>
-    <a asp-action="Create">Tạo mới</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -31,9 +38,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
-                <a asp-action="Delete" asp-route-id="@item.Id">Kết thúc khoá học</a>
-            </td>
+                @if(ViewBag.IsDelete == false)
+                {
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.Id" asp-route-isDelete="false">Kết thúc khoá học</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a asp-action="Show" asp-route-id="@item.Id" asp-route-isDelete="true">Bắt đầu lại khoá học</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" asp-action="Remove" asp-route-isDelete="true" asp-route-id="@item.Id">Xoá</a>
+                    </td>
+                }
+
         </tr>
 }
     </tbody>

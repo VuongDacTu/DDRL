@@ -9,6 +9,7 @@
 
 <h1>Danh sách giảng viên</h1>
 <form asp-action="Index">
+    <input type="hidden" name="isDelete" value="@ViewBag.IsDelete.ToString()" />
     <div class="form-group">
         <select name="departmentId" class="form-control">
             <option>Tất cả</option>
@@ -25,9 +26,17 @@
         <input type="submit" value="Tìm kiếm" class="btn btn-primary" />
     </div>
 </form>
-<p>
-    <a asp-action="Create">Thêm mới</a>
-</p>
+@if (ViewBag.IsDelete == false)
+{
+    <p>
+        <a asp-action="Create" asp-route-isDelete="false">Thêm mới</a>
+    </p>
+}
+else
+{
+    <h3 class="text-danger">Danh sách ẩn</h3>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -95,10 +104,18 @@
                 @Html.DisplayFor(modelItem => item.Position.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Sửa</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Chi tiết</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Ẩn</a> |
-                <a asp-controller="AccountLecturers" asp-action="Index" asp-route-lecturerId = "@item.Id">Tài khoản</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" asp-route-isDelete="@ViewBag.IsDelete">Sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" asp-route-isDelete="@ViewBag.IsDelete" asp-route-isDelete="@ViewBag.IsDelete">Chi tiết</a> |
+                    <a asp-controller="AccountLecturers" asp-action="Index" asp-route-lecturerId="@item.Id">Tài khoản</a><span>|</span>
+
+                @if(ViewBag.IsDelete == true)
+                {
+                        <a asp-action="Show" asp-route-id="@item.Id">Hiển thị</a> <span>|</span>
+                        <a class="btn btn-danger" asp-action="Remove" asp-route-id="@item.Id">Xoá</a>
+
+                }else{
+                    <a asp-action="Delete" asp-route-id="@item.Id">Ẩn</a> 
+                }
             </td>
         </tr>
 }

@@ -104,7 +104,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 _context.AccountStudents.Add(accountStudent);
                 _context.Students.Add(student);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new {departmentId = departmentId});
+                return RedirectToAction(nameof(Index), new {departmentId = departmentId,isDelete=false});
             }
             ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == false), "Id", "Name", student.ClassId);
             ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Id != "GV"), "Id", "Name", student.PositionId);

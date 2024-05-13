@@ -1,0 +1,30 @@
+﻿@model PJ_DGRL.Models.DGRLModels.Course
+
+@{
+    ViewData["Title"] = "Remove";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Xoá</h1>
+
+<h3>Bạn có chắc chắn muốn xoá khoá học này?</h3>
+<p class="text-danger">Tất cả lớp học và sinh viên thuộc lớp học cũng sẽ bị xoá</p>
+<div>
+    <h4>Thông tin khoá học</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    
+    <form asp-action="Remove">
+        <input type="hidden" name="isDelete" value="true" />
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Xác nhận" class="btn btn-danger" /> |
+        <a asp-action="Index" asp-route-isDelete="true">Quay lại</a>
+    </form>
+</div>
