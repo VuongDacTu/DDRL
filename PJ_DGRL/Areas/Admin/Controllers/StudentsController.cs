@@ -48,7 +48,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
 
         // GET: Admin/Students/Details/5
-        public async Task<IActionResult> Details(string id, int? departmentId, bool? isDelete)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -59,8 +59,6 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 .Include(s => s.Class)
                 .Include(s => s.Position)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            ViewBag.DepartmentId = departmentId;
-            ViewBag.IsDelete = isDelete;
             if (student == null)
             {
                 return NotFound();

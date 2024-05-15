@@ -96,7 +96,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,Password,CreateBy,CreateDate,UpdateDate,IsActive,LecturerId,IsDelete")] AccountLecturer accountLecturer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,Password,CreateBy,CreateDate,UpdateDate,IsActive,LecturerId,IsDelete")] AccountLecturer accountLecturer,string? mgv)
         {
             if (id != accountLecturer.Id)
             {
@@ -121,7 +121,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { lecturerId = mgv });
             }
             ViewData["LecturerId"] = new SelectList(_context.Lecturers, "Id", "Id", accountLecturer.LecturerId);
             return View(accountLecturer);
@@ -165,23 +165,23 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             return _context.AccountLecturers.Any(e => e.Id == id);
         }
-        public IActionResult Active(int? accId)
+        public IActionResult Active(string? mgv,int? accId)
         {
             _context.AccountLecturers.FirstOrDefault(x => x.Id == accId).IsActive = 1;
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new {lecturerId = mgv});
         }
-        public IActionResult Passive(int? accId)
+        public IActionResult Passive(string? mgv,int? accId)
         {
             _context.AccountLecturers.FirstOrDefault(x => x.Id == accId).IsActive = 0;
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { lecturerId = mgv });
         }
-        public IActionResult ResetPassword(int? accId)
+        public IActionResult ResetPassword(string? mgv, int? accId)
         {
             _context.AccountLecturers.FirstOrDefault(x => x.Id == accId).Password = "12345";
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { lecturerId = mgv });
         }
     }
 }

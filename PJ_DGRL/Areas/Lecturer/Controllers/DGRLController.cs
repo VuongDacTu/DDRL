@@ -60,6 +60,7 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
 					{
 						point.UserLecturer = lecturer.UserName;
 						point.LecturerPoint = s.LecturerPoint;
+						point.LastPoint = s.LastPoint;
 						point.UpdateDate = DateTime.Now;
 						int avg = (int)point.LecturerPoint;
 						if (avg >= 90)

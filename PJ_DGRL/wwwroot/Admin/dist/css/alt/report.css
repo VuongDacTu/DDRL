@@ -1,0 +1,20 @@
+﻿#QuocHieu {
+    display: flex;
+    justify-content: space-around;
+}
+#QuocHieu p {
+    text-align: center;
+    text-transform:uppercase;
+}
+#TT {
+    text-align: right;
+}
+
+.TieuDe {
+    text-align: center;
+}
+
+#foot {
+    display: flex;
+    justify-content: space-around;
+}

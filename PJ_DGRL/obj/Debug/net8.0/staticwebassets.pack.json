@@ -117,6 +117,10 @@
       "PackagePath": "staticwebassets\\Admin\\dist\\css\\alt\\adminlte.plugins.min.css.map"
     },
     {
+      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Admin\\dist\\css\\alt\\report.css",
+      "PackagePath": "staticwebassets\\Admin\\dist\\css\\alt\\report.css"
+    },
+    {
       "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Admin\\dist\\img\\AdminLTELogo.png",
       "PackagePath": "staticwebassets\\Admin\\dist\\img\\AdminLTELogo.png"
     },

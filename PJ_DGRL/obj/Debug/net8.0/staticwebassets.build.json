@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "19EUI10/ZR0qJgTFp8FfrFWilTbs+j4aLdp4MVAbkqA=",
+  "Hash": "NnY4Vn6DwVS5EmRU77kLp7lQ+yqr8sH3zyDgkDPW3QY=",
   "Source": "PJ_DGRL",
   "BasePath": "_content/PJ_DGRL",
   "Mode": "Default",
@@ -1763,6 +1763,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Admin\\dist\\css\\alt\\adminlte.plugins.min.css.map"
+    },
+    {
+      "Identity": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Admin\\dist\\css\\alt\\report.css",
+      "SourceId": "PJ_DGRL",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\DGRL\\PJ_DGRL\\wwwroot\\",
+      "BasePath": "_content/PJ_DGRL",
+      "RelativePath": "Admin/dist/css/alt/report.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Admin\\dist\\css\\alt\\report.css"
     },
     {
       "Identity": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Admin\\dist\\img\\AdminLTELogo.png",

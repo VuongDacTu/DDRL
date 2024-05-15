@@ -18,24 +18,22 @@
     <li class="list-group-item">
         <a asp-controller="Semesters" asp-action="Index" asp-route-isActive="0" class="nav-link">
             <i class="nav-icon fas fa-copy"></i>
-            <p style="margin:0">
+            <p>
                 Kì đánh giá
             </p>
         </a>
     </li>
-    <li class="list-group-item">
-
+    <li class="list-group-item" style="margin-bottom:15px;">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-align:left;width:100%; color:#c2c7d0;background-color:#454d55; border-color:#454d55;padding:0;height:50px;">
+                <i class="nav-icon fas fa-copy"></i> <br />
+                Danh sách sinh viên
+            </button>
+            <ul class="dropdown-menu" style="background-color:#000">
+                @await Component.InvokeAsync("Department", new { isDelete = true })
+            </ul>
+        </div>
     </li>
-    <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-align:left;width:100%; color:#c2c7d0;background-color:#454d55; border-color:#454d55">
-            Danh sách sinh viên
-        </button>
-        <ul class="dropdown-menu" style="background-color:#000">
-            @await Component.InvokeAsync("Department", new { isDelete = true })
-        </ul>
-    </div>
-
-    
     <li class="list-group-item">
         <a asp-controller="Lecturers" asp-action="Index" asp-route-isDelete="true" class="nav-link">
             <i class="nav-icon fas fa-tree"></i>

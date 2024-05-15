@@ -134,7 +134,15 @@
                         </p>
                     </a>
                 </li>
-            </ul>
+                <li class="nav-item">
+                    <a asp-controller="Departments" asp-action="Index" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Quản lý chuyên ngành
+                        </p>
+                    </a>
+                </li>
+                @await Component.InvokeAsync("Report")
         </nav>
         <!-- /.sidebar-menu -->
     </div>
