@@ -1,0 +1,114 @@
+﻿@using PJ_DGRL.Models.DGRLModels
+@model IEnumerable<PJ_DGRL.Models.DGRLModels.SumaryOfPoint>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    List<Semester> semesters = ViewBag.Semester;
+    Semester semester = semesters.FirstOrDefault(x => x.Id == ViewBag.SemesterId);
+    List<Class> cls = ViewBag.Class;
+}
+<p><b>Khoa: @Model.FirstOrDefault().Class.Department.Name</b></p>
+<p><b>Ngành: @Model.FirstOrDefault().Class.Department.Name</b></p>
+<form asp-action="Index">
+    <input type="hidden" name="departmentId" value="@ViewBag.DepartmentId">
+    <div class="form-group">
+        <select name="semesterId">
+            @foreach (var item in semesters)
+            {
+                <option value="@item.Id">Kỳ @item.Name Năm học @item.SchoolYear</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <select name="classId">
+            <option>Tất cả lớp đang học</option>
+            @foreach (var item in cls)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Tìm kiếm" />
+    </div>
+</form>
+<h2 class="text-center">KẾT QUẢ ĐÁNH GIÁ RÈN LUYỆN LỚP</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SelfPoint)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassPoint)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LecturerPoint)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Classify)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserClass)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserLecturer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastPoint)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Semester)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SelfPoint)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassPoint)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LecturerPoint)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Classify)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserClass)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserLecturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastPoint)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class.Name)
+            </td>
+            <td>
+                Kỳ @item.Semester.Name Năm học @item.Semester.SchoolYear
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.FullName)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

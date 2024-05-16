@@ -7,6 +7,8 @@
     List<Students> students = ViewBag.Student;
     Semester semester = semesters.FirstOrDefault(x => x.Id == ViewBag.SemesterId);
     List<SumaryOfPoint> sum = ViewBag.Sum;
+    List<Class> cls = ViewBag.Class;
+    List<Lecturers> lecturers = ViewBag.Lecturer;
 }
 
 <form asp-action="Index">
@@ -16,6 +18,15 @@
             @foreach(var item in semesters)
             {
                 <option value="@item.Id">Kỳ @item.Name Năm học @item.SchoolYear</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <select name="classId">
+            <option>Tất cả lớp đang học</option>
+            @foreach (var item in cls)
+            {
+                <option value="@item.Id">@item.Name</option>
             }
         </select>
     </div>
@@ -49,8 +60,12 @@
     <div>
         <p>
             <b>3. Thành phần: </b> <br>
-            - ...
         </p>
+            @foreach(var item in lecturers)
+            {
+                <p> - @item.FullName - @item.Position.Name </P>
+            }
+            
     </div>
     <div>
         <div>
@@ -159,9 +174,10 @@
                 <tr>
                         <th rowspan="2">@stt1 @{
                                 stt1++; int demsv = students.Where(x => x.ClassId == item.Id).Count();
+                                int demsv1 = demsv;
                                 if(demsv == 0)
                                 {
-                                    demsv = 1;
+                                    demsv1 = 1;
                                 }
                             }</th>
                         <td rowspan="2" style="width:100px;">@Model.FirstOrDefault().Department.Name</td>
@@ -184,37 +200,37 @@
                     <tr>
                         <td>TL</td>
                         <td>@{
-                                tl = sum1.Where(x => x.LastPoint >= 90).Count() * 100.00 / demsv;
-                            }@String.Format("{0:0.##}", tl)%
+                                tl = sum1.Where(x => x.LastPoint >= 90).Count() * 100.0 / demsv1;
+                            }@String.Format("{0:F2}", tl)%
                         </td>
                         <td>
                             @{
-                                tl = sum1.Where(x => x.LastPoint >= 80 && x.LastPoint < 90).Count() * 100.00 / demsv;
-                            }@tl%
+                                tl = sum1.Where(x => x.LastPoint >= 80 && x.LastPoint < 90).Count() * 100.0 / demsv1;
+                            }@String.Format("{0:F2}", tl)%
                         </td>
                         <td>
                             @{
-                                tl = sum1.Where(x => x.LastPoint >= 70 && x.LastPoint < 80).Count() * 100.00 / demsv;
-                            }@tl%
+                                tl = sum1.Where(x => x.LastPoint >= 70 && x.LastPoint < 80).Count() * 100.0 / demsv1;
+                            }@String.Format("{0:F2}", tl)%
                         </td>
                         <td>
                             @{
-                                tl = sum1.Where(x => x.LastPoint >= 60 && x.LastPoint < 70).Count() * 100.00 / demsv;
-                            }@tl%
+                                tl = sum1.Where(x => x.LastPoint >= 60 && x.LastPoint < 70).Count() * 100.0 / demsv1;
+                            }@String.Format("{0:F2}", tl)%
                         </td>
                         <td>
                             @{
-                                tl = sum1.Where(x => x.LastPoint >= 50 && x.LastPoint < 60).Count() * 100.00 / demsv;
-                            }@tl%
+                                tl = sum1.Where(x => x.LastPoint >= 50 && x.LastPoint < 60).Count() * 100.0 / demsv1;
+                            }@String.Format("{0:F2}", tl)%
                         </td>
                         <td>
                             @{
-                                tl = sum1.Where(x => x.LastPoint >= 40 && x.LastPoint < 50).Count() * 100.00 / demsv;
-                            }@tl%
+                                tl = sum1.Where(x => x.LastPoint >= 40 && x.LastPoint < 50).Count() * 100.0 / demsv1;
+                            }@String.Format("{0:F2}", tl)%
                         </td>
                         <td>
                             @{
-                                tl = sum1.Where(x => x.LastPoint < 40).Count() * 100.00 / demsv;
+                                tl = sum1.Where(x => x.LastPoint < 40).Count() * 100.00 / demsv1;
 
                             }@String.Format("{0:F2}", tl)%
                         </td>
@@ -223,26 +239,60 @@
             </tbody>
             <tfoot>
                 <tr>
+                    
                     <th colspan="3">Tổng</th>
                     <th>SL</th>
-                    <th>...</th>
-                    <th>...</th>
-                    <th>...</th>
-                    <th>...</th>
-                    <th>...</th>
-                    <th>...</th>
-                    <th>...</th>
+
+                    <td>@sum.Where(x => x.LastPoint >= 90).Count()</td>
+                    <td>@sum.Where(x => x.LastPoint >= 80 && x.LastPoint < 90).Count()</td>
+                    <td>@sum.Where(x => x.LastPoint >= 70 && x.LastPoint < 80).Count()</td>
+                    <td>@sum.Where(x => x.LastPoint >= 60 && x.LastPoint < 70).Count()</td>
+                    <td>@sum.Where(x => x.LastPoint >= 50 && x.LastPoint < 60).Count()</td>
+                    <td>@sum.Where(x => x.LastPoint >= 40 && x.LastPoint < 50).Count()</td>
+                    <td>@sum.Where(x => x.LastPoint < 40).Count()</td>
                 </tr>
                 <tr>
-                    <th colspan="3">...</th>
+                    <th colspan="3">@students.Count()</th>
                     <th>TL</th>
-                    <th>...</th>
-                    <th>...</th>
-                    <th>...</th>
-                    <th>...</th>
-                    <th>...</th>
-                    <th>...</th>
-                    <th>...</th>
+                    @{
+                        double ttl;
+                    }
+                    <td>
+                        @{
+                            ttl = sum.Where(x => x.LastPoint >= 90).Count() * 100.0 / students.Count();
+                        }@String.Format("{0:F2}", ttl)%
+                    </td>
+                    <td>
+                        @{
+                            ttl = sum.Where(x => x.LastPoint >= 80 && x.LastPoint < 90).Count() * 100.0 / students.Count();
+                        }@String.Format("{0:F2}", ttl)%
+                    </td>
+                    <td>
+                        @{
+                            ttl = sum.Where(x => x.LastPoint >= 70 && x.LastPoint < 80).Count() * 100.0 / students.Count();
+                        }@String.Format("{0:F2}", ttl)%
+                    </td>
+                    <td>
+                        @{
+                            ttl = sum.Where(x => x.LastPoint >= 60 && x.LastPoint < 70).Count() * 100.0 / students.Count();
+                        }@String.Format("{0:F2}", ttl)%
+                    </td>
+                    <td>
+                        @{
+                            ttl = sum.Where(x => x.LastPoint >= 50 && x.LastPoint < 60).Count() * 100.0 / students.Count();
+                        }@String.Format("{0:F2}", ttl)%
+                    </td>
+                    <td>
+                        @{
+                            ttl = sum.Where(x => x.LastPoint >= 40 && x.LastPoint < 50).Count() * 100.0 / students.Count();
+                        }@String.Format("{0:F2}", ttl)%
+                    </td>
+                    <td>
+                        @{
+                            ttl = sum.Where(x => x.LastPoint < 40).Count() * 100.00 / students.Count();
+
+                        }@String.Format("{0:F2}", ttl)%
+                    </td>
                 </tr>
             </tfoot>
         </table>

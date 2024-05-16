@@ -66,7 +66,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         public IActionResult Create()
         {
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name");
-            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name");
+            ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status == true), "Id", "Name");
             return View();
         }
 
@@ -99,7 +99,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index), new {isDelete = false});
             }
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", lecturer.DepartmentId);
-            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", lecturer.PositionId);
+            ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status == true), "Id", "Name", lecturer.PositionId);
             return View(lecturer);
         }
 
@@ -117,7 +117,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 return NotFound();
             }
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", lecturer.DepartmentId);
-            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", lecturer.PositionId);
+            ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status == true), "Id", "Name", lecturer.PositionId);
             ViewBag.IsDelete = isDelete;
             return View(lecturer);
         }
@@ -167,7 +167,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index),new {isDelete = isDelete});
             }
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", lecturer.DepartmentId);
-            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", lecturer.PositionId);
+            ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status == true), "Id", "Name", lecturer.PositionId);
             return View(lecturer);
         }
 

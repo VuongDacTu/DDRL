@@ -62,20 +62,21 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
 						point.LecturerPoint = s.LecturerPoint;
 						point.LastPoint = s.LastPoint;
 						point.UpdateDate = DateTime.Now;
-						int avg = (int)point.LecturerPoint;
-						if (avg >= 90)
+
+						point.LastPoint = (int)point.LecturerPoint;
+						if (point.LastPoint >= 90)
 						{
 							point.Classify = "Xuất sắc";
-						}else if(avg >= 80)
+						}else if(point.LastPoint >= 80)
 						{
 							point.Classify = "Tốt";
-						}else if (avg >= 70)
+						}else if (point.LastPoint >= 70)
 						{
 							point.Classify = "Khá";
-						}else if (avg >= 60)
+						}else if (point.LastPoint >= 60)
 						{
 							point.Classify = "Trung bình khá";
-						}else if(avg >= 50)
+						}else if(point.LastPoint >= 50)
 						{
 							point.Classify = "Trung bình";
 						}

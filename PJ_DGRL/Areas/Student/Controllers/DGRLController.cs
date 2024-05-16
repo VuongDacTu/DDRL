@@ -134,6 +134,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
                     SemesterId = semesterId,
                     SelfPoint = sum,
                     UpdateDate = DateTime.Now,
+                    ClassId = _context.Students.FirstOrDefault(x => x.Id == student.UserName).ClassId
                 };
                 _context.SumaryOfPoints.Add(sumaryOfPoints);
                 _context.AccountStudents.FirstOrDefault(x => x.StudentId == student.UserName).IsActive = 1;
