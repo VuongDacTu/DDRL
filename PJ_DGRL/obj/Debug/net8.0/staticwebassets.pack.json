@@ -8241,6 +8241,18 @@
       "PackagePath": "staticwebassets\\Image\\Home\\logo.png"
     },
     {
+      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Report.html",
+      "PackagePath": "staticwebassets\\Report.html"
+    },
+    {
+      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\ReportItem2Template.html",
+      "PackagePath": "staticwebassets\\ReportItem2Template.html"
+    },
+    {
+      "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\ReportItemTemplate.html",
+      "PackagePath": "staticwebassets\\ReportItemTemplate.html"
+    },
+    {
       "Id": "E:\\DGRL\\PJ_DGRL\\wwwroot\\Student\\Login\\css\\login.css",
       "PackagePath": "staticwebassets\\Student\\Login\\css\\login.css"
     },

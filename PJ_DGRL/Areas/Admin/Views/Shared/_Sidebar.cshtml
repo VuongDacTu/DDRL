@@ -143,6 +143,14 @@
                     </a>
                 </li>
                 @await Component.InvokeAsync("Report")
+                <li class="nav-item">
+                    <a asp-controller="Sumary" asp-action="Index" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Kết quả đánh giá
+                        </p>
+                    </a>
+                </li>
         </nav>
         <!-- /.sidebar-menu -->
     </div>

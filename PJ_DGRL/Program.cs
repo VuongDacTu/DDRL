@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PJ_DGRL.Models.DGRLModels;
-using Xceed.Document.NET;
 
 var builder = WebApplication.CreateBuilder(args);
 

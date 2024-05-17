@@ -6,6 +6,8 @@
     List<Semester> semesters = ViewBag.Semester;
     Semester semester = semesters.FirstOrDefault(x => x.Id == ViewBag.SemesterId);
     List<Class> cls = ViewBag.Class;
+    Class cl = cls.FirstOrDefault(x => x.Id == ViewBag.ClassId);
+    List<Students> students = ViewBag.Student;
 }
 <p><b>Khoa: @Model.FirstOrDefault().Class.Department.Name</b></p>
 <p><b>Ngành: @Model.FirstOrDefault().Class.Department.Name</b></p>
@@ -21,7 +23,6 @@
     </div>
     <div class="form-group">
         <select name="classId">
-            <option>Tất cả lớp đang học</option>
             @foreach (var item in cls)
             {
                 <option value="@item.Id">@item.Name</option>
@@ -32,83 +33,141 @@
         <input type="submit" value="Tìm kiếm" />
     </div>
 </form>
-<h2 class="text-center">KẾT QUẢ ĐÁNH GIÁ RÈN LUYỆN LỚP</h2>
+<h2 class="text-center">KẾT QUẢ ĐÁNH GIÁ RÈN LUYỆN LỚP @cl.Name</h2>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.SelfPoint)
+            <th rowspan="2">STT</th>
+            <th rowspan="2">
+                Mã SV
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClassPoint)
+            <th rowspan="2">
+                Họ và tên
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LecturerPoint)
+            <th rowspan="2">
+                Ngày sinh
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Classify)
+            <th rowspan="2">
+                Giới tính
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserClass)
+            <th colspan="3">
+                ĐIỂM RÈN LUYỆN
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserLecturer)
+            <th colspan="2">
+                Kết quả
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdateDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastPoint)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Class)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Semester)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student)
-            </th>
-            <th></th>
+            <th rowspan="2">Ghi chú</th>
+        </tr>
+        <tr>
+            <th>SV</th>
+            <th>Lớp</th>
+            <th>Khoa</th>
+            <th>Điểm</th>
+            <th>Xếp loại</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @{
+            int stt = 1;
+        }
+        @foreach (var item in Model) {
         <tr>
+            <td>@stt @{stt++;}</td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.SelfPoint)
+                @item.StudentId
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ClassPoint)
+                @item.Student.FullName
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LecturerPoint)
+                @item.Student.Birthday
+            </td>
+                @if (item.Student.Gender == true)
+                {
+                    <td>
+                        Nữ
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Nam
+                    </td>
+                }
+
+            <td>
+                @item.SelfPoint
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Classify)
+                @item.ClassPoint
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserClass)
+                @item.LecturerPoint
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserLecturer)
+            <td>@item.LastPoint</td>
+            <td>@item.Classify</td>
+            <td>@if (item.Student.IsActive == 2)
+                {
+                    <span>Bảo lưu</span>
+                }else if(item.Student.IsActive == 0)
+                {
+                    <span>Nghỉ học</span>
+                }
+                else
+                {
+                    <span></span>
+                }
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastPoint)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class.Name)
-            </td>
-            <td>
-                Kỳ @item.Semester.Name Năm học @item.Semester.SchoolYear
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.FullName)
-            </td>
-        </tr>
+            </tr>
 }
+        @foreach(var item in students)
+        {
+            <tr>
+                <td>@stt @{
+                        stt++;
+                    }</td>
+
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.FullName
+                </td>
+                <td>
+                    @item.Birthday
+                </td>
+                @if (item.Gender == true)
+                {
+                    <td>
+                        Nữ
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Nam
+                    </td>
+                }
+
+                <td colspan="5">
+                    Không DGRL
+                </td>
+                <td>
+                    @if (item.IsActive == 2)
+                    {
+                        <span>Bảo lưu</span>
+                    }
+                    else if (item.IsActive == 0)
+                    {
+                        <span>Nghỉ học</span>
+                    }
+                    else
+                    {
+                        <span>Đang học</span>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

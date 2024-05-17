@@ -45,14 +45,6 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "DocX": {
-              "target": "Package",
-              "version": "[3.0.0, )"
-            },
-            "DocumentFormat.OpenXml": {
-              "target": "Package",
-              "version": "[3.0.2, )"
-            },
             "Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter": {
               "target": "Package",
               "version": "[8.0.4, )"
@@ -93,9 +85,17 @@
               "target": "Package",
               "version": "[8.0.2, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
             "RazorEngine": {
               "target": "Package",
               "version": "[3.10.0, )"
+            },
+            "Select.HtmlToPdf.NetCore": {
+              "target": "Package",
+              "version": "[23.2.0, )"
             },
             "X.PagedList.Mvc.Core": {
               "target": "Package",

@@ -276,10 +276,7 @@ E:\DGRL\PJ_DGRL\bin\Debug\net8.0\Microsoft.JSInterop.dll
 E:\DGRL\PJ_DGRL\obj\Debug\net8.0\scopedcss\Areas\Student\Views\Shared\_LayoutStudent.cshtml.rz.scp.css
 E:\DGRL\PJ_DGRL\obj\Debug\net8.0\scopedcss\Areas\Lecturer\Views\Shared\_LayoutLecturer.cshtml.rz.scp.css
 E:\DGRL\PJ_DGRL\obj\Debug\net8.0\scopedcss\Areas\Admin\Views\Shared\_LayoutAdmin.cshtml.rz.scp.css
-E:\DGRL\PJ_DGRL\bin\Debug\net8.0\Xceed.Document.NET5.dll
-E:\DGRL\PJ_DGRL\bin\Debug\net8.0\Xceed.Words.NET5.dll
 E:\DGRL\PJ_DGRL\bin\Debug\net8.0\System.Web.Razor.dll
 E:\DGRL\PJ_DGRL\bin\Debug\net8.0\RazorEngine.dll
-E:\DGRL\PJ_DGRL\bin\Debug\net8.0\System.IO.Packaging.dll
-E:\DGRL\PJ_DGRL\bin\Debug\net8.0\DocumentFormat.OpenXml.dll
-E:\DGRL\PJ_DGRL\bin\Debug\net8.0\DocumentFormat.OpenXml.Framework.dll
+E:\DGRL\PJ_DGRL\bin\Debug\net8.0\Select.Html.dep
+E:\DGRL\PJ_DGRL\bin\Debug\net8.0\Select.HtmlToPdf.dll

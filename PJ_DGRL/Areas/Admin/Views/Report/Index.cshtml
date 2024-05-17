@@ -34,6 +34,15 @@
         <input type="submit" value="Tìm kiếm" />
     </div>
 </form>
+<form asp-action="ConvertToPDF">
+    <label>Xuất file PDF</label>
+    <input type="hidden" name="departmentId" value="@ViewBag.DepartmentId">
+    <input type="hidden" name="classId" value="@ViewBag.ClassId"/>
+    <input type="hidden" name="semesterId" value="@ViewBag.SemesterId"/>
+    <div class="form-group">
+        <input type="submit" value="Xuất file PDF" />
+    </div>
+</form>
 <header>
     <section id="QuocHieu">
         <div>
