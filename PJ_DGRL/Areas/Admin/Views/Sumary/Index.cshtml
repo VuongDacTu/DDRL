@@ -9,8 +9,8 @@
     Class cl = cls.FirstOrDefault(x => x.Id == ViewBag.ClassId);
     List<Students> students = ViewBag.Student;
 }
-<p><b>Khoa: @Model.FirstOrDefault().Class.Department.Name</b></p>
-<p><b>Ngành: @Model.FirstOrDefault().Class.Department.Name</b></p>
+<script src="~/lib//jquery/dist/jquery.min.js"></script>
+
 <form asp-action="Index">
     <input type="hidden" name="departmentId" value="@ViewBag.DepartmentId">
     <div class="form-group">
@@ -33,141 +33,168 @@
         <input type="submit" value="Tìm kiếm" />
     </div>
 </form>
-<h2 class="text-center">KẾT QUẢ ĐÁNH GIÁ RÈN LUYỆN LỚP @cl.Name</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th rowspan="2">STT</th>
-            <th rowspan="2">
-                Mã SV
-            </th>
-            <th rowspan="2">
-                Họ và tên
-            </th>
-            <th rowspan="2">
-                Ngày sinh
-            </th>
-            <th rowspan="2">
-                Giới tính
-            </th>
-            <th colspan="3">
-                ĐIỂM RÈN LUYỆN
-            </th>
-            <th colspan="2">
-                Kết quả
-            </th>
-            <th rowspan="2">Ghi chú</th>
-        </tr>
-        <tr>
-            <th>SV</th>
-            <th>Lớp</th>
-            <th>Khoa</th>
-            <th>Điểm</th>
-            <th>Xếp loại</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            int stt = 1;
-        }
-        @foreach (var item in Model) {
-        <tr>
-            <td>@stt @{stt++;}</td>
-
-            <td>
-                @item.StudentId
-            </td>
-            <td>
-                @item.Student.FullName
-            </td>
-            <td>
-                @item.Student.Birthday
-            </td>
-                @if (item.Student.Gender == true)
-                {
-                    <td>
-                        Nữ
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        Nam
-                    </td>
-                }
-
-            <td>
-                @item.SelfPoint
-            </td>
-            <td>
-                @item.ClassPoint
-            </td>
-            <td>
-                @item.LecturerPoint
-            </td>
-            <td>@item.LastPoint</td>
-            <td>@item.Classify</td>
-            <td>@if (item.Student.IsActive == 2)
-                {
-                    <span>Bảo lưu</span>
-                }else if(item.Student.IsActive == 0)
-                {
-                    <span>Nghỉ học</span>
-                }
-                else
-                {
-                    <span></span>
-                }
-            </td>
-            </tr>
-}
-        @foreach(var item in students)
-        {
+<form asp-action="ExportToExcel" asp-controller="Sumary" method="post">
+    <input type="hidden" name="sumaryTable" />
+    <input type="submit" id="btnSubmit" value="Xuất file excel" class="btn btn-primary" />
+</form>
+<div id="idEmployee">
+    <p><b>Khoa: @Model.FirstOrDefault().Class.Department.Name</b></p>
+    <p><b>Ngành: @Model.FirstOrDefault().Class.Department.Name</b></p>
+    <p><b>Lớp: @cl.Name</b></p>
+    <h2 class="text-center">KẾT QUẢ ĐÁNH GIÁ RÈN LUYỆN LỚP @cl.Name</h2>
+    <table class="table" border="1" cellpadding="0">
+        <thead>
             <tr>
-                <td>@stt @{
-                        stt++;
-                    }</td>
+                <th rowspan="2">STT</th>
+                <th rowspan="2">
+                    Mã SV
+                </th>
+                <th rowspan="2">
+                    Họ và tên
+                </th>
+                <th rowspan="2">
+                    Ngày sinh
+                </th>
+                <th rowspan="2">
+                    Giới tính
+                </th>
+                <th colspan="3">
+                    ĐIỂM RÈN LUYỆN
+                </th>
+                <th colspan="2">
+                    Kết quả
+                </th>
+                <th rowspan="2">Ghi chú</th>
+            </tr>
+            <tr>
+                <th>SV</th>
+                <th>Lớp</th>
+                <th>Khoa</th>
+                <th>Điểm</th>
+                <th>Xếp loại</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int stt = 1;
+            }
+            @foreach (var item in Model) {
+            <tr>
+                <td>@stt @{stt++;}</td>
 
                 <td>
-                    @item.Id
+                    @item.StudentId
                 </td>
                 <td>
-                    @item.FullName
+                    @item.Student.FullName
                 </td>
                 <td>
-                    @item.Birthday
+                    @item.Student.Birthday
                 </td>
-                @if (item.Gender == true)
-                {
-                    <td>
-                        Nữ
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        Nam
-                    </td>
-                }
+                    @if (item.Student.Gender == true)
+                    {
+                        <td>
+                            Nữ
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Nam
+                        </td>
+                    }
 
-                <td colspan="5">
-                    Không DGRL
+                <td>
+                    @item.SelfPoint
                 </td>
                 <td>
-                    @if (item.IsActive == 2)
+                    @item.ClassPoint
+                </td>
+                <td>
+                    @item.LecturerPoint
+                </td>
+                <td>@item.LastPoint</td>
+                <td>@item.Classify</td>
+                <td>@if (item.Student.IsActive == 2)
                     {
                         <span>Bảo lưu</span>
-                    }
-                    else if (item.IsActive == 0)
+                    }else if(item.Student.IsActive == 0)
                     {
                         <span>Nghỉ học</span>
                     }
                     else
                     {
-                        <span>Đang học</span>
+                        <span></span>
                     }
                 </td>
+                </tr>
+    }
+            @foreach(var item in students)
+            {
+                <tr>
+                    <td>@stt @{
+                            stt++;
+                        }</td>
+
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @item.FullName
+                    </td>
+                    <td>
+                        @item.Birthday
+                    </td>
+                    @if (item.Gender == true)
+                    {
+                        <td>
+                            Nữ
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Nam
+                        </td>
+                    }
+
+                    <td colspan="5">
+                        Không DGRL
+                    </td>
+                    <td>
+                        @if (item.IsActive == 2)
+                        {
+                            <span>Bảo lưu</span>
+                        }
+                        else if (item.IsActive == 0)
+                        {
+                            <span>Nghỉ học</span>
+                        }
+                        else
+                        {
+                            <span>Đang học</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="11"></th>
             </tr>
-        }
-    </tbody>
-</table>
+            <tr>
+                <th colspan="2"></th>
+                <th colspan="3">KTP.Chủ nhiện Khoa</th>
+                <th colspan="3">Người lập bảng</th>
+                <th colspan="2"></th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script>
+    $(function () {
+        $("#btnSubmit").click(function () {
+            $("input[name='sumaryTable']").val($("#idEmployee").html())
+        })
+    })
+</script>

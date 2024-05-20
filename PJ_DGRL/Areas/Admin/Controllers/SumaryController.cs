@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PJ_DGRL.Areas.Admin.Models;
 using PJ_DGRL.Models.DGRLModels;
-
+using System.Text;
 namespace PJ_DGRL.Areas.Admin.Controllers
 {
     public class SumaryController : BaseController
@@ -32,6 +32,12 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             ViewBag.ClassId = classId;
             ViewBag.Student = _context.Students.Include(x => x.SumaryOfPoints).Where(x => !x.SumaryOfPoints.Where(x => x.SemesterId == semesterId).Any()).ToList();
             return View(sum);
+        }
+        [HttpPost]
+        public FileResult ExportToExcel(string sumaryTable)
+        {
+            var utf8Bytes = Encoding.UTF8.GetBytes(sumaryTable);
+            return File(utf8Bytes, "application/vnd.ms-excel","sumaryTable.xls");
         }
     }
 }

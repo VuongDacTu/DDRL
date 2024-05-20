@@ -26,7 +26,16 @@
             <option>Tất cả lớp đang học</option>
             @foreach (var item in cls)
             {
-                <option value="@item.Id">@item.Name</option>
+                if(item.Id == ViewBag.ClassId)
+                {
+                    <option value="@item.Id" selected>@item.Name</option>
+                }
+                else
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+
+                
             }
         </select>
     </div>
@@ -46,7 +55,7 @@
 <header>
     <section id="QuocHieu">
         <div>
-            <p>KHOA @Model.FirstOrDefault().Department.Name <br><b>NGÀNH @Model.FirstOrDefault().Department.Name</b></p>
+            <p>KHOA @Model.FirstOrDefault()?.Department?.Name <br><b>NGÀNH @Model.FirstOrDefault()?.Department?.Name</b></p>
         </div>
         <div>
             <p><b>CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM <br> Độc lập - Tự do - Hạnh phúc</b></p>
@@ -64,7 +73,7 @@
         <p><b>1. Thời gian: </b>... giờ, ngày... tháng... năm... </p>
     </div>
     <div>
-        <p><b>2. Địa điểm: </b>Văn phòng Khoa @Model.FirstOrDefault().Department.Name</p>
+        <p><b>2. Địa điểm: </b>Văn phòng Khoa @Model.FirstOrDefault()?.Department?.Name</p>
     </div>
     <div>
         <p>
