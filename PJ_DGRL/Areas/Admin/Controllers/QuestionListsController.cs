@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using PJ_DGRL.Areas.Admin.Models;
 using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
@@ -20,18 +21,18 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             _context = context;
         }
-
+        public IsActive _isActive = new IsActive();
         // GET: Admin/QuestionLists
         public async Task<IActionResult> Index()
         {
             var dbDgrlContext = _context.QuestionLists.Include(q => q.GroupQuestion).Include(q => q.TypeQuestion);
-            ViewBag.Semester = _context.Semesters.Where(x => x.IsActive == 1).ToList();
+            ViewBag.Semester = _context.Semesters.Where(x => x.IsActive == _isActive.HoatDong()).ToList();
             return View(await dbDgrlContext.ToListAsync());
         }
         // GET: Admin/QuestionLists
         public async Task<IActionResult> List()
         {
-            ViewBag.Semester = _context.Semesters.Where(x => x.IsActive == 1).ToList();
+            ViewBag.Semester = _context.Semesters.Where(x => x.IsActive == _isActive.NgungHoatDong()).ToList();
             var dbDgrlContext = _context.GroupQuestions.Include(q => q.QuestionLists).ThenInclude(q => q.AnswerLists);
             return View(await dbDgrlContext.ToListAsync());
         }
@@ -193,7 +194,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
         public IActionResult Set(int? questionId, bool? list)
         {
-            _context.QuestionLists.FirstOrDefault(x => x.Id == questionId).Status = 1; 
+            _context.QuestionLists.FirstOrDefault(x => x.Id == questionId).Status = _isActive.HoatDong(); 
             _context.SaveChanges();
             if (list == true)
             {
@@ -206,7 +207,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
         public IActionResult UnSet(int? questionId, bool? list)
         {
-            _context.QuestionLists.FirstOrDefault(x => x.Id == questionId).Status = 0;
+            _context.QuestionLists.FirstOrDefault(x => x.Id == questionId).Status = _isActive.NgungHoatDong();
             _context.SaveChanges();
             if (list == true)
             {
@@ -224,12 +225,12 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             {
                 foreach (var item in questions)
                 {
-                    item.Status = 0;
+                    item.Status = _isActive.NgungHoatDong();
                 }
                 var questionHistory = _context.QuestionHisories.Include(x => x.Question).Where(x => x.SemesterId == semesterId).ToList();
                 foreach(var item in questionHistory)
                 {
-                   item.Question.Status = 1;
+                   item.Question.Status = _isActive.HoatDong();
 
                 }
                 _context.SaveChanges();
@@ -244,7 +245,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             }
             foreach(var item in questions)
             {
-                item.Status = 1;
+                item.Status = _isActive.HoatDong();
             }
             _context.SaveChanges();
             if (list == true)

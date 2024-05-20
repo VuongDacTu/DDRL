@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PJ_DGRL.Areas.Admin.Models;
 using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
@@ -18,6 +19,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             _context = context;
         }
+        public IsActive isActive = new IsActive();
 
         // GET: Admin/AccountLecturers
         public async Task<IActionResult> Index(string? lecturerId)
@@ -167,13 +169,13 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
         public IActionResult Active(string? mgv,int? accId)
         {
-            _context.AccountLecturers.FirstOrDefault(x => x.Id == accId).IsActive = 1;
+            _context.AccountLecturers.FirstOrDefault(x => x.Id == accId).IsActive = isActive.HoatDong();
             _context.SaveChanges();
             return RedirectToAction("Index", new {lecturerId = mgv});
         }
         public IActionResult Passive(string? mgv,int? accId)
         {
-            _context.AccountLecturers.FirstOrDefault(x => x.Id == accId).IsActive = 0;
+            _context.AccountLecturers.FirstOrDefault(x => x.Id == accId).IsActive = isActive.NgungHoatDong();
             _context.SaveChanges();
             return RedirectToAction("Index", new { lecturerId = mgv });
         }

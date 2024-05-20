@@ -18,7 +18,6 @@
           "Microsoft.EntityFrameworkCore.Tools": "8.0.4",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "8.0.2",
           "Newtonsoft.Json": "13.0.3",
-          "RazorEngine": "3.10.0",
           "Select.HtmlToPdf.NetCore": "23.2.0",
           "X.PagedList.Mvc.Core": "9.1.2"
         },
@@ -597,14 +596,6 @@
         "resources": {
           "lib/net6.0/zh-Hant/Humanizer.resources.dll": {
             "locale": "zh-Hant"
-          }
-        }
-      },
-      "Microsoft.AspNet.Razor/3.0.0": {
-        "runtime": {
-          "lib/net45/System.Web.Razor.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.11001.0"
           }
         }
       },
@@ -1822,17 +1813,6 @@
           }
         }
       },
-      "RazorEngine/3.10.0": {
-        "dependencies": {
-          "Microsoft.AspNet.Razor": "3.0.0"
-        },
-        "runtime": {
-          "lib/net45/RazorEngine.dll": {
-            "assemblyVersion": "3.10.0.0",
-            "fileVersion": "3.10.0.0"
-          }
-        }
-      },
       "Select.HtmlToPdf.NetCore/23.2.0": {
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "7.0.0",
@@ -2512,13 +2492,6 @@
       "path": "humanizer.core.zh-hant/2.14.1",
       "hashPath": "humanizer.core.zh-hant.2.14.1.nupkg.sha512"
     },
-    "Microsoft.AspNet.Razor/3.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-mU1W0PRd1uQAb+triRGp51YYkw26RQ9q1tWPX57eHqxDqjx1smRHhejQhhnoAGr3bZDkl8AoUxegGR3tNM+YKA==",
-      "path": "microsoft.aspnet.razor/3.0.0",
-      "hashPath": "microsoft.aspnet.razor.3.0.0.nupkg.sha512"
-    },
     "Microsoft.AspNetCore.Authorization/8.0.4": {
       "type": "package",
       "serviceable": true,
@@ -3120,13 +3093,6 @@
       "sha512": "sha512-ypnSvEtpNGo48bAWn95J1oHChycCXcevFSbn53fqzLxlXFSZP7dawu8p/7mHAfGufZQSV2sBpW80XQGIfXO8kQ==",
       "path": "nuget.versioning/6.9.1",
       "hashPath": "nuget.versioning.6.9.1.nupkg.sha512"
-    },
-    "RazorEngine/3.10.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-xWjGSjhMTM+Qzh3kabsRXR7kpCZQALbYGGYrOPc7wf6IBeDee4OVuO/LRTgWpgIFA8W/widTfszLBm0MfVHRGg==",
-      "path": "razorengine/3.10.0",
-      "hashPath": "razorengine.3.10.0.nupkg.sha512"
     },
     "Select.HtmlToPdf.NetCore/23.2.0": {
       "type": "package",

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PJ_DGRL.Areas.Admin.Models;
 using PJ_DGRL.Models.DGRLModels;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -19,7 +20,8 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             _context = context;
         }
-
+        public IsDelete _isDelete = new IsDelete();
+        public IsActive _isActive = new IsActive();
         // GET: Admin/Classes
         public async Task<IActionResult> Index(int? departmentId, string? coursesId,string? name,bool? isDelete)
         {
@@ -53,7 +55,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 dbDgrlContext = c.Where(x => x.IsDelete == isDelete && x.Name.Contains(name));
             }
             ViewBag.DepartmentId = new SelectList(_context.Departments, "Id", "Name");
-            ViewBag.CoursesId = new SelectList(_context.Courses.Where(x => x.IsDelete == false), "Id", "Id");
+            ViewBag.CoursesId = new SelectList(_context.Courses.Where(x => x.IsDelete == _isDelete.Hien()), "Id", "Id");
             ViewBag.IsDelete = isDelete;
             return View(await dbDgrlContext.ToListAsync());
         }
@@ -95,10 +97,10 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                @class.IsDelete = false;
+                @class.IsDelete = _isDelete.Hien();
                 _context.Add(@class);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new { isDelete=false }) ;
+                return RedirectToAction(nameof(Index), new { isDelete=_isDelete.Hien() }) ;
             }
             ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", @class.CourseId);
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", @class.DepartmentId);
@@ -137,14 +139,14 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 foreach(var item in student)
                 {
                     var acc = _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id);
-                    item.IsActive = 3;
-                    item.IsDelete = true;
-                    acc.IsActive = 0;
+                    item.IsActive = _isActive.NgungHoatDong();
+                    item.IsDelete = _isDelete.An();
+                    acc.IsActive = _isActive.NgungHoatDong();
                 }
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index), new {isDelete=false});
+            return RedirectToAction(nameof(Index), new {isDelete=_isDelete.Hien()});
         }
 
         private bool ClassExists(int id)
@@ -162,7 +164,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             c.IsActive = 0;
             foreach(var item in student)
             {
-                _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id).IsActive = 0;
+                _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id).IsActive = _isActive.NgungHoatDong();
             }
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -174,7 +176,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             c.IsActive = 1;
             foreach (var item in student)
             {
-                _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id).IsActive = 1;
+                _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id).IsActive = _isActive.HoatDong();
             }
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -189,9 +191,9 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 foreach (var item in student)
                 {
                     var acc = _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id);
-                    item.IsActive = 1;
-                    item.IsDelete = false;
-                    acc.IsActive = 1;
+                    item.IsActive = _isActive.HoatDong();
+                    item.IsDelete = _isDelete.Hien();
+                    acc.IsActive = _isActive.HoatDong();
                 }
             }
 

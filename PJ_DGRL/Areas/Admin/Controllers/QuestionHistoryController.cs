@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using PJ_DGRL.Areas.Admin.Models;
 using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
@@ -17,7 +18,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             _context = context;
         }
-
+        public IsDelete _isDelete = new IsDelete();
         // GET: Admin/QuestionHisories
         public async Task<IActionResult> Index(int? semesterId)
         {

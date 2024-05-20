@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using PJ_DGRL.Areas.Admin.Models;
 using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
@@ -19,6 +20,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             _context = context;
         }
 
+        public IsActive isActive = new IsActive();
         // GET: Admin/AnswerLists
         public async Task<IActionResult> Index(int? questionId)
         {
@@ -175,14 +177,14 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
         public IActionResult Set(int? answerId,int? questionId)
         {
-            _context.AnswerLists.FirstOrDefault(x => x.Id == answerId).Status = 1;
+            _context.AnswerLists.FirstOrDefault(x => x.Id == answerId).Status = isActive.HoatDong();
             ViewBag.QID = questionId;
             _context.SaveChanges();
             return RedirectToAction("Index", new {questionId = questionId});
         }
         public IActionResult UnSet(int? answerId, int? questionId)
         {
-            _context.AnswerLists.FirstOrDefault(x => x.Id == answerId).Status = 0;
+            _context.AnswerLists.FirstOrDefault(x => x.Id == answerId).Status = isActive.NgungHoatDong();
             ViewBag.QID = questionId;
             _context.SaveChanges();
             return RedirectToAction("Index", new { questionId = questionId });

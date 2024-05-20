@@ -41,7 +41,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
                 {
 					// Lưu lại session khi đăng nhập thành công
 					HttpContext.Session.SetString("StudentLogin", dataLogin.ToJson());
-					var lTLogin = _context.Students.Where(x => x.Id.Equals(dataLogin.StudentId)).FirstOrDefault(x => x.PositionId.Equals("LT"));
+					var lTLogin = _context.Students.Include(x => x.Position).Where(x => x.Id.Equals(dataLogin.StudentId)).FirstOrDefault(x => x.Position.Status == 1);
 					if (lTLogin != null)
 					{
 						HttpContext.Session.SetString("LTLogin", dataLogin.UserName);

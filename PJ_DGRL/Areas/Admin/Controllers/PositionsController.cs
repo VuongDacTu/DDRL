@@ -35,7 +35,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Position position)
+        public async Task<IActionResult> Create([Bind("Id,Name,Status")] Position position)
         {
             if (ModelState.IsValid)
             {
@@ -47,7 +47,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
 
         // GET: Admin/Positions/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
@@ -72,7 +72,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // POST: Admin/Positions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var position = await _context.Positions.FindAsync(id);
             if (position != null)
@@ -84,10 +84,13 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PositionExists(string id)
+        private bool PositionExists(int id)
         {
             return _context.Positions.Any(e => e.Id == id);
         }
-        public IActionResult Status() { return View(); }
+        public IActionResult Status() { 
+            
+            return View(); 
+        }
     }
 }

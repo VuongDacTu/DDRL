@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using PJ_DGRL.Areas.Admin.Models;
 using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
@@ -18,7 +19,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             _context = context;
         }
-
+        public IsActive _isActive = new IsActive();
         // GET: Admin/Semesters
         public async Task<IActionResult> Index(int? isActive)
         {
@@ -181,7 +182,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             if (semester != null)
             {
 
-                semester.IsActive = 0;
+                semester.IsActive = _isActive.NgungHoatDong();
             }
 
             await _context.SaveChangesAsync();
@@ -193,10 +194,10 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             if (semester != null)
             {
 
-                semester.IsActive = 1;
+                semester.IsActive = _isActive.HoatDong();
             }
             _context.SaveChanges();
-            return RedirectToAction("Index", new {isActive = 0});
+            return RedirectToAction("Index", new {isActive = _isActive.NgungHoatDong() });
         }
         public async Task<IActionResult> Remove(int? id)
         {
@@ -230,7 +231,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 _context.Semesters.Remove(semester);
             }
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index), new { isActive = 0 });
+            return RedirectToAction(nameof(Index), new { isActive = _isActive.NgungHoatDong() });
         }
     }
 }

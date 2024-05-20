@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "v9aplg4i4j1HCZaMMnBmb1hUPXMHWBKxMQhV1gAUf5A=",
+  "Hash": "50kXAZcMgaJvaeDDOCBSJacY3PbkSSogPG2bUC6Prlg=",
   "Source": "PJ_DGRL",
   "BasePath": "_content/PJ_DGRL",
   "Mode": "Default",
@@ -41530,6 +41530,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\ReportItem2Template.html"
+    },
+    {
+      "Identity": "E:\\DGRL\\PJ_DGRL\\wwwroot\\ReportItem3Template.html",
+      "SourceId": "PJ_DGRL",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\DGRL\\PJ_DGRL\\wwwroot\\",
+      "BasePath": "_content/PJ_DGRL",
+      "RelativePath": "ReportItem3Template.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ReportItem3Template.html"
     },
     {
       "Identity": "E:\\DGRL\\PJ_DGRL\\wwwroot\\ReportItemTemplate.html",

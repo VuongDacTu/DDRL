@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using PJ_DGRL.Areas.Admin.Models;
 using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
@@ -17,7 +18,8 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             _context = context;
         }
-
+        public IsDelete _isDelete = new IsDelete();
+        public IsActive _isActive = new IsActive();
         // GET: Admin/Courses
         public async Task<IActionResult> Index(bool? isDelete)
         {
@@ -60,7 +62,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             {
                 _context.Add(course);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new {isDelete=false});
+                return RedirectToAction(nameof(Index), new {isDelete=_isDelete.Hien()});
             }
             return View(course);
         }
@@ -147,21 +149,21 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 var c = _context.Classes.Where(x => x.CourseId == id).ToList();
                 foreach (var item in c)
                 {
-                    item.IsDelete = true;
-                    item.IsActive = 0;
+                    item.IsDelete = _isDelete.An();
+                    item.IsActive = _isActive.NgungHoatDong();
                     var students = _context.Students.Where(x => x.ClassId == item.Id).ToList();
                     foreach (var student in students)
                     {
-                        student.IsActive = 3;
-                        student.IsDelete = true;
+                        student.IsActive = _isActive.NgungHoatDong();
+                        student.IsDelete = _isDelete.An();
                         var acc = _context.AccountStudents.FirstOrDefault(x => x.StudentId == student.Id);
-                        acc.IsActive = 0;
+                        acc.IsActive = _isActive.NgungHoatDong();
                     }
                 }
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index), new {isDelete=false});
+            return RedirectToAction(nameof(Index), new {isDelete=_isDelete.Hien()});
         }
 
         private bool CourseExists(string id)
@@ -178,20 +180,20 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 var c = _context.Classes.Where(x => x.CourseId == id).ToList();
                 foreach (var item in c)
                 {
-                    item.IsDelete = false;
-                    item.IsActive = 1;
+                    item.IsDelete = _isDelete.Hien();
+                    item.IsActive = _isActive.HoatDong();
                     var students = _context.Students.Where(x => x.ClassId == item.Id).ToList();
                     foreach (var student in students)
                     {
-                        student.IsActive = 1;
-                        student.IsDelete = false;
+                        student.IsActive = _isActive.HoatDong();
+                        student.IsDelete = _isDelete.Hien();
                         var acc = _context.AccountStudents.FirstOrDefault(x => x.StudentId == student.Id);
-                        acc.IsActive = 1;
+                        acc.IsActive = _isActive.HoatDong();
                     }
                 }
             }
             _context.SaveChanges();
-            return RedirectToAction(nameof(Index), new {isDelete=true});
+            return RedirectToAction(nameof(Index), new {isDelete=_isDelete.An()});
         }
         public async Task<IActionResult> Remove(string id)
         {
@@ -237,7 +239,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index), new { isDelete = true });
+            return RedirectToAction(nameof(Index), new { isDelete = _isDelete.An() });
         }
 
     }

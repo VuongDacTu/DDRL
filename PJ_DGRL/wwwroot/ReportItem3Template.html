@@ -1,0 +1,57 @@
+﻿<div>
+    <p><b>4.3. Tổng hợp xếp loại đánh giá rèn luyện của Khoa</b></p>
+    <table class="table" border="1px" cellspacing="0" align="center">
+        <thead>
+            <tr>
+                <th scope="col" rowspan="2">STT</th>
+                <th scope="col" rowspan="2">Ngành</th>
+                <th scope="col" colspan="2">Tổng số điểm</th>
+                <th scope="col">Từ 90 - 100 điểm</th>
+                <th scope="col">Từ 80 - 89 điểm</th>
+                <th scope="col">Từ 70 - 79 điểm</th>
+                <th scope="col">Từ 60 - 69 điểm</th>
+                <th scope="col">Từ 50 - 59 điểm</th>
+                <th scope="col">Từ 40 - 49 điểm</th>
+                <th scope="col">Dưới 40 điểm</th>
+            </tr>
+            <tr>
+                <th scope="col" colspan="2">Xếp loại</th>
+                <th scope="col">Xuất sắc</th>
+                <th scope="col">Tốt</th>
+                <th scope="col">Khá</th>
+                <th scope="col">TB khá</th>
+                <th scope="col">TB</th>
+                <th scope="col">Yếu</th>
+                <th scope="col">Kém</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{items2}}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="3">Tổng</th>
+                <th>SL</th>
+                <th>{{txs}}</th>
+                <th>{{tt}}</th>
+                <th>{{tk}}</th>
+                <th>{{ttbk}}</th>
+                <th>{{ttb}}</th>
+                <th>{{ty}}</th>
+                <th>{{tkem}}</th>
+            </tr>
+            <tr>
+                <th colspan="3">{{t}}</th>
+                <th>TL</th>
+                <th>{{ttlxs}}</th>
+                <th>{{ttlt}}</th>
+                <th>{{ttlk}}</th>
+                <th>{{ttltbk}}</th>
+                <th>{{ttltb}}</th>
+                <th>{{ttly}}</th>
+                <th>{{ttlkem}}</th>
+            </tr>
+        </tfoot>
+    </table>
+    <p>Cuộc họp kết thúc vào lúc ... giờ cùng ngày.</p>
+</div>

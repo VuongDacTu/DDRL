@@ -72,8 +72,19 @@
         </p>
             @foreach(var item in lecturers)
             {
-                <p> - @item.FullName - @item.Position.Name </P>
-            }
+            <p> - @item.Education. @item.FullName, @item.Position.Name - @if (item.IsLeader == 0)
+                {
+                    <span>Uỷ viên</span>
+                }else if(item.IsLeader == 1)
+                {
+                    <span>Chủ tịch Hội đồng</span>
+                }
+                else
+                {
+                    <span>Thư ký Hội đồng</span>
+                }
+            </P>
+        }
             
     </div>
     <div>
@@ -145,7 +156,9 @@
     <div>
         <p><b>4.2. Tổng hợp kết quả đánh giá rèn luyện theo lớp (có bảng chi tiết kèm theo)</b></p>
     </div>
-    <div>
+    @if(ViewBag.ClassId == null)
+    {
+            <div>
         <p><b>4.3. Tổng hợp xếp loại đánh giá rèn luyện của Khoa</b></p>
         <table class="table" border="1px" cellspacing="0" align="center">
             <thead>
@@ -307,6 +320,8 @@
         </table>
         <p>Cuộc họp kết thúc vào lúc 11 giờ cùng ngày.</p>
     </div>
+    }
+
 </section>
 <section id="foot">
     <div>
@@ -314,7 +329,15 @@
         <p><b>...</b></p>
     </div>
     <div>
-        <p><b>Thư ký</b></p>
+        <p><b>Thư ký khoa</b></p>
         <p><b>...</b></p>
     </div>
+    @if(ViewBag.ClassId != null)
+    {
+        <div>
+            <p><b>Ban đại diện lớp</b></p>
+            <p><b>...</b></p>
+        </div>
+    }
+
 </section>

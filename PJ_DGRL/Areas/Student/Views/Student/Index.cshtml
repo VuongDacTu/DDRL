@@ -22,7 +22,7 @@
                             int selfPoint = item.SumaryOfPoints.FirstOrDefault()?.SelfPoint ?? 0;
                         }
                         <td><a asp-controller="History" asp-action="Self" asp-route-studentId="@item.Id"><p>@item.Id</p></a></td>
-                        @if (item.PositionId == "LT")
+                        @if (item.PositionId == 1)
                         {
                             <td><b class="text-green">@item.FullName</b></td>
                         }

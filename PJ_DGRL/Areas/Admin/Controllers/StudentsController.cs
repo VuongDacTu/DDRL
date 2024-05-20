@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using PJ_DGRL.Areas.Admin.Models;
 using PJ_DGRL.Models.DGRLModels;
 namespace PJ_DGRL.Areas.Admin.Controllers
 {
@@ -19,6 +20,9 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             _context = context;
         }
+        public Status _status = new Status();
+        public IsActive _isActive = new IsActive();
+        public IsDelete _isDelete = new IsDelete(); 
 
         // GET: Admin/Students
         public async Task<IActionResult> Index(string? name,int? classId, bool? isDelete, int? departmentId)
@@ -70,8 +74,9 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // GET: Admin/Students/Create
         public IActionResult Create(int? departmentId)
         {
-            ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == false), "Id", "Name");
-            ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status == false), "Id", "Name");
+            ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == _isDelete.Hien()), "Id", "Name");
+            ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status != _status.GiangVien()), "Id", "Name");
+            ViewBag.Student = _context.Students.ToList();
             ViewBag.DepartmentId = departmentId;
             return View();
         }
@@ -83,30 +88,47 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FullName,Birthday,Email,Phone,Gender,ClassId,PositionId,IsActive")] Students student, int?departmentId)
         {
+
             if (ModelState.IsValid)
             {
+                var students = _context.Students.FirstOrDefault(x => x.Id == student.Id);
+
                 var admin = JsonConvert.DeserializeObject<AccountAdmin>(HttpContext.Session.GetString("AdminLogin"));
                 AccountStudent accountStudent = new AccountStudent() {
                     UserName = student.Id,
                     Password = "12345",
                     CreateBy = admin.UserName,
                     CreateDate = DateTime.Now,
-                    IsActive = 1,
+                    IsActive = _isActive.HoatDong(),
                     StudentId = student.Id                    
                 };
-                if(student.IsActive != 1)
+                if(student.IsActive != _isActive.HoatDong())
                 {
-                    accountStudent.IsActive = 0;
+                    accountStudent.IsActive = _isActive.NgungHoatDong();
                 }
                 student.IsDelete = false;
+ 
+
+                if (students != null)
+                {
+                    ViewBag.Error = "Mã sinh viên đã tồn tại !";
+                    ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == _isDelete.Hien()), "Id", "Name");
+                    ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status != _status.GiangVien()), "Id", "Name");
+                    ViewBag.Student = _context.Students.ToList();
+                    ViewBag.DepartmentId = departmentId;
+                    return View(student);
+                }
                 _context.AccountStudents.Add(accountStudent);
                 _context.Students.Add(student);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new {departmentId = departmentId,isDelete=false});
+                //return Json("Thêm mới thành công");
+                return RedirectToAction(nameof(Index), new { departmentId = departmentId, isDelete = _isDelete.Hien() });
             }
-            ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == false), "Id", "Name", student.ClassId);
-            ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status == false), "Id", "Name", student.PositionId);
+            ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == _isDelete.Hien()), "Id", "Name", student.ClassId);
+            ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status != _status.GiangVien()), "Id", "Name", student.PositionId);
             return View(student);
+            
+
         }
 
         // GET: Admin/Students/Edit/5
@@ -122,8 +144,8 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == false), "Id", "Name", student.ClassId);
-            ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status == false), "Id", "Name", student.PositionId);
+            ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == _isDelete.Hien()), "Id", "Name", student.ClassId);
+            ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status != _status.GiangVien()), "Id", "Name", student.PositionId);
             ViewBag.DepartmentId = departmentId;
             ViewBag.IsDelete=isDelete;
             return View(student);
@@ -150,13 +172,13 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                     await _context.SaveChangesAsync();
                     var st = _context.Students.FirstOrDefault(x => x.Id == id);
                     var acc = _context.AccountStudents.FirstOrDefault(x => x.StudentId == id);
-                    if(st.IsActive == 1)
+                    if(st.IsActive == _isActive.HoatDong())
                     {
-                        acc.IsActive = 1;
+                        acc.IsActive = _isActive.HoatDong();
                     }
                     else
                     {
-                        acc.IsActive = 0;
+                        acc.IsActive = _isActive.NgungHoatDong();
                     }
                     _context.SaveChanges();
                 }
@@ -174,7 +196,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index), new {departmentId = departmentId, isDelete = isDelete });
             }
             ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.IsDelete == false), "Id", "Name", student.ClassId);
-            ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status == false), "Id", "Name", student.PositionId);
+            ViewData["PositionId"] = new SelectList(_context.Positions.Where(x => x.Status != _status.GiangVien()), "Id", "Name", student.PositionId);
             return RedirectToAction(nameof(Index), new { departmentId = departmentId, isDelete = isDelete });
         }
 
@@ -208,12 +230,12 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             var acc = _context.AccountStudents.Where(x => x.StudentId == id).FirstOrDefault();
             if (student != null)
             {
-                student.IsDelete = true;
-                acc.IsActive = 0;
+                student.IsDelete = _isDelete.An();
+                acc.IsActive = _isActive.NgungHoatDong();
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index), new { departmentId = departmentId, isDelete = false});
+            return RedirectToAction(nameof(Index), new { departmentId = departmentId, isDelete = _isDelete.Hien()});
         }
 
         private bool StudentExists(string id)
@@ -226,12 +248,12 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             var acc = _context.AccountStudents.Where(x => x.StudentId == id).FirstOrDefault();
             if (student != null)
             {
-                student.IsDelete = false;
-                acc.IsActive = 1;
+                student.IsDelete = _isDelete.Hien();
+                acc.IsActive = _isActive.HoatDong();
             }
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index), new { isDelete = true, departmentId = departmentId });
+            return RedirectToAction(nameof(Index), new { isDelete = _isDelete.An(), departmentId = departmentId });
         }
         public async Task<IActionResult> Remove(string id, int? departmentId)
         {
@@ -267,7 +289,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index), new { departmentId = departmentId, isDelete = true });
+            return RedirectToAction(nameof(Index), new { departmentId = departmentId, isDelete = _isDelete.An() });
         }
 
     }

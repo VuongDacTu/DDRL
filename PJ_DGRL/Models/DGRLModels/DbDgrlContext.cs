@@ -37,6 +37,8 @@ public partial class DbDgrlContext : DbContext
 
     public virtual DbSet<Lecturers> Lecturers { get; set; }
 
+    public virtual DbSet<LecturerInfor> LecturerInfors { get; set; }
+
     public virtual DbSet<Position> Positions { get; set; }
 
     public virtual DbSet<QuestionHisory> QuestionHisories { get; set; }
@@ -273,10 +275,6 @@ public partial class DbDgrlContext : DbContext
             entity.Property(e => e.Phone)
                 .HasMaxLength(15)
                 .IsUnicode(false);
-            entity.Property(e => e.PositionId)
-                .HasMaxLength(3)
-                .IsUnicode(false)
-                .IsFixedLength();
 
             entity.HasOne(d => d.Department).WithMany(p => p.Lecturers)
                 .HasForeignKey(d => d.DepartmentId)
@@ -284,20 +282,45 @@ public partial class DbDgrlContext : DbContext
 
             entity.HasOne(d => d.Position).WithMany(p => p.Lecturers)
                 .HasForeignKey(d => d.PositionId)
-                .HasConstraintName("FK__Lecturer__Positi__46E78A0C");
+                .HasConstraintName("FK__Lecturer__Positi__2B0A656D");
+        });
+
+        modelBuilder.Entity<LecturerInfor>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Lecturer__3214EC07B598D90F");
+
+            entity.ToTable("LecturerInfor");
+
+            entity.Property(e => e.LecturerId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.Note)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("note");
+            entity.Property(e => e.Position)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Rank)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Role)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.Lecturer).WithMany(p => p.LecturerInfors)
+                .HasForeignKey(d => d.LecturerId)
+                .HasConstraintName("FK__LecturerI__Lectu__160F4887");
         });
 
         modelBuilder.Entity<Position>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Position__3214EC07F76E1078");
+            entity.HasKey(e => e.Id).HasName("PK__Position__3214EC07B1F12F48");
 
             entity.ToTable("Position");
 
-            entity.Property(e => e.Id)
-                .HasMaxLength(3)
-                .IsUnicode(false)
-                .IsFixedLength();
-            entity.Property(e => e.Name).HasMaxLength(20);
+            entity.Property(e => e.Name).HasMaxLength(50);
         });
 
         modelBuilder.Entity<QuestionHisory>(entity =>
@@ -408,10 +431,6 @@ public partial class DbDgrlContext : DbContext
             entity.Property(e => e.Phone)
                 .HasMaxLength(15)
                 .IsUnicode(false);
-            entity.Property(e => e.PositionId)
-                .HasMaxLength(3)
-                .IsUnicode(false)
-                .IsFixedLength();
 
             entity.HasOne(d => d.Class).WithMany(p => p.Students)
                 .HasForeignKey(d => d.ClassId)
@@ -419,7 +438,7 @@ public partial class DbDgrlContext : DbContext
 
             entity.HasOne(d => d.Position).WithMany(p => p.Students)
                 .HasForeignKey(d => d.PositionId)
-                .HasConstraintName("FK__Student__Positio__4316F928");
+                .HasConstraintName("FK__Student__Positio__2BFE89A6");
         });
 
         modelBuilder.Entity<SumaryOfPoint>(entity =>
