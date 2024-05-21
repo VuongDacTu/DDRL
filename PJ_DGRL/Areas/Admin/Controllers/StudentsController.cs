@@ -45,7 +45,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             {
                     dbDgrlContext = students.Where(x => x.IsDelete == isDelete && x.Class.DepartmentId == departmentId && x.FullName.Contains(name));
             }
-            ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.DepartmentId == departmentId), "Id", "Name");
+            ViewData["ClassId"] = new SelectList(_context.Classes.Where(x => x.DepartmentId == departmentId), "Id", "Name",classId);
             ViewBag.DepartmentId = departmentId;
             
             return View(await dbDgrlContext.ToListAsync());

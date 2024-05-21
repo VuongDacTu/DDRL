@@ -43,7 +43,7 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
 
             }
 
-            ViewData["Class"] = new SelectList(_context.Classes.Where(x => x.DepartmentId == lecturers.FirstOrDefault().DepartmentId), "Id", "Name");
+            ViewData["Class"] = new SelectList(_context.Classes.Where(x => x.DepartmentId == lecturers.FirstOrDefault().DepartmentId), "Id", "Name",classId);
             ViewBag.Name = name;
             return View(students);
 		}

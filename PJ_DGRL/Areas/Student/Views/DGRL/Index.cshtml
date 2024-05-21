@@ -16,7 +16,7 @@
     <div class="">
             <form asp-action="Submit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" name="semesterId" value="@ViewBag.SemesterId" />
+            <input type="hidden" name="semesterId" value="ViewBag.SemesterId" />
             @foreach(var questionGroup in Model)
                 {
                 <h4> @questionGroup.Name</h4>
@@ -58,8 +58,7 @@
             }
             <div class="form-group">
                 <input type="submit" value="Gửi đánh giá" class="btn btn-primary" />
-                </div>
-
+            </div>
         </form>
     </div>
 </div>

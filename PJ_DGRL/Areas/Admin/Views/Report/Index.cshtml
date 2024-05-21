@@ -11,18 +11,24 @@
     List<Lecturers> lecturers = ViewBag.Lecturer;
 }
 
-<form asp-action="Index">
+<section id="formSearch">
+    <form asp-action="Index">
     <input type="hidden" name="departmentId" value="@ViewBag.DepartmentId">
     <div class="form-group">
-        <select name="semesterId">
+        <select name="semesterId" class="form-control">
             @foreach(var item in semesters)
             {
-                <option value="@item.Id">Kỳ @item.Name Năm học @item.SchoolYear</option>
+                if(item.Id == ViewBag.SemesterId)
+                {
+                    <option selected value="@item.Id">Kỳ @item.Name Năm học @item.SchoolYear</option>
+                }else{                
+                    <option value="@item.Id">Kỳ @item.Name Năm học @item.SchoolYear</option>
+                }
             }
         </select>
     </div>
     <div class="form-group">
-        <select name="classId">
+        <select name="classId" class="form-control">
             <option>Tất cả lớp đang học</option>
             @foreach (var item in cls)
             {
@@ -40,22 +46,23 @@
         </select>
     </div>
     <div class="form-group">
-        <input type="submit" value="Tìm kiếm" />
+        <input type="submit" value="Tìm kiếm" class="btn btn-primary" />
     </div>
 </form>
 <form asp-action="ConvertToPDF">
-    <label>Xuất file PDF</label>
     <input type="hidden" name="departmentId" value="@ViewBag.DepartmentId">
     <input type="hidden" name="classId" value="@ViewBag.ClassId"/>
     <input type="hidden" name="semesterId" value="@ViewBag.SemesterId"/>
     <div class="form-group">
-        <input type="submit" value="Xuất file PDF" />
+        <input type="submit" value="Xuất file PDF" class="btn btn-outline-primary" />
     </div>
 </form>
+</section>
+
 <header>
     <section id="QuocHieu">
         <div>
-            <p>KHOA @Model.FirstOrDefault()?.Department?.Name <br><b>NGÀNH @Model.FirstOrDefault()?.Department?.Name</b></p>
+            <p>KHOA @cls.FirstOrDefault()?.Department?.Name <br><b>NGÀNH @cls.FirstOrDefault()?.Department?.Name</b></p>
         </div>
         <div>
             <p><b>CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM <br> Độc lập - Tự do - Hạnh phúc</b></p>
@@ -73,7 +80,7 @@
         <p><b>1. Thời gian: </b>... giờ, ngày... tháng... năm... </p>
     </div>
     <div>
-        <p><b>2. Địa điểm: </b>Văn phòng Khoa @Model.FirstOrDefault()?.Department?.Name</p>
+        <p><b>2. Địa điểm: </b>Văn phòng Khoa @cls.FirstOrDefault()?.Department?.Name</p>
     </div>
     <div>
         <p>

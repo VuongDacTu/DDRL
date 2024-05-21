@@ -7,6 +7,8 @@
     int stt = 1;
     Semester semester = ViewBag.Semester;
 }
+
+
 <div class="row">
     <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
         <div class="col openMenu" >
@@ -32,8 +34,12 @@
                 <div class="">
                     <form asp-action="Submit" asp-controller="LT_DGRL">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" name="semesterId" value="@ViewBag.semesterId" readonly />
-                        <input type="hidden" name="studentId" value="@ViewBag.Id" readonly />
+                        <div class="form-group">
+                            <input type="hidden" name="semesterId" value="@ViewBag.semesterId" readonly />
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" name="studentId" value="@ViewBag.Id" readonly />
+                        </div>
                         @foreach (var questionGroup in Model)
                         {
                         <h4>@questionGroup.Name</h4>

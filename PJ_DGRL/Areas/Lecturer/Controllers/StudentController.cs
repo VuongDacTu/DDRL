@@ -34,7 +34,7 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
                 students = _context.Students.Where(u => u.Class.DepartmentId == departmentId && u.FullName.Contains(name)).Include(x => x.SumaryOfPoints).ToList();
             }
             ViewBag.Name = name;
-            ViewBag.ClassId = new SelectList(_context.Classes.Where(x => x.DepartmentId == departmentId), "Id", "Name");
+            ViewBag.ClassId = new SelectList(_context.Classes.Where(x => x.DepartmentId == departmentId), "Id", "Name",classId);
             int semesterId = _context.Semesters.FirstOrDefault(x => x.IsActive >= 1)?.Id ?? 0;
             ViewBag.Check = _context.SumaryOfPoints.Where(x => x.SemesterId == semesterId).ToList();
 			return View(students);

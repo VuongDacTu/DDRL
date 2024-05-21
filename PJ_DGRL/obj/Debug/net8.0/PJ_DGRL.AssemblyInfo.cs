@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PJ_DGRL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a2b4fc8281172ed27951592924a1fe088f2c1795")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b0f4f6f2553204eef8af3459fe85c9927fad72d")]
 [assembly: System.Reflection.AssemblyProductAttribute("PJ_DGRL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PJ_DGRL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

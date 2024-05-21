@@ -16,7 +16,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
         public async Task<IActionResult> Index()
         {
             // group question
-            var groupQuestions = _context.GroupQuestions.Include(u => u.QuestionLists).ThenInclude(u => u.QuestionHisories).Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ToList();
+            var groupQuestions = await _context.GroupQuestions.Include(u => u.QuestionLists).ThenInclude(u => u.QuestionHisories).Include(x => x.QuestionLists).ThenInclude(x => x.AnswerLists).ToListAsync();
             // lấy ra sinh viên đang đăng nhập lưu trong session
 
             var ss = HttpContext.Session.GetString("StudentLogin");
@@ -27,10 +27,10 @@ namespace PJ_DGRL.Areas.Student.Controllers
             var student = JsonConvert.DeserializeObject<AccountStudent>(ss);
 
             // set lại checked cho Answer
-            var answers = _context.AnswerLists.ToList();
+            var answers = await _context.AnswerLists.ToListAsync();
             int semesterId = _context.Semesters.FirstOrDefault(x => x.DateOpenStudent <= DateTime.Now && x.DateEndStudent >= DateTime.Now)?.Id??0;
             
-            var selfAnswers = _context.SelfAnswers.Where(u => u.StudentId == student.UserName && u.SemesterId == semesterId).ToList();
+            var selfAnswers = await _context.SelfAnswers.Where(u => u.StudentId == student.UserName && u.SemesterId == semesterId).ToListAsync();
             foreach (var item in answers)
             {
                 item.Checked = 0;
@@ -49,12 +49,11 @@ namespace PJ_DGRL.Areas.Student.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Submit(Dictionary<int, int> answerIds, Dictionary<int, int> answerId)
+        public IActionResult Submit(int semesterId,Dictionary<int, int> answerIds, Dictionary<int, int> answerId)
         {
             if (ModelState.IsValid)
             {
 
-                int semesterId = _context.Semesters.FirstOrDefault(x => x.DateOpenStudent <= DateTime.Now && x.DateEndStudent >= DateTime.Now).Id;
                 var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
                 // kiểm tra trạng thái acc (0: chưa đánh giá, 1: đã đánh giá, 2:không được đánh giá)
                 int iActive = _context.AccountStudents.Where(u => u.UserName == student.UserName).FirstOrDefault().IsActive.Value;

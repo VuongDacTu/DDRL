@@ -52,13 +52,10 @@ namespace PJ_DGRL.Areas.Student.Controllers
             ViewBag.Semester = _context.Semesters.FirstOrDefault(x => x.Id == semesterId);
             return View(groupQuestions);
 		}
-		public IActionResult submit(string studentId, Dictionary<int, int> AnswerIds, Dictionary<int, int> AnswerId)
+		public IActionResult submit(int semesterId, string studentId, Dictionary<int, int> AnswerIds, Dictionary<int, int> AnswerId)
 		{
             if (ModelState.IsValid)
             {
-
-                int semesterId = _context.Semesters.OrderByDescending(x => x.Id).FirstOrDefault(x => x.DateEndStudent <= DateTime.Now && x.DateEndClass >= DateTime.Now)?.Id ?? 0;
-
                 var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
                 // kiểm tra trạng thái acc (0: chưa đánh giá, 1: đã đánh giá, 2:không được đánh giá)
                 int Iactive = _context.AccountStudents.Where(u => u.UserName == student.UserName).FirstOrDefault().IsActive.Value;
