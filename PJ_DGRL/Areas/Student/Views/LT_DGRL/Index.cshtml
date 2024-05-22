@@ -35,7 +35,7 @@
                     <form asp-action="Submit" asp-controller="LT_DGRL">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <input type="hidden" name="semesterId" value="@ViewBag.semesterId" readonly />
+                        <input type="hidden" name="semesterId" value="@ViewBag.SemesterId" readonly />
                         </div>
                         <div class="form-group">
                             <input type="hidden" name="studentId" value="@ViewBag.Id" readonly />
@@ -47,7 +47,7 @@
                         foreach (var question in questionGroup.QuestionLists)
                             {
 
-                                var questionList = question.QuestionHisories.Where(x => x.SemesterId == ViewBag.semesterId).FirstOrDefault();
+                            var questionList = question.QuestionHisories.Where(x => x.SemesterId == ViewBag.SemesterId).FirstOrDefault();
                                 if (questionList != null)
                                 {
                                 <h5>@stt. @question.ContentQuestion</h5>

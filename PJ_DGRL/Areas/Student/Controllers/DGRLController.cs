@@ -49,7 +49,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Submit(int semesterId,Dictionary<int, int> answerIds, Dictionary<int, int> answerId)
+        public IActionResult Submit(int semesterId,Dictionary<string, int> answerIds, Dictionary<string, int> answerId)
         {
             if (ModelState.IsValid)
             {

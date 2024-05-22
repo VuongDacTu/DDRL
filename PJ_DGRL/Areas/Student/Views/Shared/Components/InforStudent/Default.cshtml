@@ -1,6 +1,13 @@
 ﻿@model PJ_DGRL.Models.DGRLModels.Students;
+@using PJ_DGRL.Models.DGRLModels;
+@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 @{
     int selfPoint = Model.SumaryOfPoints.FirstOrDefault()?.SelfPoint ?? 0;
+    var ss = HttpContextAccessor.HttpContext.Session.GetString("LTLogin");
+
 }
 <div class="InfStudent">
     <div class="row row-cols-1">
@@ -18,6 +25,10 @@
         <div class="col">@Model.Birthday</div>
         <div class="col">@Model.Phone</div>
         <div class="col"><b>@selfPoint điểm</b></div>
-        <div class="col"><a class="btn btn-outline-warning" asp-controller="History" asp-action="Class" asp-route-studentId="@Model.Id">Xem chi tiết</a></div>
+        @if(ss != null)
+        {
+            <div class="col"><a class="btn btn-outline-warning" asp-controller="History" asp-action="Class" asp-route-studentId="@Model.Id">Xem chi tiết</a></div>
+
+        }
     </div>
 </div>

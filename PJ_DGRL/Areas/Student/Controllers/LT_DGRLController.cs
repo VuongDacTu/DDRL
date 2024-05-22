@@ -47,12 +47,12 @@ namespace PJ_DGRL.Areas.Student.Controllers
 
 			}
             ViewBag.Student = _context.Students.Where(x => x.Id == studentId).FirstOrDefault();
-            ViewBag.semesterId = semesterId;
+            ViewBag.SemesterId = semesterId;
             ViewBag.Id = studentId;
             ViewBag.Semester = _context.Semesters.FirstOrDefault(x => x.Id == semesterId);
             return View(groupQuestions);
 		}
-		public IActionResult submit(int semesterId, string studentId, Dictionary<int, int> AnswerIds, Dictionary<int, int> AnswerId)
+		public IActionResult submit(int semesterId, string studentId, Dictionary<string, int> AnswerIds, Dictionary<string, int> AnswerId)
 		{
             if (ModelState.IsValid)
             {
@@ -137,9 +137,11 @@ namespace PJ_DGRL.Areas.Student.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Status", "LT_DGRL");
             }
-            return RedirectToAction("Index", "LT_DGRL", new { studentId = studentId });
+            
+            return RedirectToAction("Index", "LT_DGRL", new { studentId = studentId});
         }
-        public IActionResult Status(string? id)
+
+		public IActionResult Status(string? id)
         {
             ViewBag.Id = id;
             return View();
