@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace PJ_DGRL.Models.DGRLModels;
 
 public partial class Lecturers
 {
     public string Id { get; set; } = null!;
-
+    [DisplayName("Họ và tên")]
     public string? FullName { get; set; }
 
     public int? DepartmentId { get; set; }
-
+    [DisplayName("Ngày sinh")]
     public DateOnly? Birthday { get; set; }
 
     public string? Email { get; set; }
-
+    [DisplayName("Số điện thoại")]
     public string? Phone { get; set; }
-
+    [DisplayName("Trạng thái")]
     public byte? IsActive { get; set; }
 
     public bool? IsDelete { get; set; }

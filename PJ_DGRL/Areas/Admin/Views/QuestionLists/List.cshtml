@@ -21,7 +21,7 @@
         <input type="submit" value="Chọn" class="btn btn-outline-dark" />
     </form>
     <a asp-action="SelectAll" class="btn btn-warning" asp-route-list="true">Chọn tất cả câu hỏi</a>
-    <a asp-controller="QuestionLists" asp-action="Index" style="position:absolute; right: 10%; margin-top: 1.5rem;">Hiển thị dưới dạng danh sách</a>
+    <a asp-controller="QuestionLists" asp-action="Index" style="position:absolute; right: 10%; margin-top: 1.5rem;" class="btn btn-outline-info">Hiển thị dưới dạng danh sách</a>
 </div>
 
     <hr />
@@ -51,7 +51,7 @@
                         }
                         </div>
                         <div class="col">
-                        <a asp-controller="AnswerLists" asp-action="Index" asp-route-questionId="@question.Id">Xem câu trả lời</a>
+                        <a asp-controller="AnswerLists" asp-action="Index" asp-route-questionId="@question.Id" class="btn btn-info">Xem câu trả lời</a>
 
                         @if (question.IsEdit == true)
                             {

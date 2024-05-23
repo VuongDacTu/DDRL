@@ -66,7 +66,7 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" name="departmentId" value="@ViewBag.DepartmentId" />
-        <input type="submit" value="Ẩn" class="btn btn-danger" /> |
+        <input type="submit" value="Ẩn" class="btn btn-danger" />
         <a asp-action="Index" asp-route-departmentId="@ViewBag.DepartmentId">Quay lại</a>
     </form>
 </div>

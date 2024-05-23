@@ -20,6 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <link href="~/student/login/css/login.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.11.0/sweetalert2.min.js" integrity="sha512-Wi5Ms24b10EBwWI9JxF03xaAXdwg9nF51qFUDND/Vhibyqbelri3QqLL+cXCgNYGEgokr+GA2zaoYaypaSDHLg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -48,8 +49,9 @@
                         @if (ss1 != null)
                         {
                             var st = Newtonsoft.Json.JsonConvert.DeserializeObject<AccountStudent>(ss1);
-                            <li class="nav-item">
-                                <a class="nav-link text-danger" asp-area="Student" asp-controller="Login" asp-action="Logout">Đăng xuất(@st.UserName)</a>
+                            <li class="nav-item" style="display:flex">
+                                <a class="nav-link text-danger" asp-area="Student" asp-controller="Login" asp-action="Logout">Đăng xuất</a>
+                                <a class="nav-link text-success" asp-area="Student" asp-controller="Login" asp-action="ChangePassword">Đổi mật khẩu</a>
                             </li>
                         }
                         else
@@ -75,20 +77,23 @@
             &copy; 2024 - Đánh giá rèn luyện - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="~/Admin/dist/js/pages/dashboard.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 
     <script>
-    function w3_open() {
-        document.getElementById("mySidebar").style.display = "block";        
-    }
+        function w3_open() {
+            document.getElementById("mySidebar").style.display = "block";        
+        }
 
-    function w3_close() {
-        document.getElementById("mySidebar").style.display = "none";   
-    }
-
+        function w3_close() {
+            document.getElementById("mySidebar").style.display = "none";   
+        }
     </script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

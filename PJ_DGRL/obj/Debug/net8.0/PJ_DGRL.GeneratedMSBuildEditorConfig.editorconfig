@@ -26,20 +26,8 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = E:\DGRL\PJ_DGRL
 build_property._RazorSourceGeneratorDebug = 
 
-[E:/DGRL/PJ_DGRL/Areas/Admin/Views/AccountLecturers/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWNjb3VudExlY3R1cmVyc1xDcmVhdGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/DGRL/PJ_DGRL/Areas/Admin/Views/AccountLecturers/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWNjb3VudExlY3R1cmVyc1xEZWxldGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [E:/DGRL/PJ_DGRL/Areas/Admin/Views/AccountLecturers/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWNjb3VudExlY3R1cmVyc1xEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/DGRL/PJ_DGRL/Areas/Admin/Views/AccountLecturers/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWNjb3VudExlY3R1cmVyc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/DGRL/PJ_DGRL/Areas/Admin/Views/AccountLecturers/Index.cshtml]
@@ -100,14 +88,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/DGRL/PJ_DGRL/Areas/Admin/Views/Courses/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ291cnNlc1xEZWxldGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/DGRL/PJ_DGRL/Areas/Admin/Views/Courses/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ291cnNlc1xEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/DGRL/PJ_DGRL/Areas/Admin/Views/Courses/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ291cnNlc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/DGRL/PJ_DGRL/Areas/Admin/Views/Courses/Index.cshtml]
@@ -180,6 +160,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/DGRL/PJ_DGRL/Areas/Admin/Views/Lecturers/Remove.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTGVjdHVyZXJzXFJlbW92ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/DGRL/PJ_DGRL/Areas/Admin/Views/Login/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTG9naW5cQ2hhbmdlUGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/DGRL/PJ_DGRL/Areas/Admin/Views/Login/Index.cshtml]
@@ -342,6 +326,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTGVjdHVyZXJcVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/DGRL/PJ_DGRL/Areas/Lecturer/Views/Login/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTGVjdHVyZXJcVmlld3NcTG9naW5cQ2hhbmdlUGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/DGRL/PJ_DGRL/Areas/Lecturer/Views/Login/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTGVjdHVyZXJcVmlld3NcTG9naW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -412,6 +400,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/DGRL/PJ_DGRL/Areas/Student/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3R1ZGVudFxWaWV3c1xIb21lXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/DGRL/PJ_DGRL/Areas/Student/Views/Login/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3R1ZGVudFxWaWV3c1xMb2dpblxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/DGRL/PJ_DGRL/Areas/Student/Views/Login/Index.cshtml]

@@ -52,14 +52,14 @@ namespace PJ_DGRL.Areas.Student.Controllers
             ViewBag.Semester = _context.Semesters.FirstOrDefault(x => x.Id == semesterId);
             return View(groupQuestions);
 		}
-		public IActionResult submit(int semesterId, string studentId, Dictionary<string, int> AnswerIds, Dictionary<string, int> AnswerId)
+		public IActionResult submit(string studentId, Dictionary<string, int>? AnswerIds, Dictionary<string, int>? AnswerId)
 		{
             if (ModelState.IsValid)
             {
                 var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
                 // kiểm tra trạng thái acc (0: chưa đánh giá, 1: đã đánh giá, 2:không được đánh giá)
                 int Iactive = _context.AccountStudents.Where(u => u.UserName == student.UserName).FirstOrDefault().IsActive.Value;
-
+                int semesterId = _context.Semesters.FirstOrDefault(x => x.DateEndStudent < DateTime.Now && x.DateEndClass > DateTime.Now)?.Id ?? 0;
                 var classAnswers = _context.ClassAnswers.Where(u => u.StudentId == studentId && u.SemesterId == semesterId).ToList();
                 if (classAnswers != null)
                 { 
@@ -71,6 +71,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
                 List<ClassAnswer> classAnswer = new List<ClassAnswer>();
                 foreach (var item in AnswerIds)
                 {
+                    if (item.Value == 0) break;
                     classAnswer.Add(new ClassAnswer
                     {
                         StudentId = studentId,
@@ -83,6 +84,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
                 }
                 foreach (var item in AnswerId)
                 {
+                    if (item.Value == 0) break;
                     classAnswer.Add(new ClassAnswer
                     {
                         StudentId = studentId,

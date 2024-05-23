@@ -83,13 +83,13 @@ else
                     </td>
                 }
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id" asp-route-isDelete="@ViewBag.IsDelete">Chi tiết</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" asp-route-isDelete="@ViewBag.IsDelete" class="btn btn-primary">Chi tiết</a>
                 @if (ViewBag.IsDelete == false)
                 {
-                    <a asp-action="Delete" asp-route-id="@item.Id" asp-route-isDelete="false">Kết thúc lớp học</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" asp-route-isDelete="false" class="btn btn-outline-danger">Kết thúc lớp học</a>
                 }else{
-                    <a asp-action="Show" asp-route-id="@item.Id" asp-route-isDelete="true">Bắt đầu lớp học</a> <span>|</span>
-                    <a asp-action="Remove" asp-route-id="@item.Id" asp-route-isDelete="true">Xoá</a>
+                        <a asp-action="Show" asp-route-id="@item.Id" asp-route-isDelete="true" class="btn btn-outline-success">Bắt đầu lớp học</a>
+                        <a asp-action="Remove" asp-route-id="@item.Id" asp-route-isDelete="true" class="btn btn-danger">Xoá</a>
                 }
             </td>
         </tr>

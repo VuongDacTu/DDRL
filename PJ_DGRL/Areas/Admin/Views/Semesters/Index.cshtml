@@ -76,11 +76,10 @@ else
             <td>
                 @if (ViewBag.isActive == 1)
                 {
-                    <a asp-action="Edit" asp-route-id="@item.Id">Chỉnh sửa</a> <span>|</span>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Ẩn</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Chỉnh sửa</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Ẩn</a>
                 }else{
-                    <a asp-action="Show" asp-route-semesterId="@item.Id">Hiển thị</a> <span>|</span>
-                    <a asp-action = "Remove" asp-route-id = "@item.Id" > Xoá </a>
+                        <a asp-action="Show" asp-route-semesterId="@item.Id" class="btn btn-primary">Hiển thị</a>
                 }
             </td>
         </tr>

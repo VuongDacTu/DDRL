@@ -53,11 +53,11 @@
                 {
                         <i class="text-danger">Không thể chỉnh sửa do câu trả lời đã được sử dụng</i>
                 }else{
-                    <a asp-action="Edit" asp-route-id="@item.Id" asp-route-questionId ="@item.QuestionId">Sửa</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" asp-route-questionId="@item.QuestionId" class="btn btn-primary">Sửa</a>
 
-                    <a asp-action="Delete" asp-route-id="@item.Id" asp-route-questionId="@item.QuestionId">Xoá</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" asp-route-questionId="@item.QuestionId" class="btn btn-danger">Xoá</a>
                 }
-                    <a asp-action="Details" asp-route-id="@item.Id" asp-route-questionId="@item.QuestionId">Chi tiết</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" asp-route-questionId="@item.QuestionId" class="btn btn-primary">Chi tiết</a>
             </td>
         </tr>
 }

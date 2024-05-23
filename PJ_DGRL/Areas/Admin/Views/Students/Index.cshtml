@@ -113,18 +113,18 @@ else
             <td>
 
 
-                    <a asp-action="Edit" asp-route-id="@item.Id" asp-route-departmentId="@item.Class.DepartmentId" asp-route-isDelete="@ViewBag.IsDelete">Sửa</a> <span>|</span>
-                    <a asp-action="Details" asp-route-id="@item.Id" asp-route-departmentId="@item.Class.DepartmentId" asp-route-isDelete="@ViewBag.IsDelete">Chi tiết</a><span>|</span>
-                    <a asp-controller="AccountStudents" asp-action="Index" asp-route-msv="@item.Id" asp-route-isDelete="@ViewBag.IsDelete">Tài khoản</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" asp-route-departmentId="@item.Class.DepartmentId" asp-route-isDelete="@ViewBag.IsDelete" class="btn btn-primary">Sửa</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" asp-route-departmentId="@item.Class.DepartmentId" asp-route-isDelete="@ViewBag.IsDelete" class="btn btn-primary">Chi tiết</a>
+                    <a asp-controller="AccountStudents" asp-action="Index" asp-route-msv="@item.Id" asp-route-isDelete="@ViewBag.IsDelete" class="btn btn-primary">Tài khoản</a>
 
             </td>
             <td>
                 @if (ViewBag.IsDelete == false)
                 {
-                    <a asp-action="Delete" asp-route-id="@item.Id" asp-route-departmentId="@item.Class.DepartmentId">Ẩn</a> 
+                    <a asp-action="Delete" asp-route-id="@item.Id" asp-route-departmentId="@item.Class.DepartmentId" class="btn btn-danger">Ẩn</a> 
                 }else{
-                   <a asp-action="Show" asp-route-id="@item.Id" asp-route-departmentId="@item.Class.DepartmentId">Hiển thị</a> <span>|</span>
-                   <a asp-action="Remove" asp-route-departmentId="@item.Class.DepartmentId" asp-route-id="@item.Id">Xoá</a>
+                    <a asp-action="Show" asp-route-id="@item.Id" asp-route-departmentId="@item.Class.DepartmentId" class="btn btn-primary">Hiển thị</a>
+                    <a asp-action="Remove" asp-route-departmentId="@item.Class.DepartmentId" asp-route-id="@item.Id" class="btn btn-danger">Xoá</a>
                 }
             </td>
         </tr>

@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace PJ_DGRL.Models.DGRLModels;
 
 public partial class Semester
 {
     public int Id { get; set; }
-
+    [DisplayName("Kì học")]
     public string? Name { get; set; }
-
+    [DisplayName("Năm học")]
     public string? SchoolYear { get; set; }
-
+    [DisplayName("Ngày mở")]
     public DateTime? DateOpenStudent { get; set; }
-
+    [DisplayName("Ngày kết thúc của sinh viên")]
     public DateTime? DateEndStudent { get; set; }
-
+    [DisplayName("Ngày kết thúc của cán bộ lớp")]
     public DateTime? DateEndClass { get; set; }
-
+    [DisplayName("Ngày kết thúc của giảng viên")]
     public DateTime? DateEndLecturer { get; set; }
 
     public byte? IsActive { get; set; }

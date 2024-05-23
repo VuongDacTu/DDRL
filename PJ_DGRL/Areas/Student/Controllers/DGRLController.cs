@@ -49,12 +49,10 @@ namespace PJ_DGRL.Areas.Student.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Submit(int semesterId,Dictionary<string, int> answerIds, Dictionary<string, int> answerId)
+        public IActionResult Submit(Dictionary<string, int>? answerIds, Dictionary<string, int>? answerId)
         {
-            if (ModelState.IsValid)
-            {
-
-                var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
+            int semesterId = _context.Semesters.FirstOrDefault(x => x.DateOpenStudent <= DateTime.Now && x.DateEndStudent >= DateTime.Now)?.Id ?? 0;
+            var student = JsonConvert.DeserializeObject<AccountStudent>(HttpContext.Session.GetString("StudentLogin"));
                 // kiểm tra trạng thái acc (0: chưa đánh giá, 1: đã đánh giá, 2:không được đánh giá)
                 int iActive = _context.AccountStudents.Where(u => u.UserName == student.UserName).FirstOrDefault().IsActive.Value;
                 //nếu như đã đánh giá
@@ -71,6 +69,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
                 List<SelfAnswer> selfAnswer = new List<SelfAnswer>();
                 foreach (var item in answerIds)
                 {
+                    if (item.Value == 0) break;
                     selfAnswer.Add(new SelfAnswer
                     {
                         StudentId = student.UserName,
@@ -80,6 +79,7 @@ namespace PJ_DGRL.Areas.Student.Controllers
                 }
                 foreach (var item in answerId)
                 {
+                    if (item.Value == 0) break;
                     selfAnswer.Add(new SelfAnswer
                     {
                         StudentId = student.UserName,
@@ -140,8 +140,6 @@ namespace PJ_DGRL.Areas.Student.Controllers
                 _context.SaveChanges();
                 ViewBag.Id = student.Id;
                 return RedirectToAction(nameof(Index1));
-            }
-            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using PJ_DGRL.Models.DGRLModels;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace PJ_DGRL.Areas.Lecturer.Controllers
 {
@@ -31,8 +33,8 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
                 return View(model); // trả về trạng thái lỗi
             }
             //đăng nhập cho sinh viên
-            //var pass = GetSHA26Hash(model.Password);
-            var dataLogin = _context.AccountLecturers.Where(x => x.UserName.Equals(model.UserName)).FirstOrDefault(x => x.Password.Equals(model.Password));
+            var pass = GetSHA26Hash(model.Password);
+            var dataLogin = _context.AccountLecturers.Where(x => x.UserName.Equals(model.UserName)).FirstOrDefault(x => x.Password.Equals(pass));
 
             if (dataLogin != null)
             {
@@ -57,15 +59,28 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
             // huỷ session với key đã lưu trước đó
             return RedirectToAction("Index","Home", new { area = "" });
         }
-        //static string GetSHA26Hash(string input)
-        //{
-        //    string hash = "";
-        //    using (var sha256 = new SHA256Managed())
-        //    {
-        //        var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
-        //        hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
-        //    }
-        //    return hash;
-        //}
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+        [HttpPost]
+		public IActionResult ChangePassword(string password)
+		{
+			var acclecturer = JsonConvert.DeserializeObject<AccountLecturer>(HttpContext.Session.GetString("LecturerLogin"));
+			var account = _context.AccountLecturers.Find(acclecturer.Id);
+			account.Password = GetSHA26Hash(password);
+			_context.SaveChanges();
+			return RedirectToAction("Index", "Home");
+		}
+		static string GetSHA26Hash(string input)
+        {
+            string hash = "";
+            using (var sha256 = new SHA256Managed())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+                hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+            return hash;
+        }
     }
 }

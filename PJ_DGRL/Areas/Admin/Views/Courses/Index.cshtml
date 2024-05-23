@@ -41,13 +41,13 @@ else
                 @if(ViewBag.IsDelete == false)
                 {
                     <td>
-                        <a asp-action="Delete" asp-route-id="@item.Id" asp-route-isDelete="false">Kết thúc khoá học</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" asp-route-isDelete="false" class="btn btn-outline-danger">Kết thúc khoá học</a>
                     </td>
                 }
                 else
                 {
                     <td>
-                        <a asp-action="Show" asp-route-id="@item.Id" asp-route-isDelete="true">Bắt đầu lại khoá học</a>
+                        <a asp-action="Show" asp-route-id="@item.Id" asp-route-isDelete="true" class="btn btn-outline-success">Bắt đầu lại khoá học</a>
                     </td>
                     <td>
                         <a class="btn btn-danger" asp-action="Remove" asp-route-isDelete="true" asp-route-id="@item.Id">Xoá</a>

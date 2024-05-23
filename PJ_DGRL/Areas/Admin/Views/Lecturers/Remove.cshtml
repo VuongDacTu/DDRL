@@ -64,9 +64,9 @@
     </dl>
     
     <form asp-action="Remove">
-        <input type="hidden" name="IsDelete" value="false"  />
+        <input type="hidden" name="IsDelete" value="true"  />
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Chắc chắn" class="btn btn-danger" /> |
-        <a asp-action="Index" asp-route-isDelete="false">Quay lại</a>
+        <input type="submit" value="Chắc chắn" class="btn btn-danger" />
+        <a asp-action="Index" asp-route-isDelete="true">Quay lại</a>
     </form>
 </div>

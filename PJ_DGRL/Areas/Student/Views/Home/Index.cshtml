@@ -7,11 +7,17 @@
     var ss = HttpContextAccessor.HttpContext.Session.GetString("LTLogin");
 
 }
-<div>
+
     @if(ss != null){
+    <div>
         @await Component.InvokeAsync("Student")
+    </div>
     }
-</div>
-<div>
-    <h1>Trang chủ</h1>
-</div>
+    else
+    {
+        <div>
+            <h1>Chào mừng đến với website đánh giá rèn luyện dành cho sinh viên</h1>
+        </div>
+    }
+
+

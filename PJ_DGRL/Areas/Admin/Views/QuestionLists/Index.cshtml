@@ -58,16 +58,16 @@
                     <td><a asp-action="Set" asp-route-questionId="@item.Id" class="btn btn-success" asp-route-list="false">Chọn</a></td>
                 }
             <td>
-                    <a asp-controller="AnswerLists" asp-action="Index" asp-route-questionId="@item.Id">Xem câu trả lời</a>
+                    <a asp-controller="AnswerLists" asp-action="Index" asp-route-questionId="@item.Id" class="btn btn-info">Xem câu trả lời</a>
 
                 @if(item.IsEdit == true)
                 {
                     <i class="text-danger">Câu hỏi này không thể chỉnh sửa do đã được sử dụng</i>
                 }else{
-                    <a asp-action="Edit" asp-route-id="@item.Id">Chỉnh sửa</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Xoá</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Chỉnh sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Xoá</a>
                 }
-                <a class="text-warning" asp-action="Details" asp-route-id="@item.Id">Chi tiết</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary text-warning">Chi tiết</a>
             </td>
         </tr>
 }
