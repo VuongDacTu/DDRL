@@ -12,13 +12,17 @@
     <form asp-action="SelectAll">
         <input type="hidden" name="list" value="true" />
         <label>Sử dụng bộ câu hỏi kì</label>
-        <select name="semesterId">
-            @foreach (var item in semesters)
-            {
-                <option value="@item.Id">Kì @item.Name - Năm học @item.SchoolYear</option>
-            }
-        </select>
-        <input type="submit" value="Chọn" class="btn btn-outline-dark" />
+        <div class="form-group">
+            <select name="semesterId" class="form-control">
+                @foreach (var item in semesters)
+                {
+                    <option value="@item.Id">Kì @item.Name - Năm học @item.SchoolYear</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Chọn" class="btn btn-outline-dark" />
+        </div>
     </form>
     <a asp-action="SelectAll" class="btn btn-warning" asp-route-list="true">Chọn tất cả câu hỏi</a>
     <a asp-controller="QuestionLists" asp-action="Index" style="position:absolute; right: 10%; margin-top: 1.5rem;" class="btn btn-outline-info">Hiển thị dưới dạng danh sách</a>

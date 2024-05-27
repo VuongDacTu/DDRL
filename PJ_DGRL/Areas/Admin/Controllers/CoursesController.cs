@@ -154,7 +154,10 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                     var students = _context.Students.Where(x => x.ClassId == item.Id).ToList();
                     foreach (var student in students)
                     {
-                        student.IsActive = _isActive.NgungHoatDong();
+                        if(student.IsActive == _isActive.HoatDong())
+                        {
+                            student.IsActive = _isActive.NgungHoatDong();
+                        }
                         student.IsDelete = _isDelete.An();
                         var acc = _context.AccountStudents.FirstOrDefault(x => x.StudentId == student.Id);
                         acc.IsActive = _isActive.NgungHoatDong();
@@ -185,7 +188,10 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                     var students = _context.Students.Where(x => x.ClassId == item.Id).ToList();
                     foreach (var student in students)
                     {
-                        student.IsActive = _isActive.HoatDong();
+                        if(student.IsActive == _isActive.NgungHoatDong())
+                        {
+                            student.IsActive = _isActive.HoatDong();
+                        }
                         student.IsDelete = _isDelete.Hien();
                         var acc = _context.AccountStudents.FirstOrDefault(x => x.StudentId == student.Id);
                         acc.IsActive = _isActive.HoatDong();

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using PJ_DGRL.Areas.Admin.Models;
 using PJ_DGRL.Models.DGRLModels;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -157,29 +158,35 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             return View();
         }
-        public IActionResult Passive(int? classId)
+        public IActionResult Passive(int? classId, bool? isDelete)
         {
             var c = _context.Classes.FirstOrDefault(x => x.Id == classId);
             var student = _context.Students.Where(x => x.ClassId == classId).ToList();
             c.IsActive = 0;
             foreach(var item in student)
             {
-                _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id).IsActive = _isActive.NgungHoatDong();
+                if (item.IsActive == _isActive.HoatDong())
+                {
+                    _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id).IsActive = _isActive.NgungHoatDong();
+                }
             }
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { isDelete = isDelete });
         }
-        public IActionResult Active(int? classId)
+        public IActionResult Active(int? classId, bool? isDelete)
         {
             var c = _context.Classes.FirstOrDefault(x => x.Id == classId);
             var student = _context.Students.Where(x => x.ClassId == classId).ToList();
             c.IsActive = 1;
             foreach (var item in student)
             {
-                _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id).IsActive = _isActive.HoatDong();
+                if(item.IsActive == _isActive.NgungHoatDong())
+                {
+                    _context.AccountStudents.FirstOrDefault(x => x.StudentId == item.Id).IsActive = _isActive.HoatDong();
+                }
             }
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { isDelete = isDelete });
         }
         public async Task<IActionResult> Show(int? id) 
         {

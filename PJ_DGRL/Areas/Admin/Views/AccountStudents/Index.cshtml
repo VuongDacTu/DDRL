@@ -42,6 +42,7 @@
                 }
             <td>
                     <a asp-action="ResetPassword" asp-route-msv="@item.StudentId" asp-route-accId="@item.Id" class="btn btn-primary">Đặt lại mật khẩu</a>
+                    <a asp-action="Details" asp-route-msv="@item.StudentId" asp-route-id="@item.Id" class="btn btn-primary">Chi tiết</a>
             </td>
         </tr>
 }

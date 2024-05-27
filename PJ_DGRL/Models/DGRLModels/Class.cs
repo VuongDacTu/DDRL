@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace PJ_DGRL.Models.DGRLModels;
 
@@ -9,6 +10,7 @@ public partial class Class
     [DisplayName("Mã lớp")]
     public int Id { get; set; }
     [DisplayName("Lớp")]
+    [Required(ErrorMessage = "Tên lớp không được trống")]
     public string? Name { get; set; }
 
     public string? CourseId { get; set; }

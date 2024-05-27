@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -86,7 +88,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 var admin = JsonConvert.DeserializeObject<AccountAdmin>(HttpContext.Session.GetString("AdminLogin"));
                 AccountLecturer acc = new AccountLecturer() {
                     UserName = lecturer.Id,
-                    Password = "12345",
+                    Password = GetSHA26Hash("12345"),
                     IsActive = _isActive.HoatDong(),
                     CreateBy = admin.UserName,
                     CreateDate = DateTime.Now,
@@ -270,7 +272,16 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index), new { isDelete = true });
         }
-
+        static string GetSHA26Hash(string input)
+        {
+            string hash = "";
+            using (var sha256 = new SHA256Managed())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+                hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+            return hash;
+        }
 
     }
 }

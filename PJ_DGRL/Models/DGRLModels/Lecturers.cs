@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace PJ_DGRL.Models.DGRLModels;
 
 public partial class Lecturers
 {
+    [DisplayName("Mã giảng viên")]
+    [Required(ErrorMessage = "Mã giảng viên không được trống")]
     public string Id { get; set; } = null!;
     [DisplayName("Họ và tên")]
+    [Required(ErrorMessage = "Họ và tên không được trống")]
     public string? FullName { get; set; }
 
     public int? DepartmentId { get; set; }

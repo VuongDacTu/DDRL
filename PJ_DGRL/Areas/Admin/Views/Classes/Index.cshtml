@@ -73,13 +73,13 @@ else
                 @if(item.IsActive == 1)
                 {
                     <td>
-                        <a class="btn btn-outline-danger" asp-action="Passive" asp-route-classId="@item.Id">Dừng hoạt động</a>
+                        <a class="btn btn-outline-danger" asp-action="Passive" asp-route-isDelete="@ViewBag.IsDelete" asp-route-classId="@item.Id">Dừng hoạt động</a>
                     </td>
                 }
                 else
                 {
                     <td>
-                        <a class="btn btn-outline-success" asp-action="Active" asp-route-classId="@item.Id">Cho phép hoạt động</a>
+                        <a class="btn btn-outline-success" asp-action="Active" asp-route-isDelete="@ViewBag.IsDelete" asp-route-classId="@item.Id">Cho phép hoạt động</a>
                     </td>
                 }
             <td>

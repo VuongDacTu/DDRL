@@ -6,7 +6,7 @@ namespace PJ_DGRL.Models.DGRLModels;
 public partial class AccountAdmin
 {
     public int Id { get; set; }
-
+    
     public string? FullName { get; set; }
 
     public string? UserName { get; set; }

@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace PJ_DGRL.Models.DGRLModels;
 
 public partial class Students
 {
+    [Required(ErrorMessage = "Mã sinh viên không được trống")]
     [DisplayName("Mã sinh viên")]
     public string Id { get; set; } = null!;
 
     [DisplayName("Họ và tên")]
+    [Required(ErrorMessage = "Họ và tên không được trống")]
     public string? FullName { get; set; }
     [DisplayName("Ngày sinh")]
     public DateOnly? Birthday { get; set; }

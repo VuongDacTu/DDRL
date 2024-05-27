@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PJ_DGRL.Models.DGRLModels;
 
 public partial class QuestionList
 {
     public int Id { get; set; }
-
+    [Required(ErrorMessage = "Nội dung câu hỏi không được trống")]
     public string? ContentQuestion { get; set; }
 
     public int? TypeQuestionId { get; set; }

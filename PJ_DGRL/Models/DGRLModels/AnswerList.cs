@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PJ_DGRL.Models.DGRLModels;
 
@@ -8,9 +9,9 @@ public partial class AnswerList
     public int Id { get; set; }
 
     public int? QuestionId { get; set; }
-
+    [Required(ErrorMessage = "Nội dung không được trống")]
     public string? ContentAnswer { get; set; }
-
+    [Required(ErrorMessage = "Nội dung không được trống")]
     public int? AnswerScore { get; set; }
 
     public byte? Status { get; set; }
