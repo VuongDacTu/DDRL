@@ -14,17 +14,18 @@ using PJ_DGRL.Areas.Admin.Models;
 using PJ_DGRL.Models.DGRLModels;
 namespace PJ_DGRL.Areas.Admin.Controllers
 {
-    public class StudentsController : BaseController
+    public class StudentsController : Base1Controller
     {
         private readonly DbDgrlContext _context;
-
-        public StudentsController(DbDgrlContext context)
+        public IsDelete _isDelete;
+        public StudentsController(DbDgrlContext context, IsDelete isDelete)
         {
             _context = context;
+            _isDelete = isDelete;
         }
         public Status _status = new Status();
         public IsActive _isActive = new IsActive();
-        public IsDelete _isDelete = new IsDelete(); 
+
 
         // GET: Admin/Students
         public async Task<IActionResult> Index(string? name,int? classId, bool? isDelete, int? departmentId)

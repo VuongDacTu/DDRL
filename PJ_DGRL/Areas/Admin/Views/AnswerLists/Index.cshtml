@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>@Model.FirstOrDefault()?.Question.ContentQuestion</h1>
+<h1>@Model.FirstOrDefault()?.Question?.ContentQuestion</h1>
 <a asp-controller="QuestionLists" asp-action="List" style="position:absolute; right: 10%;">Danh sách câu hỏi</a>
 <h3>Câu trả lời</h3>
 <p>

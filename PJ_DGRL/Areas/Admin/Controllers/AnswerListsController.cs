@@ -75,8 +75,10 @@ namespace PJ_DGRL.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { questionId = answerList.QuestionId });
             }
+            ViewBag.QID = answerList.QuestionId;
             ViewData["QuestionId"] = new SelectList(_context.QuestionLists, "Id", "ContentQuestion", answerList.QuestionId);
-            return RedirectToAction("Index","AnswerLists", new {questionId = answerList.QuestionId });
+            //return RedirectToAction("Index","AnswerLists", new {questionId = answerList.QuestionId });
+            return View(answerList);
         }
 
         // GET: Admin/AnswerLists/Edit/5

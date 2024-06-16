@@ -62,9 +62,12 @@ namespace PJ_DGRL.Areas.Lecturer.Controllers
 						point.LecturerPoint = s.LecturerPoint;
 						point.LastPoint = s.LastPoint;
 						point.UpdateDate = DateTime.Now;
+						if(s.LecturerPoint != null)
+						{
+                            point.LastPoint = (int)s.LecturerPoint;
+                        }
 
-						point.LastPoint = (int)point.LecturerPoint;
-						if (point.LastPoint >= 90)
+                        if (point.LastPoint >= 90)
 						{
 							point.Classify = "Xuất sắc";
 						}else if(point.LastPoint >= 80)

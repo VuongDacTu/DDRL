@@ -9,7 +9,7 @@ public partial class Position
 {
     public int Id { get; set; }
     [DisplayName("Chức vụ")]
-    [Required(ErrorMessage = "Tên chức vụ không được trống")]
+    [MaxLength(50,ErrorMessage ="Độ dài không được quá 50 ký tự")]
     public string Name { get; set; } = null!;
 
     public byte Status { get; set; }

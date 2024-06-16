@@ -7,11 +7,15 @@ namespace PJ_DGRL.Models.DGRLModels;
 
 public partial class Department
 {
+
     public int Id { get; set; }
-    [DisplayName("Chuyên ngành")]
-    [Required(ErrorMessage = "Tên chuyên ngành không được trống")]
+    [DisplayName("Chuyên ngành"),
+        MaxLength(50, ErrorMessage ="Độ dài không được quá 50 ký tự")
+     
+        ]
     public string? Name { get; set; }
-    [Required(ErrorMessage = "Số năm học không được trống")]
+    [DisplayName("Số năm học")]
+    [MaxLength(50,ErrorMessage = "Độ dài không được quá 50 ký tự")]
     public int? Times { get; set; }
 
     public virtual ICollection<Class> Classes { get; set; } = new List<Class>();

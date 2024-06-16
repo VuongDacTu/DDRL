@@ -9,7 +9,7 @@ using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
 {
-    public class GroupQuestionsController : BaseController
+    public class GroupQuestionsController : Base1Controller
     {
         private readonly DbDgrlContext _context;
 
@@ -116,6 +116,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         }
 
         // GET: Admin/GroupQuestions/Delete/5
+        
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

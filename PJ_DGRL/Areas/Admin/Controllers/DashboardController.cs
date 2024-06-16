@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PJ_DGRL.Areas.Admin.Controllers;
 
 namespace PJ_DGRL.Areas.Admins.Controllers

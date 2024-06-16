@@ -1,8 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DinkToPdf.Contracts;
+using DinkToPdf;
+using Microsoft.EntityFrameworkCore;
 using PJ_DGRL.Models.DGRLModels;
+using PJ_DGRL.Areas.Admin.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
+// Register the DinkToPdf converter as a singleton
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 builder.Services.AddControllersWithViews();
 
 // Add DbContext
@@ -22,6 +26,9 @@ builder.Services.AddSession(option =>
     option.Cookie.Name = ".DDRL.Session";
 
 });
+
+builder.Services.AddScoped<IsDelete>();
+//
 
 var app = builder.Build();
 

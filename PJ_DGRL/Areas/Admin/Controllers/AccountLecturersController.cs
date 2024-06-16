@@ -14,7 +14,7 @@ using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
 {
-    public class AccountLecturersController : BaseController
+    public class AccountLecturersController : Base1Controller
     {
         private readonly DbDgrlContext _context;
 

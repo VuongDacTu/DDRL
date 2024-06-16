@@ -10,15 +10,16 @@ using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
 {
-    public class CoursesController : BaseController
+    public class CoursesController : Base1Controller
     {
         private readonly DbDgrlContext _context;
-
-        public CoursesController(DbDgrlContext context)
+        public IsDelete _isDelete;
+        public CoursesController(DbDgrlContext context, IsDelete isDelete)
         {
             _context = context;
+            _isDelete = isDelete;
         }
-        public IsDelete _isDelete = new IsDelete();
+
         public IsActive _isActive = new IsActive();
         // GET: Admin/Courses
         public async Task<IActionResult> Index(bool? isDelete)
@@ -48,6 +49,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // GET: Admin/Courses/Create
         public IActionResult Create()
         {
+            ViewBag.Status = "";
             return View();
         }
 
@@ -60,7 +62,14 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var crs = _context.Courses.FirstOrDefault(x => x.Id == course.Id);
+                if(crs != null)
+                {
+                    ViewBag.Status = "Tên khoá học đã tồn tại";
+                    return View();
+                }
                 _context.Add(course);
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new {isDelete=_isDelete.Hien()});
             }

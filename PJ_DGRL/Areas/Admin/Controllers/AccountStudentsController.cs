@@ -14,7 +14,7 @@ using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
 {
-    public class AccountStudentsController : BaseController
+    public class AccountStudentsController : Base1Controller
     {
         private readonly DbDgrlContext _context;
 
@@ -26,6 +26,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // GET: Admin/AccountStudents
         public async Task<IActionResult> Index(string? msv, bool? isDelete)
         {
+            
             var dbDgrlContext = _context.AccountStudents.Include(a => a.Student);
             if (!msv.IsNullOrEmpty())
             {

@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.Students>
 <form asp-controller="Student" asp-action="Index" method="get">
-    <select name="classId" asp-items="ViewBag.ClassId">
+    <select name="classId" asp-items="ViewBag.ClassId" style="height:35px;">
         <option selected>Tất cả</option>
     </select>
-    <input type="text" name="name" placeholder="Nhập tên sinh viên" value="@ViewBag.name">
-    <button type="submit">Tìm kiếm</button>
+    <input type="text" name="name" placeholder="Nhập tên sinh viên" value="@ViewBag.name" style="height:35px;">
+    <button type="submit" style="height:35px;">Tìm kiếm</button>
 </form>
 <hr />
 
 @if (Model.FirstOrDefault() != null){
-    <table class="table">
+    <table class="table" style="border:none;">
         <tbody class="table-group-divider">
 
     @foreach (var item in Model)

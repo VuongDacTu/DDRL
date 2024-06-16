@@ -7,16 +7,15 @@ namespace PJ_DGRL.Models.DGRLModels;
 
 public partial class Class
 {
-    [DisplayName("Mã lớp")]
     public int Id { get; set; }
     [DisplayName("Lớp")]
-    [Required(ErrorMessage = "Tên lớp không được trống")]
+    [MaxLength(7,ErrorMessage ="Độ dài không được quá 7 ký tự")]
     public string? Name { get; set; }
-
+    [DisplayName("Khoá")]
     public string? CourseId { get; set; }
 
     public int? DepartmentId { get; set; }
-    [DisplayName("Trạng thái")]
+
     public byte? IsActive { get; set; }
 
     public bool? IsDelete { get; set; }

@@ -9,16 +9,19 @@ public partial class Students
 {
     [Required(ErrorMessage = "Mã sinh viên không được trống")]
     [DisplayName("Mã sinh viên")]
+    [MaxLength(10,ErrorMessage ="Độ dài không vượt quá 10 ký tự")]
     public string Id { get; set; } = null!;
 
     [DisplayName("Họ và tên")]
     [Required(ErrorMessage = "Họ và tên không được trống")]
+    [MaxLength(50,ErrorMessage ="Độ dài không vượt quá 50 ký tự")]
     public string? FullName { get; set; }
     [DisplayName("Ngày sinh")]
     public DateOnly? Birthday { get; set; }
-
+    [MaxLength(50,ErrorMessage ="Độ dài không vượt quá 50 ký tự")]
     public string? Email { get; set; }
     [DisplayName("Số điện thoại")]
+    [MaxLength(15,ErrorMessage ="Độ dài không vượt quá 15 ký tự")]
     public string? Phone { get; set; }
     [DisplayName("Giới tính")]
     public bool? Gender { get; set; }

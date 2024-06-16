@@ -10,7 +10,7 @@ using PJ_DGRL.Models.DGRLModels;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
 {
-    public class DepartmentsController : BaseController
+    public class DepartmentsController : Base1Controller
     {
         private readonly DbDgrlContext _context;
 

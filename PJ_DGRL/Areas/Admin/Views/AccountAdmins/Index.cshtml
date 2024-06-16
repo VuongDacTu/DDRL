@@ -1,0 +1,60 @@
+﻿@model IEnumerable<PJ_DGRL.Models.DGRLModels.AccountAdmin>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Tài khoản quản trị viên</h1>
+
+<p>
+    <a asp-action="Create">Thêm mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoleId)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.RoleName)
+            </td>
+            <td>
+                    @if(item.IsActive == 1)
+                    {
+                        <a asp-action="UnLock" class="btn btn-outline-success" asp-route-id="@item.Id">Mở Khoá</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Lock" class="btn btn-outline-danger" asp-route-id="@item.Id">Khoá</a>
+                    }
+                </td>
+            <td>
+                <a asp-action="Reset" asp-route-id="@item.Id" class="btn btn-primary">Đặt lại mật khẩu</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Sửa</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Chi tiết</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Xoá</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

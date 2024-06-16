@@ -7,10 +7,15 @@ namespace PJ_DGRL.Models.DGRLModels;
 
 public partial class Course
 {
-    [Required(ErrorMessage = "Mã khoá học không được trống")]
+    [MaxLength(4, ErrorMessage = "Độ dài không được quá 4 ký tự")]
+    [Required(ErrorMessage ="Tên khoá học không được trống")]
+    [DisplayName("Khoá")]
+
     public string Id { get; set; } = null!;
-    [DisplayName("Khoá học")]
-    [Required(ErrorMessage = "Tên khoá học không được trống")]
+    [DisplayName("Năm học")]
+    [MaxLength(50,ErrorMessage ="Độ dài không được quá 50 ký tự")]
+    [Required(ErrorMessage = "Năm học không được trống")]
+
     public string? Name { get; set; }
 
     public bool? IsDelete { get; set; }

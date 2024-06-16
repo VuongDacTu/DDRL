@@ -268,6 +268,7 @@ public partial class DbDgrlContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .IsFixedLength();
+            entity.Property(e => e.Education).HasMaxLength(30);
             entity.Property(e => e.Email)
                 .HasMaxLength(50)
                 .IsUnicode(false);

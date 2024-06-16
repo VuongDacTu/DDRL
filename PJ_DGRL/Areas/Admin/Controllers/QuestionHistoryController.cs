@@ -13,12 +13,13 @@ namespace PJ_DGRL.Areas.Admin.Controllers
     public class QuestionHistoryController : BaseController
     {
         private readonly DbDgrlContext _context;
-
-        public QuestionHistoryController(DbDgrlContext context)
+        public IsDelete _isDelete;
+        public QuestionHistoryController(DbDgrlContext context, IsDelete isDelete)
         {
             _context = context;
+            _isDelete = isDelete;
         }
-        public IsDelete _isDelete = new IsDelete();
+
         // GET: Admin/QuestionHisories
         public async Task<IActionResult> Index(int? semesterId)
         {

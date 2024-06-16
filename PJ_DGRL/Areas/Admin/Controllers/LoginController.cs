@@ -35,7 +35,11 @@ namespace PJ_DGRL.Areas.Admin.Controllers
             //đăng nhập cho sinh viên
             var pass = GetSHA26Hash(model.Password);
             var dataLogin = _context.AccountAdmins.Where(x => x.UserName.Equals(model.UserName)).FirstOrDefault(x => x.Password.Equals(pass));
-
+            if(dataLogin.IsActive == 1)
+            {
+                TempData["errorLogin"] = "Tài khoản đã bị khoá !";
+                return View(model);
+            }
             if (dataLogin != null)
             {
                 // Lưu lại session khi đăng nhập thành công

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,15 +14,16 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PJ_DGRL.Areas.Admin.Controllers
 {
-    public class ClassesController : BaseController
+    public class ClassesController : Base1Controller
     {
         private readonly DbDgrlContext _context;
-
-        public ClassesController(DbDgrlContext context)
+        public IsDelete _isDelete;
+        public ClassesController(DbDgrlContext context, IsDelete isDelete)
         {
             _context = context;
+            _isDelete = isDelete;
         }
-        public IsDelete _isDelete = new IsDelete();
+
         public IsActive _isActive = new IsActive();
         // GET: Admin/Classes
         public async Task<IActionResult> Index(int? departmentId, string? coursesId,string? name,bool? isDelete)

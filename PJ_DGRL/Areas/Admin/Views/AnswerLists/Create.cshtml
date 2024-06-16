@@ -17,7 +17,7 @@
             <input type="text" asp-for="QuestionId" value="@ViewBag.QID" readonly />
             <div class="form-group">
                 <label asp-for="ContentAnswer" class="control-label"></label>
-                <input asp-for="ContentAnswer" class="form-control" />
+                <textarea asp-for="ContentAnswer" class="form-control" rows="10"></textarea>
                 <span asp-validation-for="ContentAnswer" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -34,13 +34,13 @@
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Thêm mới" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index" asp-route-questionId="@ViewBag.QID">Quay lạit</a>
+    <a asp-action="Index" asp-route-questionId="@ViewBag.QID">Quay lại</a>
 </div>
 
