@@ -15,15 +15,16 @@ namespace PJ_DGRL.Areas.Admin.Models
         }
         public bool An()
         {
+            
+            var admin = JsonConvert.DeserializeObject<AccountAdmin>(_context.HttpContext?.Session.GetString("AdminLogin") ?? "");
+            if (admin?.RoleId != 1 && admin != null)
+            {
+                _context.HttpContext?.Response.Redirect("/Admin/Status/Index");
+            }
             return true;
         }
         public bool Hien()
         {
-            var admin = JsonConvert.DeserializeObject<AccountAdmin>(_context.HttpContext.Session.GetString("AdminLogin"));
-            if (admin.RoleId != 1)
-            {
-                _context.HttpContext.Response.Redirect("/Admin/Status/Index");
-            }
             return false;
         }
     }

@@ -24,6 +24,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // GET: Admin/Courses
         public async Task<IActionResult> Index(bool? isDelete)
         {
+            _isDelete.An();
             ViewBag.IsDelete = isDelete;
             return View(await _context.Courses.Where(x => x.IsDelete == isDelete).ToListAsync());
         }

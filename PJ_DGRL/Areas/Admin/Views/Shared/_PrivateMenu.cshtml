@@ -1,6 +1,7 @@
 ﻿@using PJ_DGRL.Models.DGRLModels;
 @using Microsoft.AspNetCore.Http;
 @using Newtonsoft.Json;
+@inject PJ_DGRL.Areas.Admin.Models.IsDelete _isdelete
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     var ss = HttpContextAccessor.HttpContext.Session.GetString("AdminLogin");

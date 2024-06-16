@@ -28,6 +28,7 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // GET: Admin/Classes
         public async Task<IActionResult> Index(int? departmentId, string? coursesId,string? name,bool? isDelete)
         {
+            _isDelete.An();
             var c = _context.Classes.Include(@c => @c.Course).Include(@c => @c.Department);
             var dbDgrlContext = c.Where(x => x.IsDelete == isDelete);
             if(departmentId != null)

@@ -30,7 +30,8 @@ namespace PJ_DGRL.Areas.Admin.Controllers
         // GET: Admin/Students
         public async Task<IActionResult> Index(string? name,int? classId, bool? isDelete, int? departmentId)
         {
-            if(isDelete == null)
+            _isDelete.An();
+            if (isDelete == null)
             {
                 isDelete = false;
             }
